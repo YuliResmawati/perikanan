@@ -1,0 +1,641 @@
+[
+    {
+      "id": "1442",
+      "text": "ARIEF RESTU",
+      "title": "KEPALA DINAS PERTANIAN ",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1443",
+      "text": "EMRIZAL",
+      "title": "SEKRETARIS DINAS PERTANIAN ",
+      "width": "350",
+      "height": "100",
+      "dir": "vertical",
+      "img": ""
+    },
+    {
+      "id": "1444",
+      "text": "REF INDRA",
+      "title": "SUB BAGIAN UMUM DAN KEPEGAWAIAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1445",
+      "text": "NINA BETRISNA",
+      "title": "SUB BAGIAN KEUANGAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1446",
+      "text": "NURLAINI",
+      "title": "SUB BAGIAN PERENCANAAN DAN PELAPORAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1447",
+      "text": "ARMELIA",
+      "title": "BIDANG PRASARANA, SARANA PERTANIAN DAN PENYULUHAN",
+      "width": "350",
+      "height": "100",
+      "dir": "vertical",
+      "img": ""
+    },
+    {
+      "id": "1448",
+      "text": "YASRIANDI",
+      "title": "SEKSI LAHAN DAN IRIGASI",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1449",
+      "text": "IMREFLI",
+      "title": "SEKSI PUPUK, PESTISIDA, ALAT DAN MESIN PERTANIAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1450",
+      "text": "MUHAMMAD IDRIS LUBIS",
+      "title": "SEKSI PENYULUHAN PERTANIAN DAN PEMBIAYAAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1451",
+      "text": "ADE YUSUF THAMRIN",
+      "title": "BIDANG TANAMAN PANGAN",
+      "width": "350",
+      "height": "100",
+      "dir": "vertical",
+      "img": ""
+    },
+    {
+      "id": "1452",
+      "text": "FIRDAUS",
+      "title": "SEKSI PERBENIHAN DAN PERLINDUNGAN TANAMAN PANGAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1453",
+      "text": "MISWARNI",
+      "title": "SEKSI PRODUKSI TANAMAN PANGAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1454",
+      "text": "ERLINA",
+      "title": "SEKSI PENGOLAHAN DAN PEMASARAN HASIL TANAMAN PANGAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1455",
+      "text": "SARI MUSTIKA",
+      "title": "BIDANG HORTIKULTURA",
+      "width": "350",
+      "height": "100",
+      "dir": "vertical",
+      "img": ""
+    },
+    {
+      "id": "1456",
+      "text": "EVI SUSIANTI",
+      "title": "SEKSI PERBENIHAN DAN PERLINDUNGAN HORTIKULTURA",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1457",
+      "text": "WARNI",
+      "title": "SEKSI PRODUKSI HORTIKULTURA",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1458",
+      "text": "INDRAWATI",
+      "title": "SEKSI PENGOLAHAN DAN PEMASARAN HASIL HORTIKULTURA",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1459",
+      "text": "ZUL EFENDI",
+      "title": "BIDANG PERKEBUNAN",
+      "width": "350",
+      "height": "100",
+      "dir": "vertical",
+      "img": ""
+    },
+    {
+      "id": "1460",
+      "text": "EVA ZULINDA",
+      "title": "SEKSI PERBENIHAN DAN PERLINDUNGAN PERKEBUNAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1461",
+      "text": "ASTUTI",
+      "title": "SEKSI PRODUKSI PERKEBUNAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1462",
+      "text": "ASWIRZAL",
+      "title": "SEKSI PENGOLAHAN DAN PEMASARAN HASIL PERKEBUNAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1463",
+      "text": "MUHAMMAD ABRIL",
+      "title": "BIDANG PETERNAKAN",
+      "width": "350",
+      "height": "100",
+      "dir": "vertical",
+      "img": ""
+    },
+    {
+      "id": "1464",
+      "text": "JAFRIKA",
+      "title": "SEKSI PEMBIBITAN TERNAK",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1465",
+      "text": "ICHWAN SYAHDAT",
+      "title": "SEKSI PRODUKSI TERNAK",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1466",
+      "text": "ERLINA",
+      "title": "SEKSI PAKAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1467",
+      "text": "FARID MUSLIM",
+      "title": "BIDANG KESEHATAN HEWAN DAN KESEHATAN MASYARAKAT VETERINER",
+      "width": "350",
+      "height": "100",
+      "dir": "vertical",
+      "img": ""
+    },
+    {
+      "id": "1468",
+      "text": "SRI HILMAYENI TRI PUTRI",
+      "title": "SEKSI KESEHATAN HEWAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1469",
+      "text": "ISWAN HENDRI",
+      "title": "SEKSI KESEHATAN MASYAKAT VETERINER",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1470",
+      "text": "GUSMILAWATI",
+      "title": "SEKSI PENGOLAHAN DAN PEMASARAN HASIL PETERNAKAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1471",
+      "text": "DODI RASWANDI",
+      "title": "UPT PASAR TERNAK DAN RUMAH POTONG",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1472",
+      "text": "ABDUL GANIF",
+      "title": "SUB BAGIAN TU UPT PASAR TERNAK DAN RUMAH POTONG",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1473",
+      "text": "DESI SUSANTI",
+      "title": "UPT PUSKESWAN LUBUK BASUNG",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1474",
+      "text": "MUSNAWILIS",
+      "title": "SUB BAGIAN TU UPT PUSKESWAN LUBUK BASUNG",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1475",
+      "text": "ELDARIA",
+      "title": "UPT PUSKESWAN SALAREH AIA",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1476",
+      "text": "EDIWAN",
+      "title": "SUB BAGIAN TU UPT PUSKESWAN SALAREH AIA",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1477",
+      "text": "LILA SUSANTI",
+      "title": "UPT PUSKESWAN AMBUN PAGI",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1478",
+      "text": "TAUFIQ ASMAR",
+      "title": "SUB BAGIAN TU UPT PUSKESWAN AMBUN PAGI",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1479",
+      "text": null,
+      "title": "UPT PUSKESWAN KOTO HILALANG",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1480",
+      "text": "DIAN GUSTRINI",
+      "title": "SUB BAGIAN TU UPT PUSKESWAN KOTO HILALANG",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1481",
+      "text": "DEDRINALDI",
+      "title": "UPT PUSKESWAN MAGEK",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1482",
+      "text": "NURHASISWAN",
+      "title": "SUB BAGIAN TU UPT PUSKESWAN MAGEK",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1485",
+      "text": null,
+      "title": "UPT BALAI PELAKSANA PENYULUHAN PERTANIAN ",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "id": "1486",
+      "text": "RADIATUL HASNAH",
+      "title": "SUB BAGIAN TU BALAI PELAKSANA PENYULUHAN PERTANIAN",
+      "width": "350",
+      "height": "100",
+      "dir": "horizontal",
+      "img": ""
+    },
+    {
+      "from": "1442",
+      "to": "1443",
+      "id": "1442-1443",
+      "type": "line"
+    },
+    {
+      "from": "1443",
+      "to": "1444",
+      "id": "1443-1444",
+      "type": "line"
+    },
+    {
+      "from": "1443",
+      "to": "1445",
+      "id": "1443-1445",
+      "type": "line"
+    },
+    {
+      "from": "1443",
+      "to": "1446",
+      "id": "1443-1446",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1447",
+      "id": "1442-1447",
+      "type": "line"
+    },
+    {
+      "from": "1447",
+      "to": "1448",
+      "id": "1447-1448",
+      "type": "line"
+    },
+    {
+      "from": "1447",
+      "to": "1449",
+      "id": "1447-1449",
+      "type": "line"
+    },
+    {
+      "from": "1447",
+      "to": "1450",
+      "id": "1447-1450",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1451",
+      "id": "1442-1451",
+      "type": "line"
+    },
+    {
+      "from": "1451",
+      "to": "1452",
+      "id": "1451-1452",
+      "type": "line"
+    },
+    {
+      "from": "1451",
+      "to": "1453",
+      "id": "1451-1453",
+      "type": "line"
+    },
+    {
+      "from": "1451",
+      "to": "1454",
+      "id": "1451-1454",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1455",
+      "id": "1442-1455",
+      "type": "line"
+    },
+    {
+      "from": "1455",
+      "to": "1456",
+      "id": "1455-1456",
+      "type": "line"
+    },
+    {
+      "from": "1455",
+      "to": "1457",
+      "id": "1455-1457",
+      "type": "line"
+    },
+    {
+      "from": "1455",
+      "to": "1458",
+      "id": "1455-1458",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1459",
+      "id": "1442-1459",
+      "type": "line"
+    },
+    {
+      "from": "1459",
+      "to": "1460",
+      "id": "1459-1460",
+      "type": "line"
+    },
+    {
+      "from": "1459",
+      "to": "1461",
+      "id": "1459-1461",
+      "type": "line"
+    },
+    {
+      "from": "1459",
+      "to": "1462",
+      "id": "1459-1462",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1463",
+      "id": "1442-1463",
+      "type": "line"
+    },
+    {
+      "from": "1463",
+      "to": "1464",
+      "id": "1463-1464",
+      "type": "line"
+    },
+    {
+      "from": "1463",
+      "to": "1465",
+      "id": "1463-1465",
+      "type": "line"
+    },
+    {
+      "from": "1463",
+      "to": "1466",
+      "id": "1463-1466",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1467",
+      "id": "1442-1467",
+      "type": "line"
+    },
+    {
+      "from": "1467",
+      "to": "1468",
+      "id": "1467-1468",
+      "type": "line"
+    },
+    {
+      "from": "1467",
+      "to": "1469",
+      "id": "1467-1469",
+      "type": "line"
+    },
+    {
+      "from": "1467",
+      "to": "1470",
+      "id": "1467-1470",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1471",
+      "id": "1442-1471",
+      "type": "line"
+    },
+    {
+      "from": "1471",
+      "to": "1472",
+      "id": "1471-1472",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1473",
+      "id": "1442-1473",
+      "type": "line"
+    },
+    {
+      "from": "1473",
+      "to": "1474",
+      "id": "1473-1474",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1475",
+      "id": "1442-1475",
+      "type": "line"
+    },
+    {
+      "from": "1475",
+      "to": "1476",
+      "id": "1475-1476",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1477",
+      "id": "1442-1477",
+      "type": "line"
+    },
+    {
+      "from": "1477",
+      "to": "1478",
+      "id": "1477-1478",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1479",
+      "id": "1442-1479",
+      "type": "line"
+    },
+    {
+      "from": "1479",
+      "to": "1480",
+      "id": "1479-1480",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1481",
+      "id": "1442-1481",
+      "type": "line"
+    },
+    {
+      "from": "1481",
+      "to": "1482",
+      "id": "1481-1482",
+      "type": "line"
+    },
+    {
+      "from": "1442",
+      "to": "1485",
+      "id": "1442-1485",
+      "type": "line"
+    },
+    {
+      "from": "1485",
+      "to": "1486",
+      "id": "1485-1486",
+      "type": "line"
+    }
+  ]
