@@ -1,17 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Sample_upload extends Backend_Controller {
+class Kelas extends Backend_Controller {
 
     public function __construct()
 	{
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'supadmin/sample_upload';
+		$this->data['uri_mod'] = 'admin/kelas';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Sample Upload', 'sample_upload');
-        $this->load->model('m_sample_upload');
+        $this->breadcrumbs->push('Kelas', 'kelas');
+        $this->load->model([
+            'm_kelas','m_sekolah'
+        ]);
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -20,6 +22,7 @@ class Sample_upload extends Backend_Controller {
         $this->load->js($this->data['global_custom_path'] . '/js/select2-init.js');
         $this->load->js($this->data['theme_path'] . '/libs/dropify/js/dropify.min.js');
         $this->load->js($this->data['global_custom_path'] . '/js/file-upload-init.js');
+
 	}
 
 	public function _init()
@@ -29,25 +32,26 @@ class Sample_upload extends Backend_Controller {
 
     public function index()
 	{
-        $this->data['add_button_link'] = base_url('supadmin/sample_upload/add');
-        $this->data['page_title'] = "Data Sample Upload";
-        $this->data['page_description'] = "Halaman Daftar Data Sample Upload.";
+        $this->data['add_button_link'] = base_url('admin/kelas/add');
+        $this->data['page_title'] = "Data Kelas";
+        $this->data['page_description'] = "Halaman Daftar Data Kelas.";
         $this->data['card'] = "true";
+        $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         
-		$this->load->view('sample_upload/v_index', $this->data);
+		$this->load->view('kelas/v_index', $this->data);
     }
 
     public function add()
     {
-        $this->breadcrumbs->push('Tambah', 'supadmin/sample_upload/add');
-        $this->data['page_title'] = "Tambah Sample Upload";
-        $this->data['page_description'] = "Halaman Tambah Data Sample Upload.";
+        $this->breadcrumbs->push('Tambah', 'admin/kelas/add');
+        $this->data['page_title'] = "Tambah Data Kelas";
+        $this->data['page_description'] = "Halaman Tambah Data Kelas.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
 
-        $this->load->view('sample_upload/v_add', $this->data);
+        $this->load->view('kelas/v_add', $this->data);
     }
 
     public function edit($id = null)
@@ -58,63 +62,18 @@ class Sample_upload extends Backend_Controller {
 			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('supadmin/sample_upload')));
         }
 
-        $this->breadcrumbs->push('Edit', 'supadmin/sample_upload/edit');
-        $this->data['page_title'] = "Edit Data Sample Upload";
-        $this->data['page_description'] = "Halaman Edit Data Sample Upload.";
+        $this->breadcrumbs->push('Edit', 'admin/sekolah/edit');
+        $this->data['page_title'] = "Edit Data Sekolah";
+        $this->data['page_description'] = "Halaman Edit Data Sekolah.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
 
-        $this->load->view('sample_upload/v_edit', $this->data);
+        $this->load->view('sekolah/v_edit', $this->data);
     }
 
-    private function upload_files_sample($id, $type = '')
-    {
-        $this->result = array('status' => TRUE, 'message' => NULL);
-        $file_name = 'silatpendidikan_sampleupload'.$this->session->userdata('silatpendidikan_user_id').'_'.md5($_FILES['berkas']['name']).'_'.date('ymdhis');
-
-        if ($this->result['status'] == TRUE) {
-            $config['upload_path'] = $this->data['file_path'].'sampleupload/';
-            $config['allowed_types'] = "pdf";
-            $config['file_name'] = $file_name;
-            $config['max_size'] = "1024";
-
-            $this->load->library('upload', $config);
-        
-            if (!$this->upload->do_upload('berkas')) {
-                $this->result = array(
-                    'status' => false,
-                    'message' => $this->upload->display_errors()
-                );
-            } else {
-                if ($type == 'edit') {
-                    $old_data = $this->m_sample_upload->find($id);
-
-                    if ($old_data !== FALSE) {
-                        if (!empty($old_data->files)) {
-                            if (file_exists($config['upload_path'] .$old_data->files)) {
-                                unlink($config['upload_path'] .$old_data->files);
-                            }
-                        }
-                    }
-                }
-
-                $data_upload = array('upload_data' => $this->upload->data());
-                $file_berkas = $data_upload['upload_data']['file_name'];
-                $file_size = $data_upload['upload_data']['file_size'];
-
-                $this->result = array(
-                    'status' => true,
-                    'message' => 'Upload file sample upload berhasil',
-                    'file_berkas' => $file_berkas,
-                    'file_size' => $file_size
-                );
-            }
-        }
-
-        return $this->result;
-    }
+    
 
     public function AjaxGet($id = NULL)
     {
@@ -123,23 +82,33 @@ class Sample_upload extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id == FALSE) {
-            $this->m_sample_upload->push_select('status');
+            $this->m_sekolah->push_select('status');
 
-            $edit_link = 'supadmin/sample_upload/edit/'; 
-            $response = $this->m_sample_upload->datatables();
+            $edit_link = 'admin/sekolah/edit/'; 
+            $response = $this->m_sekolah->datatables();
+
+            if ($this->input->post('filter_tipe_sekolah') == FALSE) {
+                $response->where('id', 0);
+            } else {
+                if ($this->input->post('filter_tipe_sekolah') !== 'ALL') {
+                    $response->where('tipe_sekolah', $this->input->post('filter_tipe_sekolah'));
+                }
+            }
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
-            $response->edit_column('files', '$1', "str_file_datatables(files, sampleupload/)");
+            $response->edit_column('link', '$1', "btn_link(link_g_site)");
+            $response->edit_column('tipe_sekolah', '$1', "tipe_sekolah(tipe_sekolah)");
+            $response->edit_column('two_row', '$1', "two_row(alamat,'fe-map-pin text-danger mr-1', no_telp,'fe-phone-call text-success mr-1')");
             $response->edit_column('status', '$1', "str_status(status)");
             $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link', $this->id_key),
                                                     tabel_icon(id,' ','delete',' ', $this->id_key),
                                                     active_status(id,' ',status,$this->id_key,' ')");
             
-            $response = $this->m_sample_upload->datatables(true);
+            $response = $this->m_sekolah->datatables(true);
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_sample_upload->find($id); 
+            $this->return = $this->m_sekolah->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
@@ -166,7 +135,7 @@ class Sample_upload extends Backend_Controller {
     public function AjaxSave($id = null)
     {
         $this->output->unset_template();
-        $captcha_score = get_recapture_score($this->input->post('su-token-response'));  
+        $captcha_score = get_recapture_score($this->input->post('kls-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(
@@ -177,54 +146,33 @@ class Sample_upload extends Backend_Controller {
             $this->result = array('status' => TRUE, 'message' => NULL);
             $id = decrypt_url($id, $this->id_key);
 
-            $this->form_validation->set_rules('judul', 'Judul', 'required');
-            $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
+            $this->form_validation->set_rules('tipe_sekolah', 'Tingkatan Sekolah', 'required');
+            $this->form_validation->set_rules('sekolah_id', 'Nama Sekolah', 'required');
+            $this->form_validation->set_rules('tingkat', 'Tingkatan Kelas', 'required');
+            $this->form_validation->set_rules('nama_kelas', 'Nama Kelas', 'required');
     
-            if (empty($_FILES["berkas"]["name"]) && $id == FALSE) {
-                $_POST["berkas"] = null;
-                $this->form_validation->set_rules('berkas', 'File', 'required');
-            }
-
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
-            if ($this->form_validation->run() == TRUE) {    
+            if ($this->form_validation->run() == TRUE) {
                 if ($id == FALSE) {
                     $id = null;
-                    $behavior = 'add';
-
-                    $this->m_sample_upload->push_to_data('status', '1');
+                    $this->m_kelas->push_to_data('status', '1');
+                }
+    
+                $this->return = $this->m_kelas
+                                ->push_to_data('sekolah_id', decrypt_url($this->input->post('sekolah_id'), $this->id_key))
+                                ->save($id);
+    
+                if ($this->return) {
+                    $this->result = array(
+                        'status' => TRUE,
+                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Data berhasil disimpan.</span>'
+                    );
                 } else {
-                    $behavior = 'edit';
-                }
-
-                if (!empty($_FILES['berkas']['name'])) {
-                    $data_upload = $this->upload_files_sample($id, $behavior);
-    
-                    if ($data_upload['status'] == TRUE) {
-                        $berkas = $data_upload['file_berkas'];
-    
-                        if (!empty($berkas)) {
-                            $this->m_sample_upload->push_to_data('files', $berkas);
-                        }
-                    } else {
-                        $this->result = $data_upload;
-                    }
-                }
-    
-                if ($this->result['status'] !== FALSE) {
-                    $this->return = $this->m_sample_upload->save($id);
-    
-                    if ($this->return) {
-                        $this->result = array(
-                            'status' => TRUE,
-                            'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Data berhasil disimpan.</span>'
-                        );
-                    } else {
-                        $this->result = array(
-                            'status' => FALSE,
-                            'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal disimpan.</span>'
-                        );
-                    }
+                    $this->result = array(
+                        'status' => FALSE,
+                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal disimpan.</span>'
+                    );
                 }
             } else {
                 $this->result = array(
@@ -232,13 +180,15 @@ class Sample_upload extends Backend_Controller {
                     'message' => validation_errors()
                 );
             }
+    
+            if ($this->result) {
+                $this->output->set_output(json_encode($this->result));
+            } else {
+                $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Gagal mengambil data.']));
+            }
         }
 
-        if ($this->result) {
-            $this->output->set_output(json_encode($this->result));
-        } else {
-            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Gagal mengambil data.']));
-        }
+        
     }
 
     public function AjaxDel($id = null)
@@ -248,7 +198,7 @@ class Sample_upload extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->return = $this->m_sample_upload->delete($id);
+            $this->return = $this->m_sekolah->delete($id);
 
             if ($this->return) {
                 $this->result = array(
@@ -278,18 +228,18 @@ class Sample_upload extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->m_sample_upload->push_select('status');
+            $this->m_sekolah->push_select('status');
 
-            $check = $this->m_sample_upload->find($id);
+            $check = $this->m_sekolah->find($id);
 
             if ($check !== FALSE) {
                 if ($check->status == 0) {
-                    $this->m_sample_upload->push_to_data('status', '1');
+                    $this->m_sekolah->push_to_data('status', '1');
                 } else {
-                    $this->m_sample_upload->push_to_data('status', '0');
+                    $this->m_sekolah->push_to_data('status', '0');
                 }
 
-                $this->return = $this->m_sample_upload->save($id);
+                $this->return = $this->m_sekolah->save($id);
 
                 if ($this->return) {
                     $this->result = array(
@@ -316,6 +266,48 @@ class Sample_upload extends Backend_Controller {
         }
 
         $this->output->set_output(json_encode($this->result));
+    }
+
+    public function AjaxGetSekolahByTipe($tipe_sekolah = null)
+    {
+        $this->output->unset_template();
+        $tipe_sekolah = $this->input->post('tipe_sekolah'); 
+
+            if ($tipe_sekolah != FALSE) {
+                
+                $this->return = $this->m_sekolah->get_sekolah_by_tipe($tipe_sekolah)->findAll();
+                foreach ($this->return as $key => $value) {
+                    $this->return[$key]->id = encrypt_url($value->id, $this->id_key);
+
+                    unset($this->return[$key]->npsn);
+                    unset($this->return[$key]->tipe_sekolah);
+                }
+
+                if ($this->return) {
+                    $this->result = array (
+                        'status' => TRUE,
+                        'message' => 'Berhasil mengambil data',
+                        'token' => $this->security->get_csrf_hash(),
+                        'data' => $this->return
+                    );
+                } else {
+                    $this->result = array (
+                        'status' => FALSE,
+                        'message' => 'Sekolah tidak dapat ditampilkan',
+                        'data' => []
+                    );
+                }
+            } else {
+                $this->result = array('status' => FALSE, 'message' => 'ID tidak valid');
+            }
+        
+
+        if ($this->result) {
+            $this->output->set_output(json_encode($this->result));
+        } else {
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan.']));
+        }
+
     }
 }
 

@@ -11,6 +11,10 @@ class Migration_Users extends CI_Migration {
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
                         ), 
+                        'sekolah_id' => array(
+                                'type' => 'INT4',
+                                'default' => null
+                        ),
                         'username' => array(
                                 'type' => 'VARCHAR',
                                 'default' => null,

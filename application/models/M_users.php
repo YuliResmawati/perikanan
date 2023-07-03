@@ -6,14 +6,17 @@ class M_users extends MY_Model {
     protected $_table = 'users';
     protected $_order_by = 'id';
     protected $_order = 'DESC';
+    protected $_softdelete = TRUE;
     protected $_timestamps = TRUE;
     protected $_log_user = TRUE;
-    protected $_fields_toshow = ['username','password', 'display_name', 'level'];
+    protected $_fields_toshow = ['username','password', 'email', 'display_name', 'level','sekolah_id'];
     protected $_fields = [
         'username' => 'username',
         'password' => 'password',
         'display_name' => 'display_name',
-        'level' => 'level'
+        'email' => 'email',
+        'level' => 'level',
+        'sekolah_id' => 'sekolah_id'
     ];
 
     public $default_password = "silatpendidikan_pass";
@@ -38,7 +41,7 @@ class M_users extends MY_Model {
 
     public function _select($id)
     {
-        $this->db->select('a.id, a.display_name, a.username, a.password, a.email, a.level, a.last_login, a.last_ip_login, a.status, a.reason_disabled')
+        $this->db->select('a.id, a.display_name, a.sekolah.id, a.username, a.password, a.email, a.level, a.last_login, a.last_ip_login, a.status, a.reason_disabled')
             ->from('users a')
             ->where('a.deleted', '0')
             ->where('a.id', $id)
@@ -79,7 +82,7 @@ class M_users extends MY_Model {
         $username = $this->input->post('silatpendidikan_username');
         $password = $this->input->post('silatpendidikan_password');
 
-        $this->db->select('a.id, a.display_name, a.username, a.password, a.email, a.level, a.last_login, a.last_ip_login, a.status, a.reason_disabled')
+        $this->db->select('a.id, a.display_name, a.sekolah_id, a.username, a.password, a.email, a.level, a.last_login, a.last_ip_login, a.status, a.reason_disabled')
             ->from('users a')
             ->where('a.username', $username)
             ->or_where('a.email', $username)
@@ -149,7 +152,7 @@ class M_users extends MY_Model {
 
     public function get_by_cookie($cookie)
     {
-        return $this->db->select('b.id, b.display_name, b.username, b.password, b.email, b.level, b.last_login, b.last_ip_login, b.status, b.reason_disabled')
+        return $this->db->select('b.id, b.sekolah_id, b.display_name, b.username, b.password, b.email, b.level, b.last_login, b.last_ip_login, b.status, b.reason_disabled')
                 ->where(['a.cookie' => $cookie, 'a.deleted' => 0])
                 ->join('users b','a.users_id = b.id')
                 ->get('cookie a');
@@ -203,6 +206,7 @@ class M_users extends MY_Model {
     {
         $data = ([
             'silatpendidikan_user_id' => $row->id,
+            'silatpendidikan_sekolah_id' => $row->sekolah_id,
             'silatpendidikan_username' => xss_escape($row->username),
             'silatpendidikan_level' => $row->level,
             'silatpendidikan_display_name' => xss_escape($row->display_name),
@@ -221,6 +225,19 @@ class M_users extends MY_Model {
     public function silatpendidikan_session_destroy()
     {
         $this->session->sess_destroy();
+    }
+
+    public function get_detail_sekolah()
+    {
+        parent::clear_join();
+
+        $this->_fields_toshow = ['tipe_sekolah','nama_sekolah','username','display_name','email','users.status'];
+
+        parent::join('sekolah','sekolah.id=users.sekolah_id');
+
+        $this->db->where('sekolah.status', '1');
+
+        return $this;
     }
 
 }

@@ -249,6 +249,10 @@ if (!function_exists('tabel_icon')) {
                     $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-check btn btn-warning waves-effect waves-light btn-xs" title="Verifikasi" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                     <i class="icon-check"></i>
                             </' . $a_tag . '>';
+                }elseif ($action == "reset_pass") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-reset_pass btn btn-info waves-effect waves-light btn-xs" title="Reset Password" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                                    Reset Password
+                            </' . $a_tag . '>';
                 }
             }
         }
@@ -1132,5 +1136,63 @@ function obfuscate_email($email) {
     $mail_parts[1] = implode('.', $domain_parts);
 
     return implode("@", $mail_parts);
+}
+
+if (!function_exists('btn_link')) 
+{
+    function btn_link($link_g_site)
+    {
+        if (!empty($link_g_site)) {
+            $result = "<a class='btn btn-success btn-xs' href=" . $link_g_site. " target='_blank'>Kunjungi Link</a>";
+        } else {
+            $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
+        }
+
+        return $result;
+    }
+}
+
+if (!function_exists('two_row')) {
+    function two_row($first_row = '', $icon1 = '', $second_row = '', $icon2 = '')
+    {
+        $result = '
+            <div class="media d-inline-flex align-items-center">
+                <div class="media-body">
+                    <div class="mb-1">
+                        <i class="'.$icon1.'"></i>
+                        <span class="font-13">
+                        '.$first_row.'
+                        </span>
+                    </div>
+                    <i class="'.$icon2.'"></i>
+                    <span class="font-13">
+                        '.$second_row.'
+                    </span>
+                </div>
+            </div>
+        ';
+
+        return $result;
+    }
+}
+
+if (!function_exists('tipe_sekolah')) 
+{
+    function tipe_sekolah($tipe_sekolah)
+    {
+        if (!empty($tipe_sekolah)) {
+            if($tipe_sekolah == 'TK'){
+                $result = "<span class='badge bg-soft-success text-success'>TK</span>";
+            }else if($tipe_sekolah == 'SD'){
+                $result = "<span class='badge bg-soft-danger text-danger'>SD</span>";
+            }else{
+                $result = "<span class='badge bg-soft-blue text-blue'>SMP</span>";
+            }
+        } else {
+            $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
+        }
+
+        return $result;
+    }
 }
 
