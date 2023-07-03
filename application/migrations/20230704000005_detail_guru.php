@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Sekolah extends CI_Migration {
+class Migration_Detail_guru extends CI_Migration {
 
     public function up()
     {
@@ -11,40 +11,13 @@ class Migration_Sekolah extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'npsn' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
+            'guru_id' => array(
+                'type' => 'INT4',
+                'default' => null
             ),
-            'nama_sekolah' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'tipe_sekolah' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'alamat' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'no_telp' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'link_g_site' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'foto' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
+            'mapel_id' => array(
+                'type' => 'INT4',
+                'default' => null
             ),
             'created_at' => array(
                 'type' => 'timestamp',
@@ -82,12 +55,12 @@ class Migration_Sekolah extends CI_Migration {
             ),      
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('sekolah');
+        $this->dbforge->create_table('detail_guru');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('sekolah');
+        $this->dbforge->drop_table('detail_guru');
     }
 }
 ?>

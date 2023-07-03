@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Kelas extends CI_Migration {
+class Migration_Detail_rombel extends CI_Migration {
 
     public function up()
     {
@@ -15,24 +15,9 @@ class Migration_Kelas extends CI_Migration {
                 'type' => 'INT4',
                 'default' => null
             ),
-            'guru_id' => array(
+            'walas_id' => array(
                 'type' => 'INT4',
                 'default' => null
-            ),
-            'nama_kelas' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'tingkat' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'tipe' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
             ),
             'created_at' => array(
                 'type' => 'timestamp',
@@ -70,12 +55,12 @@ class Migration_Kelas extends CI_Migration {
             ),      
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('kelas');
+        $this->dbforge->create_table('detail_rombel');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('kelas');
+        $this->dbforge->drop_table('detail_rombel');
     }
 }
 ?>
