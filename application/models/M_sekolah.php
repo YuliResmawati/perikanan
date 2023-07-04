@@ -36,6 +36,34 @@ class M_sekolah extends MY_Model {
         return $this;
     }
 
+    public function get_sekolah_by_guru($guru_id){
+        $this->_fields_toshow = [ 'sekolah.id','npsn','nama_sekolah'];
+        $this->db->join('guru', 'guru.sekolah_id = sekolah.id');
+        
+        $this->db->where(['guru.id' =>$guru_id]);
+
+        return $this;
+    }
+
+    public function get_all_sekolah_by_paging($per_page, $page, $search, $type)
+    {
+        if($page == 0) $page = 1;
+        $page = ($per_page * $page) - $per_page;
+        $this->db->select('id, nama_sekolah,npsn');
+        $this->db->from('sekolah');
+        $this->db->like('LOWER(nama_sekolah)', strtolower($search));
+        $this->db->where(array('status' =>'1'));
+        $this->db->or_like('npsn',$search);
+        $this->db->limit($per_page, $page);
+        $this->db->where(array('status' =>'1'));
+
+        if ($type == 'data') {
+            return $this->db->get()->result_array();
+        } else {
+            return $this->db->count_all_results();
+        }
+    }
+
 }
 
 /* End of file M_sample_upload.php */
