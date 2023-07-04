@@ -23,6 +23,11 @@ class Migration_Mutasi_guru extends CI_Migration {
                 'type' => 'INT4',
                 'default' => null
             ),
+            'link' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
             'created_at' => array(
                 'type' => 'timestamp',
                 'default' => null,
