@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class M_mutasi_guru extends MY_Model {
+class M_mutasi_siswa extends MY_Model {
 
-    protected $_table = 'mutasi_guru';
+    protected $_table = 'mutasi_siswa';
     protected $_timestamps = TRUE;
     protected $_log_user = TRUE;
     protected $_softdelete = TRUE;
     protected $_order_by = 'id';
     protected $_order = 'ASC';
-    protected $_fields_toshow = ['id','guru_id','sekolah_awal_id','sekolah_tujuan_id'];
+    protected $_fields_toshow = ['id','siswa_id','sekolah_awal_id','sekolah_tujuan_id'];
     protected $_fields = [
        'id' => 'id'
     ];
@@ -19,11 +19,11 @@ class M_mutasi_guru extends MY_Model {
         parent::__construct();
     }
 
-    public function get_all_guru_by_paging($per_page, $page, $search, $type)
+    public function get_all_siswa_by_paging($per_page, $page, $search, $type)
     {
         if($page == 0) $page = 1;
         $page = ($per_page * $page) - $per_page;
-        $this->db->select('guru.id, nama_guru,nip');
+        $this->db->select('siswa.id, nama_siswa,nip');
         $this->db->from('guru');
         $this->db->join('sekolah','guru.sekolah_id = sekolah.id');
         $this->db->like('LOWER(nama_guru)', strtolower($search));

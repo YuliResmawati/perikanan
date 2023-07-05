@@ -88,10 +88,10 @@ class Mutasi_guru extends Backend_Controller {
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
             $response->edit_column('nama', '$1', "two_row(nama_guru,'fe-user text-danger mr-1', nip,' fe-clipboard text-success mr-1')");
-            $response->edit_column('status', '$1', "str_status(status)");  
-            $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link', $this->id_key),
-                                                    tabel_icon(id,' ','delete',' ', $this->id_key),
-                                                    active_status(id,' ',status,$this->id_key,' ')");
+            $response->edit_column('link', '$1', "btn_link(link)");
+            $response->edit_column('status', '$1', "str_status_mutasi(status)");  
+            $response->add_column('aksi', '$1 $2', "tabel_icon_mutasi(id,' ','edit','$edit_link', $this->id_key,' ',' ',status),
+                        tabel_icon_mutasi(id,' ','delete',' ', $this->id_key,' ',' ',status)");
             
             $response = $this->m_mutasi_guru->datatables(true);
     
@@ -264,7 +264,7 @@ class Mutasi_guru extends Backend_Controller {
             if ($this->form_validation->run() == TRUE) {
                 if ($id == FALSE) {
                     $id = null;
-                    $this->m_mutasi_guru->push_to_data('status', '1');
+                    $this->m_mutasi_guru->push_to_data('status', '0');
                 }
 
                 $this->m_mutasi_guru->push_to_data('guru_id', decrypt_url($this->input->post('guru_id'), 'silat_pendidikan'))
@@ -320,53 +320,6 @@ class Mutasi_guru extends Backend_Controller {
                 $this->result = array(
                     'status'   => FALSE,
                     'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal dihapus.</span>'
-                );
-            }
-        } else {
-            $this->result = array(
-                'status'   => FALSE,
-                'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
-            );
-        }
-
-        $this->output->set_output(json_encode($this->result));
-    }
-
-    public function AjaxActive($id = null)
-    {
-        $this->output->unset_template();
-
-        $id = decrypt_url($id, $this->id_key);
-
-        if ($id !== FALSE) {
-            $this->m_sekolah->push_select('status');
-
-            $check = $this->m_sekolah->find($id);
-
-            if ($check !== FALSE) {
-                if ($check->status == 0) {
-                    $this->m_sekolah->push_to_data('status', '1');
-                } else {
-                    $this->m_sekolah->push_to_data('status', '0');
-                }
-
-                $this->return = $this->m_sekolah->save($id);
-
-                if ($this->return) {
-                    $this->result = array(
-                        'status'   => TRUE,
-                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Status berhasil dirubah.</span>'
-                    );
-                } else {
-                    $this->result = array(
-                        'status'   => FALSE,
-                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Status gagal dirubah.</span>'
-                    );
-                }
-            } else {
-                $this->result = array(
-                    'status'   => FALSE,
-                    'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
                 );
             }
         } else {

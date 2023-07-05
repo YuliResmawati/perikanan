@@ -433,6 +433,23 @@ if (!function_exists('str_status')) {
     }
 }
 
+if (!function_exists('str_status_mutasi')) {
+    function str_status_mutasi($status)
+    {
+        $a = '';
+
+        if ($status == '1') {
+            $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-check-all"></i> Diterima</span></h6>';
+        } else  if ($status == '0') {
+            $a = '<h6><span class="badge bg-soft-dark text-dark"><i class="mdi mdi-timer-sand"></i> Dalam Proses</span></h6>';
+        } else {
+            $a = '<h6><span class="badge bg-soft-dark text-danger"><i class="mdi mdi-close-circle"></i> Ditolak</span></h6>';
+        }
+
+        return $a;
+    }
+}
+
 if (!function_exists('str_level')) 
 {
     function str_level($status)
@@ -1195,4 +1212,88 @@ if (!function_exists('tipe_sekolah'))
         return $result;
     }
 }
+
+if (!function_exists('btn_verifikasi_mutasi')) 
+{
+    function btn_verifikasi_mutasi($id, $session_id, $status_field, $keyid = '', $link_status = '', $modal_name = '')
+    {
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = encrypt_url($id, $keyid);
+            }
+
+            if ($link_status !== '' && $link_status !== ' ' ) {
+                $a_tag = 'a';
+                $link_status = 'href="' . base_url($link_status . $id) . '"';
+            } else {
+                $a_tag = 'span';
+                $link_status = "";
+
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            if ($status_field == '0'){
+                $a = '<' . $a_tag . ' ' . $link_status . ' class="button-verif btn btn-icons btn-rounded btn-outline-success" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Terima Verifikasi"  data-id="' . $id . '" ' . $modal_attr . '>
+                <i class="mdi mdi-check-all"></i>
+                </' . $a_tag . '> <' . $a_tag . ' ' . $link_status . ' data-status="1" class="button-ditolak btn btn-icons btn-rounded btn-outline-danger" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Tolak Verifikasi"  data-id="' . $id . '">
+                    <i class="mdi mdi-close-outline"></i>
+                </' . $a_tag . '>';
+            } else {
+                $a = '<strong>-</strong>';
+            }  
+        }
+        return $a;
+    }
+
+
+    if (!function_exists('tabel_icon_mutasi')) {
+        function tabel_icon_mutasi($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status)
+        {
+            $a = '';
+    
+            if ($id !== $session_id) {
+                if ($keyid !== '') {
+                    $id = encrypt_url($id, $keyid);
+                }
+    
+                if ($link_url !== '') {
+                    $a_tag = 'a';
+                    $link_url = 'href="' . base_url($link_url . $id) . '"';
+                    $modal_attr = '';
+                } else {
+                    $a_tag = 'span';
+                    $link_url = "";
+                    if ($modal_name !== '') {
+                        $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                    } else {
+                        $modal_attr = '';
+                    }
+                }
+    
+                if($status == '0'){
+                    if ($action == "delete") {
+                        $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-hapus btn btn-danger waves-effect waves-light btn-xs" title="Hapus" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                                        <i class="icon-trash"></i>
+                                </' . $a_tag . '>';
+                    } elseif ($action == "edit") {
+                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                        <i class="icon-note"></i>
+                                </' . $a_tag . '>';
+                    }
+                } else {
+                    $a = '<strong>-</strong>';
+                }
+                    
+                
+            }
+    
+            return $a;
+        }
+    }}
 

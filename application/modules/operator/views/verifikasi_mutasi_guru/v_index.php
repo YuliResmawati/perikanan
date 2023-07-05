@@ -67,12 +67,27 @@ $(document).ready(function() {
         btn_confirm_action(aOption);
     })
 
-    $(document).on("click", ".button-status", function (e) {
+    $(document).on("click", ".button-verif", function (e) {
         e.preventDefault();
         aOption = {
-            title: "Ubah status?",
-            message: "Yakin ingin ubah status data?",
-            url: "<?= base_url($uri_mod.'/AjaxActive/')?>" + $(this).attr('data-id'),
+            title: "Verifikasi Data ini?",
+            message: "Yakin ingin menerima usulan mutasi ini?",
+            url: "<?= base_url($uri_mod.'/AjaxTerima/')?>" + $(this).attr('data-id'),
+            table: oTable,
+            data: {
+                silatpendidikan_c_token: csrf_value
+            },
+        };
+
+        btn_confirm_action(aOption);
+    });
+
+    $(document).on("click", ".button-ditolak", function (e) {
+        e.preventDefault();
+        aOption = {
+            title: "Verifikasi Data ini?",
+            message: "Yakin ingin menolak usulan mutasi ini?",
+            url: "<?= base_url($uri_mod.'/AjaxTolak/')?>" + $(this).attr('data-id'),
             table: oTable,
             data: {
                 silatpendidikan_c_token: csrf_value
