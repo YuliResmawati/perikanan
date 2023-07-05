@@ -11,7 +11,7 @@ class Migration_Detail_siswa extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'detail_kelas_id' => array(
+            'detail_rombel_id' => array(
                 'type' => 'INT4',
                 'default' => null
             ),

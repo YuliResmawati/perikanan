@@ -11,6 +11,10 @@ class Migration_Detail_rombel extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
+            'rombel_id' => array(
+                'type' => 'INT4',
+                'default' => null
+            ),
             'sekolah_id' => array(
                 'type' => 'INT4',
                 'default' => null

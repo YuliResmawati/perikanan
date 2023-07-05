@@ -15,11 +15,11 @@ class Migration_Mutasi_siswa extends CI_Migration {
                 'type' => 'INT4',
                 'default' => null
             ),
-            'sekolah_awal_id' => array(
+            'detail_rombel_awal_id' => array(
                 'type' => 'INT4',
                 'default' => null
             ),
-            'sekolah_tujuan_id' => array(
+            'detail_rombel_tujuan_id' => array(
                 'type' => 'INT4',
                 'default' => null
             ),

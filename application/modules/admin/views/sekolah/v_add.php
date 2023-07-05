@@ -3,16 +3,16 @@
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="sklh-token-response" name="sklh-token-response">
         <div class="form-group row">
-                <label for="tipe_sekolah" class="col-md-2 col-form-label">Tingkatan Sekolah <?= label_required() ?></label>
-                <div class="col-md-10">
-                    <select class="form-control select2" name="tipe_sekolah" id="tipe_sekolah">
-                        <option selected disabled>Pilih Tingkatan Sekolah</option>
-                        <option value="TK">Taman Kanak-Kanak</option>
-                        <option value="SD">Sekolah Dasar</option>
-                        <option value="SMP">Sekolah Menengah Pertama</option>
-                    </select>
-                </div>
+            <label for="tipe_sekolah" class="col-md-2 col-form-label">Tingkatan Sekolah <?= label_required() ?></label>
+            <div class="col-md-10">
+                <select class="form-control select2" name="tipe_sekolah" id="tipe_sekolah">
+                    <option selected disabled>Pilih Tingkatan Sekolah</option>
+                    <option value="TK">Taman Kanak-Kanak</option>
+                    <option value="SD">Sekolah Dasar</option>
+                    <option value="SMP">Sekolah Menengah Pertama</option>
+                </select>
             </div>
+        </div>
         <div class="form-group row">
             <label for="npsn" class="col-md-2 col-form-label">NPSN (Nomor Pokok Sekolah Nasional) <?= label_required() ?></label>
             <div class="col-md-10">
@@ -25,6 +25,35 @@
                 <input type="text" class="form-control" name="nama_sekolah" id="nama_sekolah">
             </div>
         </div>
+        <div class="form-group row">
+            <label for="status_sekolah" class="col-md-2 col-form-label">Status Sekolah <?= label_required() ?></label>
+            <div class="col-md-10">
+                <select class="form-control select2" name="status_sekolah" id="status_sekolah">
+                    <option selected disabled>Pilih Status Sekolah</option>
+                    <option value="SWASTA">Swasta</option>
+                    <option value="NEGERI">Negeri</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="status_kepemilikan" class="col-md-2 col-form-label">Status Kepemilikan <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="status_kepemilikan" id="status_kepemilikan">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="sk_pendirian" class="col-md-2 col-form-label">No. SK Pendirian <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="sk_pendirian" id="sk_pendirian">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="tgl_sk_pendirian" class="col-md-2 col-form-label">Tanggal SK Pendirian <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input type="date" class="form-control" name="tgl_sk_pendirian" id="tgl_sk_pendirian">
+            </div>
+        </div>
+
         <div class="form-group row">
             <label for="alamat" class="col-md-2 col-form-label">Alamat Lengkap</label>
             <div class="col-md-10">
