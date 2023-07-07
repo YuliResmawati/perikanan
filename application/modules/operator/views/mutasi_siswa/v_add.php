@@ -1,18 +1,34 @@
 <div class="row mt-4">
     <div class="col-12">
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?>
-        <input type="hidden" class="mguru-token-response" name="mguru-token-response">
+        <input type="hidden" class="msiswa-token-response" name="msiswa-token-response">
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <label for="guru_id" class="col-form-label">Pilih Guru  <?= label_required() ?></label>
-                    <select class="form-control select2" name="guru_id" id="guru_id"></select>
+                    <label for="siswa_id" class="col-form-label">Pilih Siswa  <?= label_required() ?></label>
+                    <select class="form-control select2" name="siswa_id" id="siswa_id"></select>
                 </div>
             </div>
-            <div class="form-row"  id="_sekarang" style="display:none">
-                <div class="form-group col-md-12">
-                    <label for="sekolah_awal" class="col-form-label">Sekolah Sekarang</label>
-                    <input type="text" class="form-control" name="sekolah_awal" id="sekolah_awal" readonly>
-                    <input type="hidden" class="form-control" name="sekolah_awal_id" id="sekolah_awal_id" readonly>
+            <div id="_sekarang" style="display:none">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="nisn" class="col-form-label">NISN</label>
+                        <input type="text" class="form-control" name="nisn" id="nisn" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin</label>
+                        <input type="text" class="form-control" name="jenis_kelamin" id="jenis_kelamin" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="sekolah_awal" class="col-form-label">Sekolah Sekarang</label>
+                        <input type="text" class="form-control" name="sekolah_awal" id="sekolah_awal" readonly>
+                        <input type="hidden" class="form-control" name="sekolah_awal_id" id="sekolah_awal_id" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="nama_rombel" class="col-form-label">Kelas</label>
+                        <input type="text" class="form-control" name="nama_rombel" id="nama_rombel" readonly>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
@@ -22,11 +38,19 @@
                 </div>
             </div>
             <div class="form-row">
+                <div class="form-group col-md-12" id="_sekolah_rombel">
+                    <label for="rombel_id" class="col-form-label">Nama Rombel <?= label_required() ?></label>
+                    <select class="form-control select2" name="rombel_id" id="rombel_select">
+                        <option selected disabled>Rombel Tidak Tersedia</option>  
+                    </select>
+                </div>
+            </div>
+            <!-- <div class="form-row">
                 <div class="form-group col-md-12">
                     <label for="link" class="col-form-label">Link Dokumen (GDrive)</label>
                     <input type="text" class="form-control" name="link" id="link"  placeholder="Link dokumen">
                 </div>
-            </div>
+            </div> -->
             <div class="row mt-3">
                 <div class="col-12 text-center">
                     <button type="submit" id="submit-btn" class="btn btn-success waves-effect waves-light m-1">
@@ -43,17 +67,17 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        ajax_get_guru = {
-            element: $('#guru_id'),
+        ajax_get_siswa= {
+            element: $('#siswa_id'),
             type: 'post',
-            url: "<?= base_url($uri_mod. '/AjaxGetGuru/') ?>",
+            url: "<?= base_url($uri_mod. '/AjaxGetSiswa/') ?>",
             data: {
                 silatpendidikan_c_token: csrf_value
             },
-            placeholder: 'Ketik Nama Guru',
+            placeholder: 'Ketik Nama siswa',
         }
 
-        init_ajax_select2_paging(ajax_get_guru);
+        init_ajax_select2_paging(ajax_get_siswa);
 
         ajax_get_sekolah = {
             element: $('#sekolah_tujuan'),
@@ -66,13 +90,12 @@
         }
 
         init_ajax_select2_paging(ajax_get_sekolah);
-        
-        
-        $('#guru_id').change(function() {
+
+        $('#siswa_id').change(function() {
             var id = $(this).val();
 
             $.ajax({
-                url: "<?= base_url($uri_mod. '/AjaxGetValueByGuru/') ?>",
+                url: "<?= base_url($uri_mod. '/AjaxGetValueBySiswa/') ?>",
                 method : "POST",
                 data : {id: id, silatpendidikan_c_token: csrf_value},
                 async : true,
@@ -81,12 +104,44 @@
                     if (data.status == true) {
                         $('#_sekarang').show();
                         csrf_value = data.token;
+                        document.getElementById('nisn').value = data.data.nisn;
+                        document.getElementById('jenis_kelamin').value = data.data.jenis_kelamin;
                         document.getElementById('sekolah_awal').value = data.data.nama_sekolah+' -- '+data.data.npsn;
-                        document.getElementById('sekolah_awal_id').value = data.data.id;
+                        document.getElementById('nama_rombel').value = data.data.nama_rombel;
+                        document.getElementById('sekolah_awal_id').value = data.data.detail_rombel_awal_id;
 
                     } else {
                         $('#_sekarang').hide();
                     }
+                }
+            });
+            return false;
+        });
+
+        $('#sekolah_tujuan').change(function() {
+            var id = $(this).val();
+
+            $.ajax({
+                url: "<?= base_url($uri_mod. '/AjaxGetValueBySekolah/') ?>",
+                method : "POST",
+                data : {id: id, silatpendidikan_c_token: csrf_value},
+                async : true,
+                dataType : 'json',
+                success: function(data) {
+                    if (data.status == true) {
+                        $('#_sekolah_rombel').show();
+                        csrf_value = data.token;
+                        var html = '<option value="" selected disabled>Pilih Rombel</option>';
+                        var index;
+                        var no  = 1;
+
+                        for (index = 0; index < data.data.length; index++) {
+                            html += '<option value='+data.data[index].id+'>'+no+' - '+data.data[index].nama_rombel+'</option>';
+                            no++;
+                        }
+
+                        $('#rombel_select').html(html);
+                    } 
                 }
             });
             return false;
@@ -103,7 +158,7 @@
         $('#button-value').html("Loading...");
         grecaptcha.ready(function() {
             grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'submit'}).then(function(token) {
-                document.querySelector('.mguru-token-response').value = token;
+                document.querySelector('.msiswa-token-response').value = token;
                 $('#formAjax').submit()
             });
         });

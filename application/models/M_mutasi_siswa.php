@@ -23,14 +23,16 @@ class M_mutasi_siswa extends MY_Model {
     {
         if($page == 0) $page = 1;
         $page = ($per_page * $page) - $per_page;
-        $this->db->select('siswa.id, nama_siswa,nip');
-        $this->db->from('guru');
-        $this->db->join('sekolah','guru.sekolah_id = sekolah.id');
-        $this->db->like('LOWER(nama_guru)', strtolower($search));
-        $this->db->where(array('guru.status' =>'1'));
-        $this->db->or_like('nip',$search);
+        $this->db->select('siswa.id, nama_siswa, nisn', 'nama_Sekolah');
+        $this->db->from('siswa');
+        $this->db->join('detail_siswa','siswa.id = detail_siswa.siswa_id');
+        $this->db->join('detail_rombel','detail_siswa.detail_rombel_id = detail_rombel.id');
+        $this->db->join('sekolah','detail_rombel.sekolah_id = sekolah.id');
+        $this->db->like('LOWER(nama_siswa)', strtolower($search));
+        $this->db->where(array('siswa.status' =>'1'));
+        $this->db->or_like('nisn',$search);
         $this->db->limit($per_page, $page);
-        $this->db->where(array('guru.status' =>'1'));
+        $this->db->where(array('siswa.status' =>'1'));
 
         if ($type == 'data') {
             return $this->db->get()->result_array();
@@ -39,17 +41,23 @@ class M_mutasi_siswa extends MY_Model {
         }
     }
 
-    public function get_detail_mutasi_guru()
+    public function get_detail_mutasi_siswa()
     {   
         parent::clear_join();
         $this->_fields_toshow = [
-            'mutasi_guru.id','s_awal.nama_sekolah as sekolah_awal','s_tujuan.nama_sekolah as sekolah_tujuan',
-            'nama_guru', 'nip','link', 'mutasi_guru.status'
+            'mutasi_siswa.id','s_awal.nama_sekolah as sekolah_awal','s_tujuan.nama_sekolah as sekolah_tujuan',
+            'nama_siswa', 'nisn', 'mutasi_siswa.status', 'd.nama_rombel as rombel_awal', 'dd.nama_rombel as rombel_tujuan'
         ];
 
-        parent::join('guru g','g.id=mutasi_guru.guru_id');
-        parent::join('sekolah s_awal','s_awal.id=mutasi_guru.sekolah_awal_id');
-        parent::join('sekolah s_tujuan','s_tujuan.id=mutasi_guru.sekolah_tujuan_id');
+        parent::join('siswa a','a.id=mutasi_siswa.siswa_id');
+        parent::join('detail_rombel b','b.id=mutasi_siswa.detail_rombel_awal_id');
+        parent::join('detail_siswa c','c.detail_rombel_id=b.id');
+        parent::join('sekolah s_awal','s_awal.id=b.sekolah_id');
+        parent::join('rombel d','d.id=b.rombel_id');
+        parent::join('detail_rombel bb','bb.id=mutasi_siswa.detail_rombel_tujuan_id');
+        parent::join('detail_siswa cc','cc.detail_rombel_id=b.id');
+        parent::join('sekolah s_tujuan','s_tujuan.id=bb.sekolah_id');
+        parent::join('rombel dd','dd.id=bb.rombel_id');
 
         return $this;
     }
