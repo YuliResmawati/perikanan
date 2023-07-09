@@ -23,6 +23,22 @@ class M_siswa extends MY_Model {
         parent::__construct();
     }
 
+    public function get_All_Detail_siswa($siswa_id)
+    {   
+        parent::clear_join();
+        $this->_fields_toshow = [
+            'siswa.id','nama_siswa', 'nama_rombel', 'nama_sekolah', 'jenis_kelamin', 'nisn', 'siswa.status','npsn', 'd.id as detail_rombel_awal_id'
+        ];
+
+        parent::join('detail_siswa dd','dd.siswa_id=siswa.id');
+        parent::join('detail_rombel d','d.id=dd.detail_rombel_id');
+        parent::join('rombel r','r.id=d.rombel_id');
+        parent::join('sekolah s','s.id=d.sekolah_id');
+
+        parent::where(['siswa.id' => $siswa_id, 'siswa.status' => '1']);
+
+        return $this;
+    }
 
 }
 
