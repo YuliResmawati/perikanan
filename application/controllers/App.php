@@ -108,6 +108,132 @@ class App extends Backend_Controller {
         } 
     }
 
+    public function AjaxGetSekolah()
+    {
+        $this->output->unset_template();
+
+        $search = $this->input->post('search');
+        $page = $this->input->post('page');
+		$perPage = 10;
+        $results = $this->m_app->get_all_sekolah_by_paging($perPage, $page, $search, 'data');
+		$countResults = $this->m_app->get_all_sekolah_by_paging($perPage, $page, $search, 'count');
+
+        $this->return = [];
+
+        foreach ($results as $row) {
+            $this->return[] = array(
+                'id' => encrypt_url($row['id'], 'silat_pendidikan'),
+                'text' => $row['npsn'] . " - " . $row['nama_sekolah']
+            );
+        }
+
+        if ($this->return) {
+            $this->result = array ( 
+                'status' => TRUE, 
+                'message' => 'Berhasil mengambil data', 
+                'items' => $this->return,
+                'total_count' => $countResults
+            ); 
+        } else {
+            $this->result = array ( 
+                'status' => FALSE, 
+                'message' => 'Gagal mengambil data', 
+                'items' => [],
+                'total_count' => 0
+            ); 
+        }
+
+        if ($this->result) { 
+            $this->output->set_content_type('application/json')->set_output(json_encode($this->result));
+        } else { 
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan pada response server.'])); 
+        } 
+    }
+
+    public function AjaxGetSiswa()
+    {
+        $this->output->unset_template();
+
+        $search = $this->input->post('search');
+        $page = $this->input->post('page');
+		$perPage = 10;
+        $results = $this->m_app->get_all_siswa_by_paging($perPage, $page, $search, 'data');
+		$countResults = $this->m_app->get_all_siswa_by_paging($perPage, $page, $search, 'count');
+
+        $this->return = [];
+
+        foreach ($results as $row) {
+            $this->return[] = array(
+                'id' => encrypt_url($row['id'], 'silat_pendidikan'),
+                'text' => $row['nisn'] . " - " . $row['nama_siswa']
+            );
+        }
+
+        if ($this->return) {
+            $this->result = array ( 
+                'status' => TRUE, 
+                'message' => 'Berhasil mengambil data', 
+                'items' => $this->return,
+                'total_count' => $countResults
+            ); 
+        } else {
+            $this->result = array ( 
+                'status' => FALSE, 
+                'message' => 'Gagal mengambil data', 
+                'items' => [],
+                'total_count' => 0
+            ); 
+        }
+
+        if ($this->result) { 
+            $this->output->set_content_type('application/json')->set_output(json_encode($this->result));
+        } else { 
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan pada response server.'])); 
+        } 
+    }
+
+    public function AjaxGetGuru()
+    {
+        $this->output->unset_template();
+
+        $search = $this->input->post('search');
+        $page = $this->input->post('page');
+		$perPage = 10;
+        $results = $this->m_app->get_all_guru_by_paging($perPage, $page, $search, 'data');
+		$countResults = $this->m_app->get_all_guru_by_paging($perPage, $page, $search, 'count');
+
+        $this->return = [];
+
+        foreach ($results as $row) {
+            $this->return[] = array(
+                'id' => encrypt_url($row['id'], 'silat_pendidikan'),
+                'text' => $row['nip'] . " - " . $row['nama_guru']
+            );
+        }
+
+        if ($this->return) {
+            $this->result = array ( 
+                'status' => TRUE, 
+                'message' => 'Berhasil mengambil data', 
+                'items' => $this->return,
+                'total_count' => $countResults
+            ); 
+        } else {
+            $this->result = array ( 
+                'status' => FALSE, 
+                'message' => 'Gagal mengambil data', 
+                'items' => [],
+                'total_count' => 0
+            ); 
+        }
+
+        if ($this->result) { 
+            $this->output->set_content_type('application/json')->set_output(json_encode($this->result));
+        } else { 
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan pada response server.'])); 
+        } 
+    }
+
    
 }
 

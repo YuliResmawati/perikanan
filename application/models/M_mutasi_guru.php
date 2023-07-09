@@ -19,26 +19,6 @@ class M_mutasi_guru extends MY_Model {
         parent::__construct();
     }
 
-    public function get_all_guru_by_paging($per_page, $page, $search, $type)
-    {
-        if($page == 0) $page = 1;
-        $page = ($per_page * $page) - $per_page;
-        $this->db->select('guru.id, nama_guru,nip');
-        $this->db->from('guru');
-        $this->db->join('sekolah','guru.sekolah_id = sekolah.id');
-        $this->db->like('LOWER(nama_guru)', strtolower($search));
-        $this->db->where(array('guru.status' =>'1'));
-        $this->db->or_like('nip',$search);
-        $this->db->limit($per_page, $page);
-        $this->db->where(array('guru.status' =>'1'));
-
-        if ($type == 'data') {
-            return $this->db->get()->result_array();
-        } else {
-            return $this->db->count_all_results();
-        }
-    }
-
     public function get_detail_mutasi_guru()
     {   
         parent::clear_join();

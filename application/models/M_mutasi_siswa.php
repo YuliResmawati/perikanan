@@ -19,33 +19,12 @@ class M_mutasi_siswa extends MY_Model {
         parent::__construct();
     }
 
-    public function get_all_siswa_by_paging($per_page, $page, $search, $type)
-    {
-        if($page == 0) $page = 1;
-        $page = ($per_page * $page) - $per_page;
-        $this->db->select('siswa.id, nama_siswa, nisn', 'nama_Sekolah');
-        $this->db->from('siswa');
-        $this->db->join('detail_siswa','siswa.id = detail_siswa.siswa_id');
-        $this->db->join('detail_rombel','detail_siswa.detail_rombel_id = detail_rombel.id');
-        $this->db->join('sekolah','detail_rombel.sekolah_id = sekolah.id');
-        $this->db->like('LOWER(nama_siswa)', strtolower($search));
-        $this->db->where(array('siswa.status' =>'1'));
-        $this->db->or_like('nisn',$search);
-        $this->db->limit($per_page, $page);
-        $this->db->where(array('siswa.status' =>'1'));
-
-        if ($type == 'data') {
-            return $this->db->get()->result_array();
-        } else {
-            return $this->db->count_all_results();
-        }
-    }
 
     public function get_detail_mutasi_siswa()
     {   
         parent::clear_join();
         $this->_fields_toshow = [
-            'mutasi_siswa.id','s_awal.nama_sekolah as sekolah_awal','s_tujuan.nama_sekolah as sekolah_tujuan',
+            ' mutasi_siswa.id','s_awal.nama_sekolah as sekolah_awal','s_tujuan.nama_sekolah as sekolah_tujuan',
             'nama_siswa', 'nisn', 'mutasi_siswa.status', 'd.nama_rombel as rombel_awal', 'dd.nama_rombel as rombel_tujuan'
         ];
 
@@ -58,6 +37,7 @@ class M_mutasi_siswa extends MY_Model {
         parent::join('detail_siswa cc','cc.detail_rombel_id=b.id');
         parent::join('sekolah s_tujuan','s_tujuan.id=bb.sekolah_id');
         parent::join('rombel dd','dd.id=bb.rombel_id');
+        $this->db->group_by('mutasi_siswa.id, s_awal.nama_sekolah, s_tujuan.nama_sekolah, nama_siswa, nisn, d.nama_rombel, dd.nama_rombel');
 
         return $this;
     }

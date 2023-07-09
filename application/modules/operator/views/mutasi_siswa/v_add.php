@@ -70,7 +70,7 @@
         ajax_get_siswa= {
             element: $('#siswa_id'),
             type: 'post',
-            url: "<?= base_url($uri_mod. '/AjaxGetSiswa/') ?>",
+            url: "<?= base_url('app/AjaxGetSiswa') ?>",
             data: {
                 silatpendidikan_c_token: csrf_value
             },
@@ -82,7 +82,7 @@
         ajax_get_sekolah = {
             element: $('#sekolah_tujuan'),
             type: 'post',
-            url: "<?= base_url($uri_mod. '/AjaxGetSekolah/') ?>",
+            url: "<?= base_url('app/AjaxGetSekolah') ?>",
             data: {
                 silatpendidikan_c_token: csrf_value
             },

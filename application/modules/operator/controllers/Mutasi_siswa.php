@@ -125,90 +125,6 @@ class Mutasi_siswa extends Backend_Controller {
         return $this->output->set_output($response);
     }
 
-    public function AjaxGetSiswa()
-    {
-        $this->output->unset_template();
-
-        $search = $this->input->post('search');
-        $page = $this->input->post('page');
-		$perPage = 10;
-        $results = $this->m_mutasi_siswa->get_all_siswa_by_paging($perPage, $page, $search, 'data');
-		$countResults = $this->m_mutasi_siswa->get_all_siswa_by_paging($perPage, $page, $search, 'count');
-
-        $this->return = [];
-
-        foreach ($results as $row) {
-            $this->return[] = array(
-                'id' => encrypt_url($row['id'], 'silat_pendidikan'),
-                'text' => $row['nisn'] . " - " . $row['nama_siswa']
-            );
-        }
-
-        if ($this->return) {
-            $this->result = array ( 
-                'status' => TRUE, 
-                'message' => 'Berhasil mengambil data', 
-                'items' => $this->return,
-                'total_count' => $countResults
-            ); 
-        } else {
-            $this->result = array ( 
-                'status' => FALSE, 
-                'message' => 'Gagal mengambil data', 
-                'items' => [],
-                'total_count' => 0
-            ); 
-        }
-
-        if ($this->result) { 
-            $this->output->set_content_type('application/json')->set_output(json_encode($this->result));
-        } else { 
-            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan pada response server.'])); 
-        } 
-    }
-
-    public function AjaxGetSekolah()
-    {
-        $this->output->unset_template();
-
-        $search = $this->input->post('search');
-        $page = $this->input->post('page');
-		$perPage = 10;
-        $results = $this->m_sekolah->get_all_sekolah_by_paging($perPage, $page, $search, 'data');
-		$countResults = $this->m_sekolah->get_all_sekolah_by_paging($perPage, $page, $search, 'count');
-
-        $this->return = [];
-
-        foreach ($results as $row) {
-            $this->return[] = array(
-                'id' => encrypt_url($row['id'], 'silat_pendidikan'),
-                'text' => $row['npsn'] . " - " . $row['nama_sekolah']
-            );
-        }
-
-        if ($this->return) {
-            $this->result = array ( 
-                'status' => TRUE, 
-                'message' => 'Berhasil mengambil data', 
-                'items' => $this->return,
-                'total_count' => $countResults
-            ); 
-        } else {
-            $this->result = array ( 
-                'status' => FALSE, 
-                'message' => 'Gagal mengambil data', 
-                'items' => [],
-                'total_count' => 0
-            ); 
-        }
-
-        if ($this->result) { 
-            $this->output->set_content_type('application/json')->set_output(json_encode($this->result));
-        } else { 
-            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan pada response server.'])); 
-        } 
-    }
-
     public function AjaxGetValueBySiswa($id = null)
     {
         $this->output->unset_template();
@@ -304,7 +220,7 @@ class Mutasi_siswa extends Backend_Controller {
 
             $this->form_validation->set_rules('siswa_id', 'Nama Siswa', 'required');
             $this->form_validation->set_rules('sekolah_tujuan', 'Sekolah Tujuan', 'required');
-            $this->form_validation->set_rules('link', 'Link Dokumen', 'required');
+            // $this->form_validation->set_rules('link', 'Link Dokumen', 'required');
     
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 

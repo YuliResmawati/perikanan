@@ -46,7 +46,7 @@
         ajax_get_guru = {
             element: $('#guru_id'),
             type: 'post',
-            url: "<?= base_url($uri_mod. '/AjaxGetGuru/') ?>",
+            url: "<?= base_url('app/AjaxGetGuru') ?>",
             data: {
                 silatpendidikan_c_token: csrf_value
             },
@@ -58,7 +58,7 @@
         ajax_get_sekolah = {
             element: $('#sekolah_tujuan'),
             type: 'post',
-            url: "<?= base_url($uri_mod. '/AjaxGetSekolah/') ?>",
+            url: "<?= base_url('app/AjaxGetSekolah') ?>",
             data: {
                 silatpendidikan_c_token: csrf_value
             },

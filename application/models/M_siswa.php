@@ -3,11 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_siswa extends MY_Model {
 
-    protected $_table = 'kelas';
+    protected $_table = 'siswa';
     protected $_timestamps = TRUE;
     protected $_log_user = TRUE;
     protected $_softdelete = TRUE;
-    protected $_order_by = 'sekolah_id';
+    protected $_order_by = 'id';
     protected $_order = 'ASC';
     protected $_fields_toshow = ['id','nik','no_kk','nipd','nisn', 'nama_siswa','jenis_kelamin','agama','tempat_lahir','provinsi_id','kabupaten_id','kecamatan_id','kelurahan'];
     protected $_fields = [
