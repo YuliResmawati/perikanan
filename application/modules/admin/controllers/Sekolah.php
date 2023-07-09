@@ -11,7 +11,7 @@ class Sekolah extends Backend_Controller {
 		$this->data['uri_mod'] = 'admin/sekolah';
         $this->id_key = $this->private_key;
         $this->breadcrumbs->push('Sekolah', 'sekolah');
-        $this->load->model('m_sekolah');
+        $this->load->model(array('m_sekolah', 'm_app'));  
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');

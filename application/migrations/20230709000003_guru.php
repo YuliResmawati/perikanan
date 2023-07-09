@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Sekolah extends CI_Migration {
+class Migration_Guru extends CI_Migration {
 
     public function up()
     {
@@ -11,55 +11,113 @@ class Migration_Sekolah extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'nama_sekolah' => array(
+            'sekolah_id' => array(
+                'type' => 'INT4',
+                'default' => null
+            ),
+            'nik' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'npsn' => array(
+            'nip' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'status_sekolah' => array(
+            'nama_guru' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'tipe_sekolah' => array(
+            'nuptk' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'status_kepemilikan' => array(
+            'jenis_kelamin' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'sk_pendirian' => array(
+            'agama' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'tgl_sk_pendirian' => array(
+            'tempat_lahir' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'tgl_lahir' => array(
                 'type' => 'date',
                 'default' => null,
             ),
-            'sk_izin' => array(
+            'status_tugas' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'tgl_sk_izin' => array(
+            'jenjang' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'no_hp' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'sk_cpns' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'tgl_sk_cpns' => array(
                 'type' => 'date',
                 'default' => null,
             ),
-            'akreditasi' => array(
+            'sk_pengangkatan' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'kurikulum' => array(
+            'tgl_sk_pengangkatan' => array(
+                'type' => 'date',
+                'default' => null,
+            ),
+            'jenis_ptk' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'pendidikan' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'bidang_studi_pendidikan' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'bidang_studi_sertifikasi' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'status_kepegawaian' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'pangkat' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'golongan' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
@@ -79,22 +137,17 @@ class Migration_Sekolah extends CI_Migration {
                 'constraint' => '255',
                 'default' => null,
             ),
+            'nagari_id' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
             'alamat_lengkap' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
             ),
-            'no_telp' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'link_g_site' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'logo' => array(
+            'is_kepsek' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
@@ -135,12 +188,12 @@ class Migration_Sekolah extends CI_Migration {
             ),      
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('sekolah');
+        $this->dbforge->create_table('guru');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('sekolah');
+        $this->dbforge->drop_table('guru');
     }
 }
 ?>

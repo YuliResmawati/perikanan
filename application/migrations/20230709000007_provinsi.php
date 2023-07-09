@@ -7,13 +7,14 @@ class Migration_Provinsi extends CI_Migration {
     {
         $this->dbforge->add_field(array(
             'id' => array(
-                'type' => 'INT4',
+                'type' => 'VARCHAR',
+                'constraint' => '255',
                 'unsigned' => TRUE,
-                'auto_increment' => TRUE
             ),
             'negara_id' => array(
-                'type' => 'INT4',
-                'default' => null
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
             ),
             'nama_provinsi' => array(
                 'type' => 'VARCHAR',
@@ -56,12 +57,12 @@ class Migration_Provinsi extends CI_Migration {
             ),      
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('_provinsi');
+        $this->dbforge->create_table('provinsi');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('_provinsi');
+        $this->dbforge->drop_table('provinsi');
     }
 }
 ?>

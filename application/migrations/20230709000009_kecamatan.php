@@ -1,21 +1,22 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Kelurahan extends CI_Migration {
+class Migration_Kecamatan extends CI_Migration {
 
     public function up()
     {
         $this->dbforge->add_field(array(
             'id' => array(
-                'type' => 'INT4',
+                'type' => 'VARCHAR',
+                'constraint' => '255',
                 'unsigned' => TRUE,
-                'auto_increment' => TRUE
             ),
-            'kecamatan_id' => array(
-                'type' => 'INT4',
-                'default' => null
+            'kabupaten_id' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
             ),
-            'nama_kelurahan' => array(
+            'nama_kecamatan' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
@@ -56,12 +57,12 @@ class Migration_Kelurahan extends CI_Migration {
             ),      
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('_kelurahan');
+        $this->dbforge->create_table('kecamatan');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('_kelurahan');
+        $this->dbforge->drop_table('kecamatan');
     }
 }
 ?>
