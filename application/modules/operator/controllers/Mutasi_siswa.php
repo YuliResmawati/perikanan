@@ -11,7 +11,9 @@ class Mutasi_siswa extends Backend_Controller {
 		$this->data['uri_mod'] = 'operator/mutasi_siswa';
         $this->id_key = $this->private_key;
         $this->breadcrumbs->push('Mutasi Siswa', 'operator/mutasi_siswa');
-        $this->load->model(['m_mutasi_siswa','m_sekolah']);
+        $this->load->model([
+            'm_mutasi_siswa','m_sekolah','m_siswa', 'm_detail_rombel'
+        ]);
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -80,20 +82,22 @@ class Mutasi_siswa extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id == FALSE) {
-            $this->m_mutasi_guru->push_select('status');
+            $this->m_mutasi_siswa->push_select('status');
 
-            $edit_link = 'operator/mutasi_guru/edit/'; 
-            $response = $this->m_mutasi_guru->get_detail_mutasi_guru()->datatables();
+            $edit_link = 'operator/mutasi_siswa/edit/'; 
+            $response = $this->m_mutasi_siswa->get_detail_mutasi_siswa()->datatables();
 
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
-            $response->edit_column('nama', '$1', "two_row(nama_guru,'fe-user text-danger mr-1', nip,' fe-clipboard text-success mr-1')");
+            $response->edit_column('nama', '$1', "two_row(nama_siswa,'fe-user text-danger mr-1', nisn,' fe-clipboard text-success mr-1')");
+            $response->edit_column('awal', '$1', "two_row(sekolah_awal,'fe-home text-info mr-1', rombel_awal,' fe-book text-warning mr-1')");
+            $response->edit_column('tujuan', '$1', "two_row(sekolah_tujuan,'fe-home text-info mr-1', rombel_tujuan,' fe-book text-warning mr-1')");
             $response->edit_column('link', '$1', "btn_link(link)");
             $response->edit_column('status', '$1', "str_status_mutasi(status)");  
             $response->add_column('aksi', '$1 $2', "tabel_icon_mutasi(id,' ','edit','$edit_link', $this->id_key,' ',' ',status),
                         tabel_icon_mutasi(id,' ','delete',' ', $this->id_key,' ',' ',status)");
             
-            $response = $this->m_mutasi_guru->datatables(true);
+            $response = $this->m_mutasi_siswa->datatables(true);
     
             $this->output->set_output($response);
         } else {
@@ -121,22 +125,22 @@ class Mutasi_siswa extends Backend_Controller {
         return $this->output->set_output($response);
     }
 
-    public function AjaxGetGuru()
+    public function AjaxGetSiswa()
     {
         $this->output->unset_template();
 
         $search = $this->input->post('search');
         $page = $this->input->post('page');
 		$perPage = 10;
-        $results = $this->m_mutasi_guru->get_all_guru_by_paging($perPage, $page, $search, 'data');
-		$countResults = $this->m_mutasi_guru->get_all_guru_by_paging($perPage, $page, $search, 'count');
+        $results = $this->m_mutasi_siswa->get_all_siswa_by_paging($perPage, $page, $search, 'data');
+		$countResults = $this->m_mutasi_siswa->get_all_siswa_by_paging($perPage, $page, $search, 'count');
 
         $this->return = [];
 
         foreach ($results as $row) {
             $this->return[] = array(
                 'id' => encrypt_url($row['id'], 'silat_pendidikan'),
-                'text' => $row['nip'] . " - " . $row['nama_guru']
+                'text' => $row['nisn'] . " - " . $row['nama_siswa']
             );
         }
 
@@ -205,14 +209,16 @@ class Mutasi_siswa extends Backend_Controller {
         } 
     }
 
-    public function AjaxGetValueByGuru($id = null)
+    public function AjaxGetValueBySiswa($id = null)
     {
         $this->output->unset_template();
-        $guru_id = decrypt_url($this->input->post('id'), 'silat_pendidikan');
+        $siswa_id = decrypt_url($this->input->post('id'), 'silat_pendidikan');
 
-            if ($guru_id != FALSE) { 
-                $this->return = $this->m_sekolah->get_sekolah_by_guru($guru_id)->findAll()[0];
+            if ($siswa_id != FALSE) { 
+                $this->return = $this->m_siswa->get_All_Detail_siswa($siswa_id)->findAll()[0];
                 $this->return->id = encrypt_url($this->return->id, 'silat_pendidikan');
+                $this->return->detail_rombel_awal_id = encrypt_url($this->return->detail_rombel_awal_id, 'silat_pendidikan');
+                $this->return->jenis_kelamin=jenisKelamin($this->return->jenis_kelamin);
 
                 if ($this->return) {
                     $this->result = array (
@@ -241,10 +247,51 @@ class Mutasi_siswa extends Backend_Controller {
 
     }
 
+    public function AjaxGetValueBySekolah($id = null)
+    {
+        $this->output->unset_template();
+        $sekolah_id = decrypt_url($this->input->post('id'), 'silat_pendidikan');
+
+            if ($sekolah_id != FALSE) { //1
+                
+                $this->return = $this->m_detail_rombel->get_rombel_by_sekolah($sekolah_id)->findAll();
+        
+                foreach ($this->return as $key => $value) {
+                $this->return[$key]->id = encrypt_url($value->id, $this->id_key);
+                $this->return[$key]->sekolah_id = encrypt_url($value->sekolah_id, $this->id_key);
+                }
+
+                if ($this->return) {
+                    $this->result = array (
+                        'status' => TRUE,
+                        'message' => 'Berhasil mengambil data',
+                        'token' => $this->security->get_csrf_hash(),
+                        'data' => $this->return
+                    );
+                } else {
+                    $this->result = array (
+                        'status' => FALSE,
+                        'message' => 'Sekolah tidak memiliki Rombel',
+                        'data' => []
+                    );
+                }
+            } else {
+                $this->result = array('status' => FALSE, 'message' => 'ID tidak valid');
+            }
+        
+
+        if ($this->result) {
+            $this->output->set_output(json_encode($this->result));
+        } else {
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan.']));
+        }
+
+    }
+
     public function AjaxSave($id = null)
     {
         $this->output->unset_template();
-        $captcha_score = get_recapture_score($this->input->post('mguru-token-response'));  
+        $captcha_score = get_recapture_score($this->input->post('msiswa-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(
@@ -255,7 +302,7 @@ class Mutasi_siswa extends Backend_Controller {
             $this->result = array('status' => TRUE, 'message' => NULL);
             $id = decrypt_url($id, $this->id_key);
 
-            $this->form_validation->set_rules('guru_id', 'Nama Guru', 'required');
+            $this->form_validation->set_rules('siswa_id', 'Nama Siswa', 'required');
             $this->form_validation->set_rules('sekolah_tujuan', 'Sekolah Tujuan', 'required');
             $this->form_validation->set_rules('link', 'Link Dokumen', 'required');
     
@@ -264,15 +311,14 @@ class Mutasi_siswa extends Backend_Controller {
             if ($this->form_validation->run() == TRUE) {
                 if ($id == FALSE) {
                     $id = null;
-                    $this->m_mutasi_guru->push_to_data('status', '0');
+                    $this->m_mutasi_siswa->push_to_data('status', '0');
                 }
 
-                $this->m_mutasi_guru->push_to_data('guru_id', decrypt_url($this->input->post('guru_id'), 'silat_pendidikan'))
-                    ->push_to_data('sekolah_tujuan_id', decrypt_url($this->input->post('sekolah_tujuan'), 'silat_pendidikan'))
-                    ->push_to_data('sekolah_awal_id', decrypt_url($this->input->post('sekolah_awal_id'), 'silat_pendidikan'))
-                    ->push_to_data('link', $this->input->post('link'));
+                $this->m_mutasi_siswa->push_to_data('siswa_id', decrypt_url($this->input->post('siswa_id'), 'silat_pendidikan'))
+                    ->push_to_data('detail_rombel_awal_id', decrypt_url($this->input->post('sekolah_awal_id'), 'silat_pendidikan'))
+                    ->push_to_data('detail_rombel_tujuan_id', decrypt_url($this->input->post('rombel_id'),  $this->id_key));
     
-                $this->return = $this->m_mutasi_guru->save($id);
+                $this->return = $this->m_mutasi_siswa->save($id);
     
                 if ($this->return) {
                     $this->result = array(
@@ -309,7 +355,7 @@ class Mutasi_siswa extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->return = $this->m_sekolah->delete($id);
+            $this->return = $this->m_mutasi_siswa->delete($id);
 
             if ($this->return) {
                 $this->result = array(

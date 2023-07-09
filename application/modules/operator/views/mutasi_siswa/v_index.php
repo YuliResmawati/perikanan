@@ -1,18 +1,19 @@
 <div class="table-responsive mb-4 mt-3">
-    <table id="table-mutasi_guru" class="table table-striped w-100">
+    <table id="table-mutasi_siswa" class="table table-striped w-100">
         <thead>
             <tr>
                 <th style="text-align: center; vertical-align: middle;">#</th>
-                <th>_Nip</th>
+                <th>_Nisn</th>
                 <th>_Nama</th>
-                <th class="text-nowrap text-center">Nama Guru
-                    <hr class="m-0">NIP
+                <th class="text-nowrap text-center">Nama Siswa
+                    <hr class="m-0">NISN
                 </th>
-                <th style="text-align: center; vertical-align: middle;">Sekolah Asal</th>
+                <th style="text-align: center; vertical-align: middle;">Sekolah Asal
+                    <hr class="m-0">Rombel
+                </th>
                 <th class="text-nowrap text-center">Usulan mutasi
-                    <hr class="m-0">Sekolah Tujuan
+                    <hr class="m-0">Sekolah Tujuan || Rombel
                 </th>
-                <th style="text-align: center; vertical-align: middle;">Link</th>
                 <th style="text-align: center; vertical-align: middle;">Status Usulan</th>
                 <th style="text-align: center; vertical-align: middle;">Aksi</th>
             </tr>
@@ -24,7 +25,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-    table_name = '#table-mutasi_guru';
+    table_name = '#table-mutasi_siswa';
     url_get_data = "<?= base_url($uri_mod.'/AjaxGet') ?>";
 
     datatables = {
@@ -36,12 +37,11 @@ $(document).ready(function() {
         }, 
         columns: [
             {"data": "id", searchable:false, orderable:false, "sClass": "text-center"},
-            {"data": "nip", "visible": false},
-            {"data": "nama_guru","visible": false},
+            {"data": "nisn", "visible": false},
+            {"data": "nama_siswa","visible": false},
             {"data": "nama", searchable: false},
-            {"data": "sekolah_awal", "sClass": "text-center",searchable: false},
-            {"data": "sekolah_tujuan", "sClass": "text-center",searchable: false},
-            {"data": "link", searchable: false},
+            {"data": "awal", "sClass": "text-center",searchable: false},
+            {"data": "tujuan", "sClass": "text-center",searchable: false},
             {"data": "status", searchable:false, orderable:false, "sClass": "text-center text-nowrap"},
             {"data": "aksi", searchable:false, orderable:false, "sClass": "text-center text-nowrap"},
         ]

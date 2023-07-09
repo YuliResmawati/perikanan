@@ -57,18 +57,18 @@ class Mutasi_guru extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 		
 		if ($id == FALSE) {
-			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('supadmin/sample_upload')));
+			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('operator/mutasi_guru/edit')));
         }
 
-        $this->breadcrumbs->push('Edit', 'operator/mutasi_guru/add');
-        $this->data['page_title'] = "Edit Data Sekolah";
-        $this->data['page_description'] = "Halaman Edit Data Sekolah.";
+        $this->breadcrumbs->push('Edit', 'operator/mutasi_guru/edit');
+        $this->data['page_title'] = "Edit Data Mutasi Guru";
+        $this->data['page_description'] = "Halaman Edit Data Mutasi Guru.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
 
-        $this->load->view('sekolah/v_edit', $this->data);
+        $this->load->view('mutasi_guru/v_edit', $this->data);
     }
 
     
@@ -97,7 +97,7 @@ class Mutasi_guru extends Backend_Controller {
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_sekolah->find($id); 
+            $this->return = $this->m_mutasi_guru->get_detail_mutasi_guru()->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
@@ -309,7 +309,7 @@ class Mutasi_guru extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->return = $this->m_sekolah->delete($id);
+            $this->return = $this->m_mutasi_guru->delete($id);
 
             if ($this->return) {
                 $this->result = array(
