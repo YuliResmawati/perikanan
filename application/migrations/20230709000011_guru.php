@@ -122,21 +122,6 @@ class Migration_Guru extends CI_Migration {
                 'constraint' => '255',
                 'default' => null,
             ),
-            'provinsi_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'kabupaten_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'kecamatan_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
             'nagari_id' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',

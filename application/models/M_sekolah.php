@@ -11,8 +11,7 @@ class M_sekolah extends MY_Model {
     protected $_order = 'ASC';
     protected $_fields_toshow = ['id','npsn','nama_sekolah','tipe_sekolah','status_sekolah',
                                 'status_kepemilikan','sk_pendirian','tgl_sk_pendirian','sk_izin',
-                                'tgl_sk_izin','akreditasi','kurikulum','provinsi_id','kabupaten_id',
-                                'kecamatan_id','nagari_id','alamat_lengkap','kode_pos','no_telp', 'link_g_site', 'foto'];
+                                'tgl_sk_izin','akreditasi','kurikulum','nagari_id','alamat_lengkap','kode_pos','no_telp', 'link_g_site', 'foto'];
     protected $_fields = [
        'npsn'               => 'npsn',
        'nama_sekolah'       => 'nama_sekolah',
@@ -25,9 +24,6 @@ class M_sekolah extends MY_Model {
        'tgl_sk_izin'        => 'tgl_sk_izin',
        'akreditasi'         => 'akreditasi',
        'kurikulum'          => 'kurikulum',
-       'provinsi_id'        => 'provinsi_id',
-       'kabupaten_id'       => 'kabupaten_id',
-       'kecamatan_id'       => 'kecamatan_id',
        'nagari_id'          => 'nagari_id',
        'alamat_lengkap'     => 'alamat_lengkap',
        'kode_pos'           => 'kode_pos',

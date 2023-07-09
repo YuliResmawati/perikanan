@@ -148,14 +148,20 @@ class Sekolah extends Backend_Controller {
             $this->form_validation->set_rules('tipe_sekolah', 'Tingkatan Sekolah', 'required');
             $this->form_validation->set_rules('npsn', 'NPSN', 'required');
             $this->form_validation->set_rules('nama_sekolah', 'Nama Sekolah', 'required');
-            $this->form_validation->set_rules('link_g_site', 'Link Google Site', 'required');
+            $this->form_validation->set_rules('status_sekolah', 'Status Sekolah', 'required');
+            $this->form_validation->set_rules('status_kepemilikan', 'Status Kepemilikan', 'required');
+            $this->form_validation->set_rules('akreditasi', 'Akreditasi', 'required');
+            $this->form_validation->set_rules('nagari_id', 'Alamat', 'required');
+            $this->form_validation->set_rules('alamat_lengkap', ' Detail Alamat', 'required');
     
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
             if ($this->form_validation->run() == TRUE) {
                 if ($id == FALSE) {
                     $id = null;
-                    $this->m_sekolah->push_to_data('status', '1');
+                    $this->m_sekolah->push_to_data('status', '1')
+                                    ->push_to_data('nagari_id', decrypt_url($this->input->post('nagari_id'), 'app'));
+
                 }
     
                 $this->return = $this->m_sekolah->save($id);

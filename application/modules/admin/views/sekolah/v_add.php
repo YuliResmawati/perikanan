@@ -129,9 +129,9 @@
             <label for="alamat" class="col-md-2 col-form-label">Alamat (Provinsi, Kota, Kecamatan, Kelurahan) <?= label_required() ?></label>
             <div class="col-md-10">
                 <div class="form-group mb-3">
-                    <textarea class="form-control" name="jorong" id="jorong" rows="2" readonly></textarea>
-                    <input class="form-control" type="hidden" name="jorong_id" id="jorong_id" readonly/>
-                    <code class="text-primary">klik <a href="#data-alamat-domisili" data-toggle="modal" class="cari-jorong"><span class="badge bg-primary text-white"><b>disini</b></span></a> untuk merubah data alamat.</code>
+                    <textarea class="form-control" name="nagari" id="nagari" rows="2" readonly></textarea>
+                    <input class="form-control" type="hidden" name="nagari_id" id="nagari_id" readonly/>
+                    <code class="text-primary">klik <a href="#data-alamat-domisili" data-toggle="modal" class="cari-nagari"><span class="badge bg-primary text-white"><b>disini</b></span></a> untuk merubah data alamat.</code>
                 </div>           
             </div>
         </div>
@@ -164,7 +164,7 @@
 
 
         <div class="form-group row">
-            <label for="link_g_site" class="col-md-2 col-form-label">Link Google Site <?= label_required() ?></label>
+            <label for="link_g_site" class="col-md-2 col-form-label">Link Google Site</label>
             <div class="col-md-10">
                 <input type="text" class="form-control" name="link_g_site" id="link_g_site">
             </div>
@@ -241,8 +241,8 @@
         let nagari = data[0].text.split(",", 4);
         let result = nagari[3].split("Nagari");
 
-        $('#jorong').val(data[0].text);
-        $('#jorong_id').val(data[0].id);
+        $('#nagari').val(data[0].text);
+        $('#nagari_id').val(data[0].id);
         $('#data-alamat-domisili').modal('hide'); 
     });
 
