@@ -35,7 +35,9 @@ class Sekolah extends Backend_Controller {
         $this->data['page_title'] = "Data Sekolah";
         $this->data['page_description'] = "Halaman Daftar Data Sekolah.";
         $this->data['card'] = "true";
+        $this->data['id_key'] = $this->id_key;
         $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
+        $this->data['kecamatan'] = $this->m_sekolah->get_distinct_kec()->findAll();
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         
 		$this->load->view('sekolah/v_index', $this->data);
@@ -84,7 +86,15 @@ class Sekolah extends Backend_Controller {
             $this->m_sekolah->push_select('status');
 
             $edit_link = 'admin/sekolah/edit/'; 
-            $response = $this->m_sekolah->datatables();
+            $response = $this->m_sekolah->get_all_sekolah()->datatables();
+
+            if ($this->input->post('filter_kecamatan') == FALSE) {
+                $response->where('id', 0);
+            } else {
+                if ($this->input->post('filter_kecamatan') !== 'ALL') {
+                    $response->where('kecamatan_id', decrypt_url($this->input->post('filter_kecamatan'), $this->id_key));
+                }
+            }
 
             if ($this->input->post('filter_tipe_sekolah') == FALSE) {
                 $response->where('id', 0);
@@ -94,10 +104,29 @@ class Sekolah extends Backend_Controller {
                 }
             }
 
+            if ($this->input->post('filter_status_sekolah') == FALSE) {
+                $response->where('id', 0);
+            } else {
+                if ($this->input->post('filter_status_sekolah') !== 'ALL') {
+                    $response->where('status_sekolah', $this->input->post('filter_status_sekolah'));
+                }
+            }
+
+            if ($this->input->post('filter_akreditasi') == FALSE) {
+                $response->where('id', 0);
+            } else {
+                if ($this->input->post('filter_akreditasi') !== 'ALL') {
+                    $response->where('akreditasi', $this->input->post('filter_akreditasi'));
+                }
+            }
+
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
-            $response->edit_column('link', '$1', "btn_link(link_g_site)");
             $response->edit_column('tipe_sekolah', '$1', "tipe_sekolah(tipe_sekolah)");
-            $response->edit_column('two_row', '$1', "two_row(alamat,'fe-map-pin text-danger mr-1', no_telp,'fe-phone-call text-success mr-1')");
+            $response->edit_column('status_sekolah_kepemilikan', '$1', "two_row(status_sekolah,' ', status_kepemilikan,' ')");
+            $response->edit_column('sk', '$1', "two_row_two_line(sk_pendirian,'tgl_sk_pendirian', sk_izin,'tgl_sk_izin')");
+            $response->edit_column('akre', '$1', "two_row(akreditasi,'fe-star text-success mr-1', kurikulum,' ')");
+            $response->edit_column('alamat', '$1', "format_alamat(nama_nagari,nama_kecamatan,nama_kabupaten,nama_provinsi,'fe-map-pin text-danger mr-1',alamat_lengkap,'fe-phone-call text-success mr-1',no_telp)");
+            $response->edit_column('link', '$1', "btn_link(link_g_site)");
             $response->edit_column('status', '$1', "str_status(status)");
             $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link', $this->id_key),
                                                     tabel_icon(id,' ','delete',' ', $this->id_key),
@@ -107,11 +136,18 @@ class Sekolah extends Backend_Controller {
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_sekolah->find($id); 
+            $this->return = $this->m_sekolah->get_all_sekolah()->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
+                $this->return->nagari_id = ($this->return->nagari_id) ? encrypt_url($this->return->nagari_id, 'app') : '';
 
+                if (decrypt_url($this->return->nagari_id, 'app') != NULL) {
+                    $this->return->alamat = "Kelurahan " . uc_words($this->return->nama_nagari) . ", Kecamatan " . uc_words($this->return->nama_kecamatan) . ", " . uc_words($this->return->nama_kabupaten) . ", Provinsi " . uc_words($this->return->nama_provinsi);
+                } else {
+                    $this->return->alamat = NULL;
+                }
+    
                 $response = array(
                     'status' => TRUE,
                     'message' => 'Berhasil mengambil data',
@@ -153,17 +189,20 @@ class Sekolah extends Backend_Controller {
             $this->form_validation->set_rules('akreditasi', 'Akreditasi', 'required');
             $this->form_validation->set_rules('nagari_id', 'Alamat', 'required');
             $this->form_validation->set_rules('alamat_lengkap', ' Detail Alamat', 'required');
+
+            $nagari_id = decrypt_url($this->input->post('nagari_id'), 'app');
     
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
             if ($this->form_validation->run() == TRUE) {
                 if ($id == FALSE) {
                     $id = null;
-                    $this->m_sekolah->push_to_data('status', '1')
-                                    ->push_to_data('nagari_id', decrypt_url($this->input->post('nagari_id'), 'app'));
+                    $this->m_sekolah->push_to_data('status', '1');
 
                 }
     
+                $this->m_sekolah->push_to_data('nagari_id', $nagari_id );
+
                 $this->return = $this->m_sekolah->save($id);
     
                 if ($this->return) {

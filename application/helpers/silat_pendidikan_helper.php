@@ -1181,6 +1181,8 @@ if (!function_exists('two_row')) {
                         '.$first_row.'
                         </span>
                     </div>
+                    <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+
                     <i class="'.$icon2.'"></i>
                     <span class="font-13">
                         '.$second_row.'
@@ -1202,8 +1204,18 @@ if (!function_exists('tipe_sekolah'))
                 $result = "<span class='badge bg-soft-success text-success'>TK</span>";
             }else if($tipe_sekolah == 'SD'){
                 $result = "<span class='badge bg-soft-danger text-danger'>SD</span>";
+            }else if($tipe_sekolah == 'SMP'){
+                $result = "<span class='badge bg-soft-danger text-blue'>SMP</span>";
+            }else if($tipe_sekolah == 'SPS'){
+                $result = "<span class='badge bg-soft-info text-info'>SPS</span>";
+            }else if($tipe_sekolah == 'SKB'){
+                $result = "<span class='badge bg-soft-pink text-pink'>SKB</span>";
+            }else if($tipe_sekolah == 'KB'){
+                $result = "<span class='badge bg-soft-warning text-warning'>KB</span>";
+            }else if($tipe_sekolah == 'PKBM'){
+                $result = "<span class='badge bg-soft-secondary text-secondary'>PKBM</span>";
             }else{
-                $result = "<span class='badge bg-soft-blue text-blue'>SMP</span>";
+                $result = "<span class='badge bg-soft-blue text-blue'>TPA</span>";
             }
         } else {
             $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
@@ -1297,3 +1309,56 @@ if (!function_exists('btn_verifikasi_mutasi'))
         }
     }}
 
+    if (!function_exists('two_row_two_line')) {
+        function two_row_two_line($first_row = '', $line_1 = '', $second_row = '', $line_2 = '')
+        {
+            $result = '
+                <div class="media d-inline-flex align-items-center">
+                    <div class="media-body">
+                        <div class="mb-1">
+                            <span class="font-13">
+                            '.$first_row.' - '.date('d-m-Y', strtotime($line_1)).'
+                            </span>
+                            <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+
+                        </div>
+                        <span class="font-13">
+                            '.$second_row.' - '.date('d-m-Y', strtotime($line_2)).'
+                        </span>
+                    </div>
+                </div>
+            ';
+    
+            return $result;
+        }
+    }
+    
+    if (!function_exists('format_alamat')) {
+        function format_alamat($nagari = '', $kecamatan = '', $kabupaten = '', $provinsi = '', $icon = '', $alamat_lengkap = '', $icon2 = '', $no_telp = '')
+        {
+            $result = '
+                <div class="media d-inline-flex align-items-center">
+                    <div class="media-body">
+                        <span class="font-13">
+                        '.uc_words($alamat_lengkap).'
+                        </span>
+                        <div class="mb-1">
+                            <i class="'.$icon.'"></i>
+                            <span class="font-13">
+                            '.'Kelurahan ' . uc_words($nagari) . ', Kecamatan ' . uc_words($kecamatan) . ', ' . uc_words($kabupaten) . ', Provinsi ' . uc_words($provinsi).'
+                            </span>
+                        </div>
+                        <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+    
+                        <i class="'.$icon2.'"></i>
+                        <span class="font-13">
+                            '.$no_telp.'
+                        </span>
+                    </div>
+                </div>
+            ';
+    
+            return $result;
+        }
+    }
+    
