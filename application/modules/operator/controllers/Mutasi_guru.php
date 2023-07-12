@@ -90,8 +90,7 @@ class Mutasi_guru extends Backend_Controller {
             $response->edit_column('nama', '$1', "two_row(nama_guru,'fe-user text-danger mr-1', nip,' fe-clipboard text-success mr-1')");
             $response->edit_column('link', '$1', "btn_link(link)");
             $response->edit_column('status', '$1', "str_status_mutasi(status)");  
-            $response->add_column('aksi', '$1 $2', "tabel_icon_mutasi(id,' ','edit','$edit_link', $this->id_key,' ',' ',status),
-                        tabel_icon_mutasi(id,' ','delete',' ', $this->id_key,' ',' ',status)");
+            $response->add_column('aksi', '$1', "tabel_icon_mutasi(id,' ','delete',' ', $this->id_key,' ',' ',status)");
             
             $response = $this->m_mutasi_guru->datatables(true);
     
@@ -100,7 +99,8 @@ class Mutasi_guru extends Backend_Controller {
             $this->return = $this->m_mutasi_guru->get_detail_mutasi_guru()->find($id); 
 
             if ($this->return !== FALSE) {
-                unset($this->return->id);
+                $this->return->id = encrypt_url($this->return->id, $this->id_key);
+                // unset($this->return->id);
 
                 $response = array(
                     'status' => TRUE,

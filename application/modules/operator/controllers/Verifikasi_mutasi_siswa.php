@@ -1,18 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Verifikasi_mutasi_guru extends Backend_Controller {
+class Verifikasi_mutasi_siswa extends Backend_Controller {
 
     public function __construct()
 	{
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'operator/verifikasi_mutasi_guru';
+		$this->data['uri_mod'] = 'operator/verifikasi_mutasi_siswa';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Verifikasi Mutasi Guru', 'operator/verifikasi_mutasi_guru');
-        $this->modal_name = 'modal-verifikasi-mutasi';
-        $this->load->model(['m_mutasi_guru','m_sekolah','m_guru']);
+        $this->breadcrumbs->push('Verifikasi Mutasi Siswa', 'operator/verifikasi_mutasi_siswa');
+        $this->modal_name = 'modal-verifikasi-siswa';
+        $this->load->model(['m_mutasi_siswa','m_sekolah','m_guru']);
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -33,14 +33,14 @@ class Verifikasi_mutasi_guru extends Backend_Controller {
     public function index()
 	{
         // $this->data['add_button_link'] = base_url('operator/verifikasi_mutasi_guru/add');
-        $this->data['page_title'] = "Data Mutasi Guru";
-        $this->data['page_description'] = "Halaman Daftar Data Mutasi Guru.";
+        $this->data['page_title'] = "Data Mutasi Siswa";
+        $this->data['page_description'] = "Halaman Daftar Data Mutasi Siswa.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
-        $this->data['form_name'] = "form-verifikasi-mutasi";
+        $this->data['form_name'] = "form-verifikasi-siswa";
         $this->data['modal_name'] = $this->modal_name;
         
-		$this->load->view('verifikasi_mutasi_guru/v_index', $this->data);
+		$this->load->view('verifikasi_mutasi_siswa/v_index', $this->data);
     }
     
 
@@ -51,19 +51,21 @@ class Verifikasi_mutasi_guru extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id == FALSE) {
-            $this->m_mutasi_guru->push_select('status');
+            $this->m_mutasi_siswa->push_select('status');
 
-            $edit_link = 'operator/mutasi_guru/edit/'; 
-            $response = $this->m_mutasi_guru->get_detail_mutasi_guru()->datatables();
+            $edit_link = 'operator/mutasi_siswa/edit/'; 
+            $response = $this->m_mutasi_siswa->get_detail_mutasi_siswa()->datatables();
 
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
-            $response->edit_column('nama', '$1', "two_row(nama_guru,'fe-user text-danger mr-1', nip,' fe-clipboard text-success mr-1')");
+            $response->edit_column('nama', '$1', "two_row(nama_siswa,'fe-user text-danger mr-1', nisn,' fe-clipboard text-success mr-1')");
             $response->edit_column('link', '$1', "btn_link(link)");
+            $response->edit_column('awal', '$1', "two_row(sekolah_awal,'fe-home text-info mr-1', rombel_awal,' fe-book text-warning mr-1')");
+            $response->edit_column('tujuan', '$1', "two_row(sekolah_tujuan,'fe-home text-info mr-1', rombel_tujuan,' fe-book text-warning mr-1')");
             $response->edit_column('status', '$1', "str_status_mutasi(status)");  
             $response->add_column('aksi', '$1', "btn_verifikasi_mutasi(id,' ',status,$this->id_key,' ',$this->modal_name)");
             
-            $response = $this->m_mutasi_guru->datatables(true);
+            $response = $this->m_mutasi_siswa->datatables(true);
     
             $this->output->set_output($response);
         } else {
@@ -128,31 +130,31 @@ class Verifikasi_mutasi_guru extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->m_mutasi_guru->push_select('status');
+            $this->m_mutasi_siswa->push_select('status');
 
-            $check = $this->m_mutasi_guru->find($id);
-            $guru_id = $check->guru_id;
-            $sekolah_id = $check->sekolah_tujuan_id;
+            $check = $this->m_mutasi_siswa->find($id);
+            $siswa_id = $check->siswa_id;
+            $rombel_id = $check->detail_rombel_tujuan_id;
 
             if ($check !== FALSE) {
                 if ($check->status == 0) {
 
-                    $this->m_mutasi_guru->push_to_data('status', '1');
+                    $this->m_mutasi_siswa->push_to_data('status', '1');
                     
                     $data = array(
-                        'sekolah_id' => $sekolah_id
+                        'detail_rombel_id' => $rombel_id
                     );
 
                 } else {
-                    $this->m_mutasi_guru->push_to_data('status', '0');
+                    $this->m_mutasi_siswa->push_to_data('status', '0');
                 }
 
-                $this->return = $this->m_mutasi_guru->save($id);
+                $this->return = $this->m_mutasi_siswa->save($id);
 
                 if ($this->return) {
 
-                    $this->db->where('id', $guru_id);
-                    $this->db->update('guru', $data);
+                    $this->db->where('siswa_id', $siswa_id);
+                    $this->db->update('detail_siswa', $data);
 
                     $this->result = array(
                         'status'   => TRUE,
