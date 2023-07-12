@@ -28,6 +28,11 @@ class Migration_Mutasi_guru extends CI_Migration {
                 'constraint' => '255',
                 'default' => null,
             ),
+            'alasan' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
             'created_at' => array(
                 'type' => 'timestamp',
                 'default' => null,
