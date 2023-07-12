@@ -9,36 +9,41 @@ class M_guru extends MY_Model {
     protected $_softdelete = TRUE;
     protected $_order_by = 'nama_guru';
     protected $_order = 'ASC';
-    protected $_fields_toshow = ['id','sekolah_id','nik','nip','nama_guru','nuptk',
-                                'jenis_kelamin','agama','tempat_lahir','status_tugas',
-                                'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','jenis_ptk','pendidikan',
+    protected $_fields_toshow = ['id','sekolah_id','guru.status as status','nik','nip','nama_guru','nuptk',
+                                'jenis_kelamin','agama','tempat_lahir','tgl_lahir','status_tugas','gelar_depan','gelar_belakang',
+                                'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','tgl_sk_pengangkatan','jenis_ptk','pendidikan',
                                 'bidang_studi_pendidikan', 'bidang_studi_sertifikasi','status_kepegawaian','pangkat',
-                                'golongan','nagari_id','alamat_lengkap','is_kepsek'];
+                                'nagari_id','alamat_lengkap','is_kepsek','tahun_terakhir_kgb'];
     protected $_fields = [
        'sekolah_id'         => 'sekolah_id',
+       'status'             => 'status',
        'nik'                => 'nik',
        'nip'                => 'nip',
        'nama_guru'          => 'nama_guru',
        'nuptk'              => 'nuptk',
+       'gelar_depan'        => 'gelar_depan',
+       'gelar_belakang'     => 'gelar_belakang',
        'jenis_kelamin'      => 'jenis_kelamin',
        'agama'              => 'agama',
        'tempat_lahir'       => 'tempat_lahir',
+       'tgl_lahir'          => 'tgl_lahir',
        'status_tugas'       => 'status_tugas',
        'jenjang'            => 'jenjang',
        'no_hp'              => 'no_hp',
        'sk_cpns'            => 'sk_cpns',
        'tgl_sk_cpns'        => 'tgl_sk_cpns',
        'sk_pengangkatan'    => 'sk_pengangkatan',
+       'tgl_sk_pengangkatan'        => 'tgl_sk_pengangkatan',
        'jenis_ptk'          => 'jenis_ptk',
        'pendidikan'         => 'pendidikan',
        'bidang_studi_pendidikan'    => 'bidang_studi_pendidikan',
        'bidang_studi_sertifikasi'   => 'bidang_studi_sertifikasi',
        'status_kepegawaian'         => 'status_kepegawaian',
        'pangkat'            => 'pangkat',
-       'golongan'           => 'golongan',
        'nagari_id'          => 'nagari_id',
        'alamat_lengkap'     => 'alamat_lengkap',
-       'is_kepsek'     => 'is_kepsek'
+       'is_kepsek'     => 'is_kepsek',
+       'tahun_terakhir_kgb'     => 'tahun_terakhir_kgb'
     ];
 
     public function __construct()
@@ -60,12 +65,12 @@ class M_guru extends MY_Model {
 
     public function get_all_guru()
     {
-        $this->_fields_toshow = ['id','sekolah_id','nik','nip','nama_guru','nuptk',
-        'jenis_kelamin','agama','tempat_lahir','status_tugas',
+        $this->_fields_toshow = ['sekolah_id','nik','nip','nama_guru','nuptk','guru.status as status',
+        'jenis_kelamin','agama','tempat_lahir','status_tugas','gelar_depan','gelar_belakang',
         'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','jenis_ptk','pendidikan',
         'bidang_studi_pendidikan', 'bidang_studi_sertifikasi','status_kepegawaian','pangkat',
-        'golongan','nagari_id','alamat_lengkap','is_kepsek',
-        'nama_sekolah','nama_nagari','nama_kecamatan','nama_kabupaten','nama_provinsi'];
+        'guru.nagari_id','guru.alamat_lengkap','is_kepsek',
+        'nama_sekolah','nama_nagari','nama_kecamatan','nama_kabupaten','nama_provinsi','tahun_terakhir_kgb'];
 
 
         parent::join('sekolah', 'sekolah.id=guru.sekolah_id', 'left');

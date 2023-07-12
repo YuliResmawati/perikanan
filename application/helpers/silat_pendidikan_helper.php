@@ -1361,4 +1361,30 @@ if (!function_exists('btn_verifikasi_mutasi'))
             return $result;
         }
     }
+
+    if (!function_exists('jenis_ptk')) 
+    {
+        function jenis_ptk($jenis_ptk)
+        {
+            if (!empty($jenis_ptk)) {
+                if($jenis_ptk == 'Tenaga Administrasi Sekolah' || $jenis_ptk == 'Tenaga Perpustakaan'){
+                    $result = "<span class='badge bg-soft-success text-success'>$jenis_ptk</span>";
+                } else if($jenis_ptk == 'Petugas Keamanan' || $jenis_ptk == 'Penjaga Sekolah' || $jenis_ptk == 'Pesuruh/Office Boy'|| $jenis_ptk == 'Tukang Kebun'){
+                    $result = "<span class='badge bg-soft-pink text-pink'>$jenis_ptk</span>";
+                }else if($jenis_ptk == 'Guru BK' || $jenis_ptk == 'Guru Mapel' || $jenis_ptk == 'Guru TIK'|| $jenis_ptk == 'Guru Kelas'){
+                    $result = "<span class='badge bg-soft-info text-info'>$jenis_ptk</span>";
+                }else if($jenis_ptk == 'Tutor' || $jenis_ptk == 'Pamong Belajar' || $jenis_ptk == 'Guru Pengganti'|| $jenis_ptk == 'Guru Pendamping Khusus'){
+                    $result = "<span class='badge bg-soft-info text-info'>$jenis_ptk</span>";
+                }else if($jenis_ptk == 'Kepala Sekolah'){
+                    $result = "<span class='badge bg-soft-danger text-danger'>$jenis_ptk</span>";
+                }else{
+                    $result = "<span class='badge bg-soft-blue text-blue'>$jenis_ptk</span>";
+                }
+            } else {
+                $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
+            }
+    
+            return $result;
+        }
+    }
     

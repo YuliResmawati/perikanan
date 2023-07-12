@@ -35,6 +35,16 @@ class Migration_Guru extends CI_Migration {
                 'constraint' => '255',
                 'default' => null,
             ),
+            'gelar_depan' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
+            'gelar_belakang' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
             'jenis_kelamin' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
@@ -117,7 +127,7 @@ class Migration_Guru extends CI_Migration {
                 'constraint' => '255',
                 'default' => null,
             ),
-            'golongan' => array(
+            'tahun_terakhir_kgb' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,

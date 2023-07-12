@@ -100,6 +100,7 @@
             </div>
         </div>
 
+
         <div class="form-group row">
             <div class="col-md-6">
                 <div class="form-group row">
@@ -130,7 +131,7 @@
             <div class="col-md-10">
                 <div class="form-group mb-3">
                     <textarea class="form-control" name="nagari" id="nagari" rows="2" readonly></textarea>
-                    <input class="form-control" type="text" name="nagari_id" id="nagari_id" readonly/>
+                    <input class="form-control" type="hidden" name="nagari_id" id="nagari_id" readonly/>
                     <code class="text-primary">klik <a href="#data-alamat-domisili" data-toggle="modal" class="cari-nagari"><span class="badge bg-primary text-white"><b>disini</b></span></a> untuk merubah data alamat.</code>
                 </div>           
             </div>
