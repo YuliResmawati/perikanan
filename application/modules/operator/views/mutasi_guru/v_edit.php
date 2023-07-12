@@ -5,10 +5,12 @@
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label for="guru_id" class="col-form-label">Pilih Guru  <?= label_required() ?></label>
-                    <select class="form-control select2" name="guru_id" id="guru_id"></select>
+                    <input class="form-control" type="text" name="nama_guru" id="nama_guru" readonly/>
+                    <input class="form-control" type="text" name="guru_id" id="guru_id" readonly/>
+                    <code class="text-primary">klik <a href="#data-guru" data-toggle="modal" class="cari_guru"><span class="badge bg-primary text-white"><b>disini</b></span></a> untuk merubah nama guru.</code>
                 </div>
             </div>
-            <div class="form-row"  id="_sekarang" style="display:none">
+            <div class="form-row"  id="_sekarang">
                 <div class="form-group col-md-12">
                     <label for="sekolah_awal" class="col-form-label">Sekolah Sekarang</label>
                     <input type="text" class="form-control" name="sekolah_awal" id="sekolah_awal" readonly>
@@ -40,8 +42,61 @@
     </div>
 </div>
 
+<div class="modal fade" id="data-guru" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="example-Modal3">Cari Nama Guru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <?= form_open('', 'id="form-data-guru" data-id="" class="form-data-guru"');?>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-control-label">Pilih Guru</label>
+                    <select class="form-control select2" name="data_guru_id" id="data_guru_id"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="spinner-status" class="spinner-border spinner-border-sm text-success mr-2" role="status"
+                    style="display:none"></div>
+                <button id="submit-btn" type="submit" class="btn btn-success waves-effect waves-light">
+                    <i class="mdi mdi-cursor-default-click mr-1"></i> Pilih
+                </button>
+                <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal"><i
+                        class="mdi mdi-cancel mr-1"></i> Batal</button>
+            </div>
+            <?= form_close(); ?>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function() {
+
+        ajax_get_guru = {
+            element: $('#data_guru_id'),
+            type: 'post',
+            url: "<?= base_url('app/AjaxGetGuru/') ?>",
+            data: {
+                silatpendidikan_c_token: csrf_value
+            },
+            placeholder: 'Ketik Nama Guru',
+        }
+        ajax_get_sekolah = {
+            element: $('#sekolah_tujuan'),
+            type: 'post',
+            url: "<?= base_url($uri_mod. '/AjaxGetSekolah/') ?>",
+            data: {
+                silatpendidikan_c_token: csrf_value
+            },
+            placeholder: 'Ketik Nama Sekolah Tujuan',
+        }
+        
+        init_ajax_select2_paging(ajax_get_guru);
+        init_ajax_select2_paging(ajax_get_sekolah);
+
         let id ='<?= encrypt_url($id, $id_key) ?>';
             aOption = {
                 url: "<?= base_url($uri_mod. '/AjaxGet/') ?>" + id,
@@ -52,40 +107,16 @@
             data = get_data_by_id(aOption);
             
             if (data != false) {
-                $('#guru_id').val(data.data.guru_id);
+                $('#nama_guru').val(data.data.nama_guru);
+                $('#guru_id').val(data.data.id);
                 $('select[name="sekolah_tujuan"]').val(data.data.sekolah_tujuan).change();
                 $('#link').val(data.data.link);
-            }   
-        });   
-
-        ajax_get_guru = {
-            element: $('#guru_id'),
-            type: 'post',
-            url: "<?= base_url($uri_mod. '/AjaxGetGuru/') ?>",
-            data: {
-                silatpendidikan_c_token: csrf_value
-            },
-            placeholder: 'Ketik Nama Guru',
-        }
-
-        init_ajax_select2_paging(ajax_get_guru);
-
-        ajax_get_sekolah = {
-            element: $('#sekolah_tujuan'),
-            type: 'post',
-            url: "<?= base_url($uri_mod. '/AjaxGetSekolah/') ?>",
-            data: {
-                silatpendidikan_c_token: csrf_value
-            },
-            placeholder: 'Ketik Nama Sekolah Tujuan',
-        }
-
-        init_ajax_select2_paging(ajax_get_sekolah);
+            }    
         
         
         $('#guru_id').change(function() {
             var id = $(this).val();
-
+            // console.log(id);
             $.ajax({
                 url: "<?= base_url($uri_mod. '/AjaxGetValueByGuru/') ?>",
                 method : "POST",
@@ -100,13 +131,22 @@
                         document.getElementById('sekolah_awal_id').value = data.data.id;
 
                     } else {
-                        $('#_sekarang').hide();
+                        $('#_sekarang').show();
                     }
                 }
             });
             return false;
         });
-    
+    });  
+
+    $(document).on("submit", ".form-data-guru", function (e) {
+        e.preventDefault();
+        let data = $('#data_guru').select2('data');
+
+        console.log(data);
+        $('#nama_guru').val(data[0].text);
+        $('#guru_id').val(data[0].id);
+        $('#data-guru').modal('hide'); 
     });
 
     $('#submit-btn').click(function(e) {
