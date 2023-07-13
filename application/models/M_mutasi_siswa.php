@@ -9,7 +9,7 @@ class M_mutasi_siswa extends MY_Model {
     protected $_softdelete = TRUE;
     protected $_order_by = 'id';
     protected $_order = 'ASC';
-    protected $_fields_toshow = ['id','siswa_id','sekolah_awal_id','sekolah_tujuan_id'];
+    protected $_fields_toshow = ['id','siswa_id','detail_rombel_awal_id','detail_rombel_tujuan_id'];
     protected $_fields = [
        'id' => 'id'
     ];

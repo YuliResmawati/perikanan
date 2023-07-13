@@ -219,7 +219,7 @@ class Mutasi_siswa extends Backend_Controller {
 
             $this->form_validation->set_rules('siswa_id', 'Nama Siswa', 'required');
             $this->form_validation->set_rules('sekolah_tujuan', 'Sekolah Tujuan', 'required');
-            // $this->form_validation->set_rules('link', 'Link Dokumen', 'required');
+            $this->form_validation->set_rules('link', 'Link Dokumen', 'required');
     
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
@@ -231,7 +231,8 @@ class Mutasi_siswa extends Backend_Controller {
 
                 $this->m_mutasi_siswa->push_to_data('siswa_id', decrypt_url($this->input->post('siswa_id'), 'silat_pendidikan'))
                     ->push_to_data('detail_rombel_awal_id', decrypt_url($this->input->post('sekolah_awal_id'), 'silat_pendidikan'))
-                    ->push_to_data('detail_rombel_tujuan_id', decrypt_url($this->input->post('rombel_id'),  $this->id_key));
+                    ->push_to_data('detail_rombel_tujuan_id', decrypt_url($this->input->post('rombel_id'),  $this->id_key))
+                    ->push_to_data('link', $this->input->post('link'));
     
                 $this->return = $this->m_mutasi_siswa->save($id);
     

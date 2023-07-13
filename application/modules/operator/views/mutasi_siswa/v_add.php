@@ -45,12 +45,12 @@
                     </select>
                 </div>
             </div>
-            <!-- <div class="form-row">
+            <div class="form-row">
                 <div class="form-group col-md-12">
                     <label for="link" class="col-form-label">Link Dokumen (GDrive)</label>
                     <input type="text" class="form-control" name="link" id="link"  placeholder="Link dokumen">
                 </div>
-            </div> -->
+            </div>
             <div class="row mt-3">
                 <div class="col-12 text-center">
                     <button type="submit" id="submit-btn" class="btn btn-success waves-effect waves-light m-1">

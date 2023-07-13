@@ -11,7 +11,7 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
 		$this->data['uri_mod'] = 'operator/verifikasi_mutasi_siswa';
         $this->id_key = $this->private_key;
         $this->breadcrumbs->push('Verifikasi Mutasi Siswa', 'operator/verifikasi_mutasi_siswa');
-        $this->modal_name = 'modal-verifikasi-siswa';
+        $this->modal_name = 'modal-verifikasi-mutasi';
         $this->load->model(['m_mutasi_siswa','m_sekolah','m_guru']);
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
@@ -93,36 +93,6 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
         return $this->output->set_output($response);
     }
 
-    public function AjaxDel($id = null)
-    {
-        $this->output->unset_template();
-
-        $id = decrypt_url($id, $this->id_key);
-
-        if ($id !== FALSE) {
-            $this->return = $this->m_sekolah->delete($id);
-
-            if ($this->return) {
-                $this->result = array(
-                    'status'   => TRUE,
-                    'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Data berhasil dihapus.</span>'
-                );
-            } else {
-                $this->result = array(
-                    'status'   => FALSE,
-                    'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal dihapus.</span>'
-                );
-            }
-        } else {
-            $this->result = array(
-                'status'   => FALSE,
-                'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
-            );
-        }
-
-        $this->output->set_output(json_encode($this->result));
-    }
-
     public function AjaxTerima($id = null)
     {
         $this->output->unset_template();
@@ -189,35 +159,34 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->m_mutasi_guru->push_select('status');
-
-            $check = $this->m_mutasi_guru->find($id);
-
-            if ($check !== FALSE) {
-                if ($check->status == 0) {
-                    $this->m_mutasi_guru->push_to_data('status', '2');
-                    
-                } else {
-                    $this->m_mutasi_guru->push_to_data('status', '0');
+            $this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
+            $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
+        
+            if ($this->form_validation->run() == TRUE) {
+                if ($id == FALSE) {
+                    $id = null;
                 }
 
-                $this->return = $this->m_mutasi_guru->save($id);
+                $this->m_mutasi_siswa->push_to_data('alasan', $this->input->post('keterangan'))
+                    ->push_to_data('status', '2');
+
+                $this->return = $this->m_mutasi_siswa->save($id);
 
                 if ($this->return) {
                     $this->result = array(
-                        'status'   => TRUE,
-                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Mutasi berhasil ditolak.</span>'
+                        'status' => TRUE,
+                        'message' => '<span class="text-success"><i class="mdi mdi-check"></i> Data berhasil ditolak.</span>'
                     );
                 } else {
                     $this->result = array(
-                        'status'   => FALSE,
-                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Mutasi gagal ditolak.</span>'
+                        'status' => FALSE,
+                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal ditolak.</span>'
                     );
                 }
             } else {
                 $this->result = array(
-                    'status'   => FALSE,
-                    'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
+                    'status' => FALSE,
+                    'message' => validation_errors()
                 );
             }
         } else {
@@ -227,7 +196,11 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
             );
         }
 
-        $this->output->set_output(json_encode($this->result));
+        if ($this->result) {
+            $this->output->set_output(json_encode($this->result));
+        } else {
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Gagal mengambil data.']));
+        }
     }
 }
 

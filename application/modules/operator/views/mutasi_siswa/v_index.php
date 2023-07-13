@@ -14,6 +14,7 @@
                 <th class="text-nowrap text-center">Usulan mutasi
                     <hr class="m-0">Sekolah Tujuan || Rombel
                 </th>
+                <th style="text-align: center; vertical-align: middle;">Link</th>
                 <th style="text-align: center; vertical-align: middle;">Status Usulan</th>
                 <th style="text-align: center; vertical-align: middle;">Aksi</th>
             </tr>
@@ -42,6 +43,7 @@ $(document).ready(function() {
             {"data": "nama", searchable: false},
             {"data": "awal", "sClass": "text-center",searchable: false},
             {"data": "tujuan", "sClass": "text-center",searchable: false},
+            {"data": "link", "sClass": "text-center",searchable: false},
             {"data": "status", searchable:false, orderable:false, "sClass": "text-center text-nowrap"},
             {"data": "aksi", searchable:false, orderable:false, "sClass": "text-center text-nowrap"},
         ]
