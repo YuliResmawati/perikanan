@@ -127,9 +127,8 @@ class Migration_Guru extends CI_Migration {
                 'constraint' => '255',
                 'default' => null,
             ),
-            'tahun_terakhir_kgb' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
+            'kgb_terakhir' => array(
+                'type' => 'date',
                 'default' => null,
             ),
             'nagari_id' => array(

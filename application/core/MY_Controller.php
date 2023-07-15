@@ -119,6 +119,7 @@ class Backend_Controller extends MY_Controller
         $this->del 				                = '';
         $this->where			                = array();
         $this->data['navtoggle']                = false;
+        $this->logged_sekolah_id                = $this->session->userdata('silatpendidikan_sekolah_id');
         $this->logged_user_id                   = $this->session->userdata('silatpendidikan_user_id');
         $this->logged_level                     = $this->session->userdata('silatpendidikan_level');  
         $this->logged_display_name              = $this->session->userdata('silatpendidikan_display_name');  

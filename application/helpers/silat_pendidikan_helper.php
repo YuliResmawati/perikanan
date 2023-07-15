@@ -1387,4 +1387,53 @@ if (!function_exists('btn_verifikasi_mutasi'))
             return $result;
         }
     }
+
+    if (!function_exists('name_degree')) 
+{
+    function name_degree($gelar_depan, $nama_guru, $gelar_belakang, $xss_option = FALSE)
+    {
+        if ($xss_option == TRUE) {
+            if ($gelar_depan) {
+                $gelar_depan = xss_escape($gelar_depan.'. ');
+            }
+    
+            if ($gelar_belakang) {
+                $gelar_belakang = xss_escape(', '.$gelar_belakang);
+            }
+    
+            $nama_guru = xss_escape($nama_guru);
+        } else {
+            if ($gelar_depan) {
+                $gelar_depan = $gelar_depan.'. ';
+            }
+    
+            if ($gelar_belakang) {
+                $gelar_belakang = ', '.$gelar_belakang;
+            } 
+        }
+
+        return $gelar_depan.$nama_guru.$gelar_belakang;
+    }
+
+}
+
+if (!function_exists('jk')) 
+{
+    function jk($jenis_kelamin)
+    {
+        if (!empty($jenis_kelamin)) {
+            if($jenis_kelamin == 'L'){
+                $result = "Laki-laki";
+            } else{
+                $result = "Perempuan";
+            }
+        } else {
+            $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
+        }
+
+        return $result;
+    }
+}
+
+
     

@@ -13,7 +13,7 @@ class M_guru extends MY_Model {
                                 'jenis_kelamin','agama','tempat_lahir','tgl_lahir','status_tugas','gelar_depan','gelar_belakang',
                                 'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','tgl_sk_pengangkatan','jenis_ptk','pendidikan',
                                 'bidang_studi_pendidikan', 'bidang_studi_sertifikasi','status_kepegawaian','pangkat',
-                                'nagari_id','alamat_lengkap','is_kepsek','tahun_terakhir_kgb'];
+                                'nagari_id','alamat_lengkap','is_kepsek','kgb_terakhir'];
     protected $_fields = [
        'sekolah_id'         => 'sekolah_id',
        'status'             => 'status',
@@ -43,7 +43,7 @@ class M_guru extends MY_Model {
        'nagari_id'          => 'nagari_id',
        'alamat_lengkap'     => 'alamat_lengkap',
        'is_kepsek'     => 'is_kepsek',
-       'tahun_terakhir_kgb'     => 'tahun_terakhir_kgb'
+       'kgb_terakhir'     => 'kgb_terakhir'
     ];
 
     public function __construct()
@@ -66,12 +66,11 @@ class M_guru extends MY_Model {
     public function get_all_guru()
     {
         $this->_fields_toshow = ['sekolah_id','nik','nip','nama_guru','nuptk','guru.status as status',
-        'jenis_kelamin','agama','tempat_lahir','status_tugas','gelar_depan','gelar_belakang',
-        'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','jenis_ptk','pendidikan',
+        'jenis_kelamin','agama','tempat_lahir','tgl_lahir','status_tugas','gelar_depan','gelar_belakang',
+        'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','tgl_sk_pengangkatan','jenis_ptk','pendidikan',
         'bidang_studi_pendidikan', 'bidang_studi_sertifikasi','status_kepegawaian','pangkat',
-        'guru.nagari_id','guru.alamat_lengkap','is_kepsek',
-        'nama_sekolah','nama_nagari','nama_kecamatan','nama_kabupaten','nama_provinsi','tahun_terakhir_kgb'];
-
+        'guru.nagari_id','guru.alamat_lengkap','is_kepsek','tipe_sekolah',
+        'nama_sekolah','nama_nagari','nama_kecamatan','nama_kabupaten','nama_provinsi','kgb_terakhir'];
 
         parent::join('sekolah', 'sekolah.id=guru.sekolah_id', 'left');
         parent::join('nagari', 'nagari.id=guru.nagari_id', 'left');
@@ -81,6 +80,14 @@ class M_guru extends MY_Model {
 
         return $this;
     }
+
+    public function get_distinct($jenis_ptk){
+        $this->_order_by= false;
+        $this->_order = false;
+        $this->_fields_toshow = [ "DISTINCT($jenis_ptk)"];
+        return $this;
+    }
+
 
 
 }

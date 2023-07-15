@@ -239,7 +239,7 @@ class M_users extends MY_Model {
 
         return $this;
     }
-
+    
 }
 
 /* End of file M_users.php */
