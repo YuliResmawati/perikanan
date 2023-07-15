@@ -284,7 +284,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group row mb-3">
-                    <label for="kgb_terakhir" class="col-4 col-form-label">Tahun Terakhir KGB <?= label_required() ?></label>
+                    <label for="kgb_terakhir" class="col-4 col-form-label">Terakhir KGB <?= label_required() ?></label>
                     <div class="col-8">
                         <select class="form-control select2" name="kgb_terakhir" id="kgb_terakhir">
                             <option selected disabled>Pilih Tahun</option>

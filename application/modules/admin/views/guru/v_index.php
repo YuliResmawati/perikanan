@@ -48,19 +48,6 @@
     </div>
 </div>
 
-<div class="form-group row mt-10">
-    <label for="filter_tahun_kgb" class="col-md-2 col-form-label">Terakhir KGB</label>
-    <div class="col-sm-10">
-        <select id="filter_tahun_kgb" name="filter_tahun_kgb" class="form-control select2" data-search="false" required>
-            <option value="ALL" selected>Tampilkan Semua</option>
-            <?php 
-                $sekarang = date('Y');
-                for($i=2018;$i<=$sekarang;$i++): ?>
-                    <option value="<?= $i ?>"><?= $i ?></option>
-            <?php $no++; endfor; ?>
-        </select>
-    </div>
-</div>
 <div class="form-group row mb-0">
     <div class="col-sm-2">
     </div>
@@ -108,9 +95,9 @@
                 <?php
                     if($this->logged_level !== "3"){ ?>
                         <div class="form-group row">
-                            <label for="sekolah_id" class="col-md-2 col-form-label">Nama Sekolah <?= label_required() ?></label>
+                            <label for="nama_sekolah" class="col-md-2 col-form-label">Nama Sekolah</label>
                             <div class="col-md-10">
-                                <input type="text" class="form-control" name="sekolah_id" id="sekolah_id">
+                                <input type="text" class="form-control" name="nama_sekolah" id="nama_sekolah">
                             </div>
                         </div>
                 <?php } ?>
@@ -118,7 +105,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <div class="form-group row mb-3">
-                            <label for="nama_guru" class="col-4 col-form-label">Nama Guru <?= label_required() ?></label>
+                            <label for="nama_guru" class="col-4 col-form-label">Nama Guru</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="nama_guru" id="nama_guru">
                             </div>
@@ -126,7 +113,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row mb-3">
-                            <label for="nik" class="col-4 col-form-label">NIK <?= label_required() ?></label>
+                            <label for="nik" class="col-4 col-form-label">NIK</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="nik" id="nik" readonly>
                             </div>
@@ -156,7 +143,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="jenis_kelamin" class="col-4 col-form-label">Jenis Kelamin <?= label_required() ?></label>
+                            <label for="jenis_kelamin" class="col-4 col-form-label">Jenis Kelamin</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="jenis_kelamin" id="jenis_kelamin" readonly>
                             </div>
@@ -164,7 +151,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row mb-3">
-                            <label for="agama" class="col-4 col-form-label">Agama <?= label_required() ?></label>
+                            <label for="agama" class="col-4 col-form-label">Agama</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="agama" id="agama" readonly>
                             </div>
@@ -175,7 +162,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="tempat_lahir" class="col-4 col-form-label">Tempat Lahir <?= label_required() ?></label>
+                            <label for="tempat_lahir" class="col-4 col-form-label">Tempat Lahir</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" readonly>
                             </div>
@@ -183,7 +170,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row mb-3">
-                            <label for="tgl_lahir" class="col-4 col-form-label">Tanggal Lahir <?= label_required() ?></label>
+                            <label for="tgl_lahir" class="col-4 col-form-label">Tanggal Lahir</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="tgl_lahir" id="tgl_lahir" readonly>
                             </div>
@@ -194,7 +181,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="jenjang" class="col-4 col-form-label">Jenjang <?= label_required() ?></label>
+                            <label for="jenjang" class="col-4 col-form-label">Jenjang</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="jenjang" id="jenjang" readonly>
                             </div>                
@@ -251,7 +238,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="jenis_ptk" class="col-4 col-form-label">Jenis PTK <?= label_required() ?></label>
+                            <label for="jenis_ptk" class="col-4 col-form-label">Jenis PTK</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="jenis_ptk" id="jenis_ptk" readonly>
                             </div>
@@ -289,7 +276,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <div class="form-group row mb-3">
-                            <label for="pangkat" class="col-4 col-form-label">Pangkat/Golongan <?= label_required() ?></label>
+                            <label for="pangkat" class="col-4 col-form-label">Pangkat/Golongan</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="pangkat" id="pangkat" readonly>
                             </div>
@@ -297,7 +284,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row mb-3">
-                            <label for="kgb_terakhir" class="col-4 col-form-label">Tahun Terakhir KGB <?= label_required() ?></label>
+                            <label for="kgb_terakhir" class="col-4 col-form-label">Terakhir KGB</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="kgb_terakhir" id="kgb_terakhir" readonly>
                             </div>
@@ -308,7 +295,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="status_kepegawaian" class="col-4 col-form-label">Status Kepegawaian <?= label_required() ?></label>
+                            <label for="status_kepegawaian" class="col-4 col-form-label">Status Kepegawaian</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" name="status_kepegawaian" id="status_kepegawaian" readonly>
                         </div>
@@ -324,7 +311,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="alamat" class="col-md-2 col-form-label">Alamat (Provinsi, Kota, Kecamatan, Kelurahan) <?= label_required() ?></label>
+                    <label for="alamat" class="col-md-2 col-form-label">Alamat (Provinsi, Kota, Kecamatan, Kelurahan)</label>
                     <div class="col-md-10">
                         <div class="form-group mb-3">
                             <input type="text" class="form-control" name="nagari" id="nagari" readonly>
@@ -333,7 +320,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="alamat_lengkap" class="col-md-2 col-form-label">Detail Alamat (Penulisan Harus Sesuai EYD) <?= label_required() ?></label>
+                    <label for="alamat_lengkap" class="col-md-2 col-form-label">Detail Alamat (Penulisan Harus Sesuai EYD)</label>
                     <div class="col-md-10">
                         <input type="text" class="form-control" name="alamat_lengkap" id="alamat_lengkap" readonly>
                     </div>
@@ -427,6 +414,7 @@
                 $(form_name).addClass('form-edit');
                 $(form_name).removeClass('form-tambah');
                 $(form_name).attr('data-id', $(this).data('id'));
+                $('#nama_sekolah').val(data.data.nama_sekolah);
                 $('#nama_guru').val(data.data.nama_guru);
                 $('#nik').val(data.data.nik);
                 $('#nip').val(data.data.nip);
