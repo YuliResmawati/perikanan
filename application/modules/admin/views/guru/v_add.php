@@ -2,19 +2,22 @@
     <div class="col-12">
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="gr-token-response" name="gr-token-response">
-        
-        <div class="form-group row">
-            <label for="nama_sekolah" class="col-md-2 col-form-label">Nama Sekolah <?= label_required() ?></label>
-            <div class="col-md-10">
-                <select class="form-control select2" name="sekolah_id" id="sekolah_id">
-                    <option selected disabled>Pilih Sekolah</option>
-                    <?php 
-                    foreach($sekolah as $row): ?>
-                        <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
-                    <?php $no++; endforeach; ?>
-                </select>            
-            </div>
-        </div>
+
+        <?php
+            if($this->logged_level !== "3"){ ?>
+                <div class="form-group row">
+                    <label for="sekolah_id" class="col-md-2 col-form-label">Nama Sekolah <?= label_required() ?></label>
+                    <div class="col-md-10">
+                        <select class="form-control select2" name="sekolah_id" id="sekolah_id">
+                            <option selected disabled>Pilih Sekolah</option>
+                            <?php 
+                            foreach($sekolah as $row): ?>
+                                <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
+                            <?php $no++; endforeach; ?>
+                        </select>            
+                    </div>
+                </div>
+        <?php } ?>
 
         <div class="form-group row">
             <div class="col-md-6">
@@ -281,9 +284,9 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group row mb-3">
-                    <label for="tahun_terakhir_kgb" class="col-4 col-form-label">Tahun Terakhir KGB <?= label_required() ?></label>
+                    <label for="kgb_terakhir" class="col-4 col-form-label">Terakhir KGB <?= label_required() ?></label>
                     <div class="col-8">
-                        <select class="form-control select2" name="tahun_terakhir_kgb" id="tahun_terakhir_kgb">
+                        <select class="form-control select2" name="kgb_terakhir" id="kgb_terakhir">
                             <option selected disabled>Pilih Tahun</option>
                             <?php 
                             $sekarang = date('Y');
