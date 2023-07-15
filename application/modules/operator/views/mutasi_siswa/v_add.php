@@ -70,7 +70,7 @@
         ajax_get_siswa= {
             element: $('#siswa_id'),
             type: 'post',
-            url: "<?= base_url('app/AjaxGetSiswa') ?>",
+            url: "<?= base_url('app/AjaxGetSiswa/true') ?>",
             data: {
                 silatpendidikan_c_token: csrf_value
             },

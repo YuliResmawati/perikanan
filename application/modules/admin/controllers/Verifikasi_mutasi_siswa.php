@@ -8,9 +8,9 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'operator/verifikasi_mutasi_siswa';
+		$this->data['uri_mod'] = 'admin/verifikasi_mutasi_siswa';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Verifikasi Mutasi Siswa', 'operator/verifikasi_mutasi_siswa');
+        $this->breadcrumbs->push('Verifikasi Mutasi Siswa', 'admin/verifikasi_mutasi_siswa');
         $this->modal_name = 'modal-verifikasi-mutasi';
         $this->load->model(['m_mutasi_siswa','m_sekolah','m_guru']);
 
@@ -53,7 +53,7 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
         if ($id == FALSE) {
             $this->m_mutasi_siswa->push_select('status');
 
-            $edit_link = 'operator/mutasi_siswa/edit/'; 
+            $edit_link = 'admin/mutasi_siswa/edit/'; 
             $response = $this->m_mutasi_siswa->get_detail_mutasi_siswa()->datatables();
 
 
