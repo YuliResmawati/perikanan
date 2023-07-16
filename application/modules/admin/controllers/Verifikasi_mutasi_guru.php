@@ -8,9 +8,9 @@ class Verifikasi_mutasi_guru extends Backend_Controller {
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'operator/verifikasi_mutasi_guru';
+		$this->data['uri_mod'] = 'admin/verifikasi_mutasi_guru';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Verifikasi Mutasi Guru', 'operator/verifikasi_mutasi_guru');
+        $this->breadcrumbs->push('Verifikasi Mutasi Guru', 'admin/verifikasi_mutasi_guru');
         $this->modal_name = 'modal-verifikasi-guru';
         $this->load->model(['m_mutasi_guru','m_sekolah','m_guru']);
 
@@ -53,7 +53,7 @@ class Verifikasi_mutasi_guru extends Backend_Controller {
         if ($id == FALSE) {
             $this->m_mutasi_guru->push_select('status');
 
-            $edit_link = 'operator/mutasi_guru/edit/'; 
+            $edit_link = 'admin/mutasi_guru/edit/'; 
             $response = $this->m_mutasi_guru->get_detail_mutasi_guru()->datatables();
 
 

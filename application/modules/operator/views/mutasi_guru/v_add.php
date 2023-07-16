@@ -46,7 +46,7 @@
         ajax_get_guru = {
             element: $('#guru_id'),
             type: 'post',
-            url: "<?= base_url('app/AjaxGetGuru') ?>",
+            url: "<?= base_url('app/AjaxGetGuru/true') ?>",
             data: {
                 silatpendidikan_c_token: csrf_value
             },

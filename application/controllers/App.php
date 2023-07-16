@@ -150,15 +150,22 @@ class App extends Backend_Controller {
         } 
     }
 
-    public function AjaxGetSiswa()
+    public function AjaxGetSiswa($option = null)
     {
         $this->output->unset_template();
 
         $search = $this->input->post('search');
         $page = $this->input->post('page');
 		$perPage = 10;
-        $results = $this->m_app->get_all_siswa_by_paging($perPage, $page, $search, 'data');
-		$countResults = $this->m_app->get_all_siswa_by_paging($perPage, $page, $search, 'count');
+
+        if ($option == TRUE) {
+            $results = $this->m_app->get_all_siswa_by_paging($perPage, $page, $search, 'data', true);
+		    $countResults = $this->m_app->get_all_siswa_by_paging($perPage, $page, $search, 'count', true);
+        }else {
+            $results = $this->m_app->get_all_siswa_by_paging($perPage, $page, $search, 'data');
+		    $countResults = $this->m_app->get_all_siswa_by_paging($perPage, $page, $search, 'count');
+        }
+        
 
         $this->return = [];
 
@@ -192,15 +199,22 @@ class App extends Backend_Controller {
         } 
     }
 
-    public function AjaxGetGuru()
+    public function AjaxGetGuru($option = null)
     {
         $this->output->unset_template();
 
         $search = $this->input->post('search');
         $page = $this->input->post('page');
 		$perPage = 10;
-        $results = $this->m_app->get_all_guru_by_paging($perPage, $page, $search, 'data');
-		$countResults = $this->m_app->get_all_guru_by_paging($perPage, $page, $search, 'count');
+
+        if ($option == TRUE) {
+            $results = $this->m_app->get_all_guru_by_paging($perPage, $page, $search, 'data', true);
+            $countResults = $this->m_app->get_all_guru_by_paging($perPage, $page, $search, 'count', true);
+        }else {
+            $results = $this->m_app->get_all_guru_by_paging($perPage, $page, $search, 'data');
+            $countResults = $this->m_app->get_all_guru_by_paging($perPage, $page, $search, 'count');
+        }
+       
 
         $this->return = [];
 

@@ -57,20 +57,33 @@ class M_app extends MY_Model {
         }
     }
 
-    public function get_all_siswa_by_paging($per_page, $page, $search, $type)
+    public function get_all_siswa_by_paging($per_page, $page, $search, $type, $option = null)
     {
         if($page == 0) $page = 1;
         $page = ($per_page * $page) - $per_page;
         $this->db->select('siswa.id, nama_siswa, nisn', 'nama_Sekolah');
         $this->db->from('siswa');
-        $this->db->join('detail_siswa','siswa.id = detail_siswa.siswa_id');
-        $this->db->join('detail_rombel','detail_siswa.detail_rombel_id = detail_rombel.id');
-        $this->db->join('sekolah','detail_rombel.sekolah_id = sekolah.id');
-        $this->db->like('LOWER(nama_siswa)', strtolower($search));
-        $this->db->where(array('siswa.status' =>'1'));
-        $this->db->or_like('nisn',$search);
-        $this->db->limit($per_page, $page);
-        $this->db->where(array('siswa.status' =>'1'));
+
+        if ($option == TRUE) {
+            $this->db->join('detail_siswa','siswa.id = detail_siswa.siswa_id');
+            $this->db->join('detail_rombel','detail_siswa.detail_rombel_id = detail_rombel.id');
+            $this->db->join('sekolah','detail_rombel.sekolah_id = sekolah.id');
+            $this->db->like('LOWER(nama_siswa)', strtolower($search));
+            $this->db->where(array('siswa.status' =>'1', 'detail_rombel.sekolah_id' => $this->logged_sekolah_id));
+            $this->db->or_like('nisn',$search);
+            $this->db->limit($per_page, $page);
+            $this->db->where(array('siswa.status' =>'1', 'detail_rombel.sekolah_id' => $this->logged_sekolah_id));
+        } else {
+            $this->db->join('detail_siswa','siswa.id = detail_siswa.siswa_id');
+            $this->db->join('detail_rombel','detail_siswa.detail_rombel_id = detail_rombel.id');
+            $this->db->join('sekolah','detail_rombel.sekolah_id = sekolah.id');
+            $this->db->like('LOWER(nama_siswa)', strtolower($search));
+            $this->db->where(array('siswa.status' =>'1'));
+            $this->db->or_like('nisn',$search);
+            $this->db->limit($per_page, $page);
+            $this->db->where(array('siswa.status' =>'1'));
+        }
+       
 
         if ($type == 'data') {
             return $this->db->get()->result_array();
@@ -79,18 +92,29 @@ class M_app extends MY_Model {
         }
     }
 
-    public function get_all_guru_by_paging($per_page, $page, $search, $type)
+    public function get_all_guru_by_paging($per_page, $page, $search, $type, $option = null)
     {
         if($page == 0) $page = 1;
         $page = ($per_page * $page) - $per_page;
         $this->db->select('guru.id, nama_guru,nip');
         $this->db->from('guru');
-        $this->db->join('sekolah','guru.sekolah_id = sekolah.id');
-        $this->db->like('LOWER(nama_guru)', strtolower($search));
-        $this->db->where(array('guru.status' =>'1'));
-        $this->db->or_like('nip',$search);
-        $this->db->limit($per_page, $page);
-        $this->db->where(array('guru.status' =>'1'));
+
+        if ($option == TRUE){
+            $this->db->join('sekolah','guru.sekolah_id = sekolah.id');
+            $this->db->like('LOWER(nama_guru)', strtolower($search));
+            $this->db->where(array('guru.status' =>'1', 'sekolah_id' => $this->logged_sekolah_id));
+            $this->db->or_like('nip',$search);
+            $this->db->limit($per_page, $page);
+            $this->db->where(array('guru.status' =>'1', 'sekolah_id' => $this->logged_sekolah_id));
+        } else {
+            $this->db->join('sekolah','guru.sekolah_id = sekolah.id');
+            $this->db->like('LOWER(nama_guru)', strtolower($search));
+            $this->db->where(array('guru.status' =>'1'));
+            $this->db->or_like('nip',$search);
+            $this->db->limit($per_page, $page);
+            $this->db->where(array('guru.status' =>'1'));
+        }
+        
 
         if ($type == 'data') {
             return $this->db->get()->result_array();
