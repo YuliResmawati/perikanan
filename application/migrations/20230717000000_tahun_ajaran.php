@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Detail_rombel extends CI_Migration {
+class Migration_Tahun_Ajaran extends CI_Migration {
 
     public function up()
     {
@@ -11,17 +11,10 @@ class Migration_Detail_rombel extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'rombel_id' => array(
-                'type' => 'INT4',
-                'default' => null
-            ),
-            'sekolah_id' => array(
-                'type' => 'INT4',
-                'default' => null
-            ),
-            'walas_id' => array(
-                'type' => 'INT4',
-                'default' => null
+            'tahun_ajaran' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
             ),
             'created_at' => array(
                 'type' => 'timestamp',
@@ -59,12 +52,12 @@ class Migration_Detail_rombel extends CI_Migration {
             ),      
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('detail_rombel');
+        $this->dbforge->create_table('tahun_ajaran');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('detail_rombel');
+        $this->dbforge->drop_table('tahun_ajaran');
     }
 }
 ?>

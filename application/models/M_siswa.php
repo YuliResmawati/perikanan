@@ -77,8 +77,10 @@ class M_siswa extends MY_Model {
             'agama','tempat_lahir','tgl_lahir','siswa.nagari_id','siswa.alamat_lengkap','jenis_tinggal',
             'transportasi','email','no_hp','skhun','no_kps','no_peserta_un','no_seri_ijazah','no_kip','no_kks',
             'no_akta_lahir','no_rekening','bank','atas_nama','kelayakan_pip','alasan','kebutuhan_khusus',
-            'sekolah_lama_id','anak_ke','nama_nagari','nama_kecamatan','nama_kabupaten','nama_provinsi','s.nama_sekolah as nama_sekolah',
-            'tingkatan','nama_rombel','s.tipe_sekolah as tipe_sekolah','s.id as sekolah_id','sek.nama_sekolah as sekolah_lama_nama','r.id as rombel_id'
+            'sekolah_lama_id','anak_ke','nama_nagari','nama_kecamatan','nama_kabupaten','nama_provinsi',
+            's.nama_sekolah as nama_sekolah',
+            'tingkatan','nama_rombel','s.tipe_sekolah as tipe_sekolah','s.id as sekolah_id',
+            'sek.nama_sekolah as sekolah_lama_nama','r.id as rombel_id'
         ];
 
         parent::join('detail_siswa dd','dd.siswa_id=siswa.id', 'left');
@@ -90,7 +92,6 @@ class M_siswa extends MY_Model {
         parent::join('kabupaten', 'kabupaten.id=kecamatan.kabupaten_id', 'left');
         parent::join('provinsi', 'provinsi.id=kabupaten.provinsi_id', 'left');
         parent::join('sekolah sek','sek.id=siswa.sekolah_lama_id', 'left');
-
 
         return $this;
     }
