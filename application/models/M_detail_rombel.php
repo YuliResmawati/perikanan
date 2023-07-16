@@ -32,8 +32,8 @@ class M_detail_rombel extends MY_Model {
     }
 
     public function get_all_rombel(){
-        $this->_fields_toshow = [ 'detail_rombel.id','nama_rombel','detail_rombel.sekolah_id','sekolah.status',
-                                    'npsn','nama_sekolah','nama_guru','tingkatan',
+        $this->_fields_toshow = [ 'detail_rombel.id','nama_rombel','detail_rombel.sekolah_id','sekolah.status','detail_rombel.status as detail_rombel_status',
+                                    'npsn','nama_sekolah','nama_guru','tingkatan','rombel_id','walas_id',
                                     '(select count(id) from detail_siswa where detail_rombel_id = detail_rombel.id) as jumlah_siswa'
                                 ];
         parent::join('sekolah','detail_rombel.sekolah_id=sekolah.id');

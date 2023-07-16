@@ -74,6 +74,14 @@ class Detail_rombel extends Backend_Controller {
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
+        $this->data['rombel'] = $this->m_rombel->findAll();
+        $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
+        if($this->logged_level == "3"){
+            $this->data['guru'] = $this->m_guru->get_guru_by_sekolah($this->logged_sekolah_id)->findAll();
+        }else{
+            $this->data['guru'] = $this->m_guru->findAll();
+        }
+
 
         $this->load->view('detail_rombel/v_edit', $this->data);
     }
@@ -105,7 +113,7 @@ class Detail_rombel extends Backend_Controller {
             }
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
-            $response->edit_column('status', '$1', "str_status(status)");
+            $response->edit_column('status', '$1', "str_status(detail_rombel_status)");
             $response->edit_column('nama_rombel', '$1 $2', "tingkatan,nama_rombel");
             $response->edit_column('jumlah_siswa', '$1', "jumlah(jumlah_siswa,Siswa)");
             $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link', $this->id_key),
@@ -116,11 +124,14 @@ class Detail_rombel extends Backend_Controller {
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_detail_rombel->find($id); 
+            $this->return = $this->m_detail_rombel->get_all_rombel()->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
-    
+                $this->return->sekolah_id = ($this->return->sekolah_id) ? encrypt_url($this->return->sekolah_id, $this->id_key) : '';
+                $this->return->rombel_id = ($this->return->rombel_id) ? encrypt_url($this->return->rombel_id, $this->id_key) : '';
+                $this->return->walas_id = ($this->return->walas_id) ? encrypt_url($this->return->walas_id, $this->id_key) : '';
+
                 $response = array(
                     'status' => TRUE,
                     'message' => 'Berhasil mengambil data',
@@ -154,11 +165,15 @@ class Detail_rombel extends Backend_Controller {
             $this->result = array('status' => TRUE, 'message' => NULL);
             $id = decrypt_url($id, $this->id_key);
 
-            $this->form_validation->set_rules('sekolah_id', 'Nama Sekolah', 'required');
+            if($this->logged_level !== "3"){
+                $this->form_validation->set_rules('sekolah_id', 'Nama Sekolah', 'required');
+                $sekolah_id = decrypt_url($this->input->post('sekolah_id'), $this->id_key);
+            }else{
+                $sekolah_id = $this->logged_sekolah_id;
+            }
             $this->form_validation->set_rules('rombel_id', 'Nama Rombel', 'required');
             $this->form_validation->set_rules('walas_id', 'Nama Wali Kelas', 'required');
 
-            $sekolah_id = decrypt_url($this->input->post('sekolah_id'), $this->id_key);
             $rombel_id = decrypt_url($this->input->post('rombel_id'), $this->id_key);
             $walas_id = decrypt_url($this->input->post('walas_id'), $this->id_key);
 

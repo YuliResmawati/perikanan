@@ -1,8 +1,7 @@
 <div class="row mt-4">
     <div class="col-12">
     <?= form_open($uri_mod.'/AjaxSave/'.encrypt_url($id, $id_key), 'id="formAjax" class="form"') ?> 
-        <input type="hidden" class="gr-token-response" name="gr-token-response">
-
+        <input type="hidden" class="wl-token-response" name="wl-token-response">
         <?php
             if($this->logged_level !== "3"){ ?>
                 <div class="form-group row">
@@ -20,328 +19,28 @@
         <?php } ?>
 
         <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="nama_guru" class="col-4 col-form-label">Nama Guru <?= label_required() ?></label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="nama_guru" id="nama_guru">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="nik" class="col-4 col-form-label">NIK <?= label_required() ?></label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="nik" id="nik">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="gelar_depan" class="col-4 col-form-label">Gelar Depan</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="gelar_depan" id="gelar_depan">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="gelar_belakang" class="col-4 col-form-label">Gelar Belakang</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="gelar_belakang" id="gelar_belakang">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="nip" class="col-4 col-form-label">NIP</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="nip" id="nip">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="nuptk" class="col-4 col-form-label">NUPTK</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="nuptk" id="nuptk">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="jenis_kelamin" class="col-4 col-form-label">Jenis Kelamin <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="jenis_kelamin" id="jenis_kelamin">
-                            <option selected disabled>Pilih Jenis Kelamin</option>
-                            <option value="L">Laki-laki</option>
-                            <option value="P">Perempuan</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="agama" class="col-4 col-form-label">Agama <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="agama" id="agama">
-                            <option selected disabled>Pilih Agama</option>
-                            <option value="Islam">Islam</option>
-                            <option value="Kristen">Kristen</option>
-                            <option value="Katolik">Katolik</option>
-                            <option value="Protestan">Protestan</option>
-                            <option value="Hindu">Hindu</option>
-                            <option value="Budha">Budha</option>
-                            <option value="Konghucu">Konghucu</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="tempat_lahir" class="col-4 col-form-label">Tempat Lahir <?= label_required() ?></label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="tgl_lahir" class="col-4 col-form-label">Tanggal Lahir <?= label_required() ?></label>
-                    <div class="col-8">
-                        <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="jenjang" class="col-4 col-form-label">Jenjang <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="jenjang" id="jenjang">
-                            <option selected disabled>Pilih Jenjang</option>
-                            <option value="PAUD">PAUD</option>
-                            <option value="PNF">PNF</option>
-                            <option value="SMP">SMP</option>
-                            <option value="SD">SD</option>
-                        </select>
-                    </div>                
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="status_tugas" class="col-4 col-form-label">Status Tugas</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="status_tugas" id="status_tugas">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="sk_cpns" class="col-4 col-form-label">No. SK CPNS</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="sk_cpns" id="sk_cpns">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="tgl_sk_cpns" class="col-4 col-form-label">Tanggal SK CPNS</label>
-                    <div class="col-8">
-                        <input type="date" class="form-control" name="tgl_sk_cpns" id="tgl_sk_cpns">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="sk_pengangkatan" class="col-4 col-form-label">No. SK Pengangkatan</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="sk_pengangkatan" id="sk_pengangkatan">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="tgl_sk_pengangkatan" class="col-4 col-form-label">Tanggal SK Pengangkatan</label>
-                    <div class="col-8">
-                        <input type="date" class="form-control" name="tgl_sk_pengangkatan" id="tgl_sk_pengangkatan">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="jenis_ptk" class="col-4 col-form-label">Jenis PTK <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="jenis_ptk" id="jenis_ptk">
-                            <option selected disabled>Pilih Jenis PTK</option>
-                            <option value="Tenaga Administrasi Sekolah">Tenaga Administrasi Sekolah</option>
-                            <option value="Guru BK">Guru BK</option>
-                            <option value="Tukang Kebun">Tukang Kebun</option>
-                            <option value="Tutor">Tutor</option>
-                            <option value="Pesuruh/Office Boy">Pesuruh/Office Boy</option>
-                            <option value="Pamong Belajar">Pamong Belajar</option>
-                            <option value="Guru Pengganti">Guru Pengganti</option>
-                            <option value="Kepala Sekolah">Kepala Sekolah</option>
-                            <option value="Guru Mapel">Guru Mapel</option>
-                            <option value="Guru TIK">Guru TIK</option>
-                            <option value="Guru Pendamping Khusus">Guru Pendamping Khusus</option>
-                            <option value="Guru Kelas">Guru Kelas</option>
-                            <option value="Tenaga Perpustakaan">Tenaga Perpustakaan</option>
-                            <option value="Penjaga Sekolah">Penjaga Sekolah</option>
-                            <option value="Petugas Keamanan">Petugas Keamanan</option>
-                        </select>                    
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="pendidikan" class="col-4 col-form-label">Pendidikan Terakhir</label>
-                    <div class="col-8">
-                    <select class="form-control select2" name="pendidikan" id="pendidikan">
-                            <option selected disabled>Pilih Jenis Pendidikan Terakhir</option>
-                            <option value="SMP/Sederajat">SMP/Sederajat</option>
-                            <option value="SMA/Sederajat">SMA/Sederajat</option>
-                            <option value="D1">D1</option>
-                            <option value="D2">D2</option>
-                            <option value="D3">D3</option>
-                            <option value="D4">D4</option>
-                            <option value="S1">S1</option>
-                            <option value="S2">S2</option>
-                            <option value="S3">S3</option>
-                        </select>                     
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="bidang_studi_pendidikan" class="col-4 col-form-label">Bidang Studi Pendidikan</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="bidang_studi_pendidikan" id="bidang_studi_pendidikan">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="bidang_studi_sertifikasi" class="col-4 col-form-label">Bidang Sertifikasi</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="bidang_studi_sertifikasi" id="bidang_studi_sertifikasi">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="pangkat" class="col-4 col-form-label">Pangkat/Golongan <?= label_required() ?></label>
-                    <div class="col-8">
-                    <select class="form-control select2" name="pangkat" id="pangkat">
-                            <option selected disabled>Pilih Pangkat/Golongan Terakhir</option>
-                            <option value="I/a">I/a</option>
-                            <option value="I/b">I/b</option>
-                            <option value="I/c">I/c</option>
-                            <option value="I/d">I/d</option>
-                            <option value="II/a">II/a</option>
-                            <option value="II/b">II/b</option>
-                            <option value="II/c">II/c</option>
-                            <option value="II/d">II/d</option>
-                            <option value="III/a">III/a</option>
-                            <option value="III/b">III/b</option>
-                            <option value="III/c">III/c</option>
-                            <option value="III/d">III/d</option>
-                            <option value="IV/a">IV/a</option>
-                            <option value="IV/b">IV/b</option>
-                            <option value="IV/c">IV/c</option>
-                            <option value="IV/d">IV/d</option>
-                        </select>                     
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="kgb_terakhir" class="col-4 col-form-label">Terakhir KGB <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="kgb_terakhir" id="kgb_terakhir">
-                            <option selected disabled>Pilih Tahun</option>
-                            <?php 
-                            $sekarang = date('Y');
-                            for($i=2018;$i<=$sekarang;$i++): ?>
-                                <option value="<?= $i ?>"><?= $i ?></option>
-                            <?php $no++; endfor; ?>
-                        </select>            
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="status_kepegawaian" class="col-4 col-form-label">Status Kepegawaian <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="status_kepegawaian" id="status_kepegawaian">
-                            <option selected disabled>Pilih Status Kepegawaian</option>
-                            <option value="Tenaga Honor Sekolah">Tenaga Honor Sekolah</option>
-                            <option value="PNS Depag">PNS Depag</option>
-                            <option value="PNS Diperbantukan">PNS Diperbantukan</option>
-                            <option value="Guru Honor Sekolah">Guru Honor Sekolah</option>
-                            <option value="GTY/PTY">GTY/PTY</option>
-                            <option value="PNS">PNS</option>
-                            <option value="Honor Daerah TK.II Kab/Kota">Honor Daerah TK.II Kab/Kota</option>
-                            <option value="PPPK">PPPK</option>
-                        </select>                      
-                </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="no_hp" class="col-4 col-form-label">Nomor Telp</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="no_hp" id="no_hp">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="alamat" class="col-md-2 col-form-label">Alamat (Provinsi, Kota, Kecamatan, Kelurahan) <?= label_required() ?></label>
+            <label for="rombel_id" class="col-md-2 col-form-label">Nama Rombel <?= label_required() ?></label>
             <div class="col-md-10">
-                <div class="form-group mb-3">
-                    <textarea class="form-control" name="nagari" id="nagari" rows="2" readonly></textarea>
-                    <input class="form-control" type="hidden" name="nagari_id" id="nagari_id" readonly/>
-                    <code class="text-primary">klik <a href="#data-alamat-domisili" data-toggle="modal" class="cari-nagari"><span class="badge bg-primary text-white"><b>disini</b></span></a> untuk merubah data alamat.</code>
-                </div>           
+                <select class="form-control select2" name="rombel_id" id="rombel_id">
+                    <option selected disabled>Pilih Rombel</option>
+                    <?php 
+                    foreach($rombel as $row): ?>
+                        <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->tingkatan."-".$row->nama_rombel ?></option>
+                    <?php $no++; endforeach; ?>
+                </select>            
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="alamat_lengkap" class="col-md-2 col-form-label">Detail Alamat (Penulisan Harus Sesuai EYD) <?= label_required() ?></label>
+            <label for="walas_id" class="col-md-2 col-form-label">Nama Wali Kelas <?= label_required() ?></label>
             <div class="col-md-10">
-                <textarea class="form-control" name="alamat_lengkap" id="alamat_lengkap" rows="4"></textarea>
+                <select class="form-control select2" name="walas_id" id="walas_id">
+                    <option selected disabled>Pilih Wali Kelas</option>
+                    <?php 
+                    foreach($guru as $row): ?>
+                        <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= name_degree($row->gelar_depan,$row->nama_guru,$row->gelar_belakang) ?></option>
+                    <?php $no++; endforeach; ?>
+                </select>            
             </div>
         </div>
 
@@ -358,58 +57,9 @@
     </div>
 </div>
 
-<!-- Alamat Domisili Search Modal -->
-<div class="modal fade" id="data-alamat-domisili" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="example-Modal3">Cari Alamat Domisili</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <?= form_open('', 'id="form-data-alamat-domisili" data-id="" class="form-data-alamat-domisili"');?>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-control-label">Pilih Alamat Domisili</label>
-                    <select class="form-control select2" name="data_alamat_domisili" id="data_alamat_domisili"></select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div id="spinner-status" class="spinner-border spinner-border-sm text-success mr-2" role="status"
-                    style="display:none"></div>
-                <button id="submit-btn" type="submit" class="btn btn-success waves-effect waves-light">
-                    <i class="mdi mdi-cursor-default-click mr-1"></i> Pilih
-                </button>
-                <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal"><i
-                        class="mdi mdi-cancel mr-1"></i> Batal</button>
-            </div>
-            <?= form_close(); ?>
-        </div>
-    </div>
-</div>
-<!-- End Alamat Domisili Search Modal -->
-
-
 <script type="text/javascript">
+    
     $(document).ready(function() {
-        $('#nik').mask('0000000000000000');
-        $('#nuptk').mask('0000000000000000');
-        $('#nip').mask('000000000000000000');
-        $('#no_hp').mask('00000000000000000000');
-
-        ajax_get_region = {
-            element: $('#data_alamat_domisili'),
-            type: 'post',
-            url: "<?= base_url('app/AjaxGetRegion') ?>",
-            data: {
-                silatpendidikan_c_token: csrf_value
-            },
-            placeholder: 'Ketik Nama Kecamatan atau Kelurahan',
-        }
-
-        init_ajax_select2_paging(ajax_get_region);
-
         let id ='<?= encrypt_url($id, $id_key) ?>';
 
         aOption = {
@@ -419,46 +69,44 @@
         data = get_data_by_id(aOption);
         if (data != false) {
             $('select[name="sekolah_id"]').val(data.data.sekolah_id).change();
-            $('#nik').val(data.data.nik);
-            $('#nip').val(data.data.nip);
-            $('#nama_guru').val(data.data.nama_guru);
-            $('#nuptk').val(data.data.nuptk);
-            $('select[name="jenis_kelamin"]').val(data.data.jenis_kelamin).change();
-            $('select[name="agama"]').val(data.data.agama).change();
-            $('#tempat_lahir').val(data.data.tempat_lahir);
-            $('#tgl_lahir').val(data.data.tgl_lahir);
-            $('#status_tugas').val(data.data.status_tugas);
-            $('select[name="jenjang"]').val(data.data.jenjang).change();
-            $('#no_hp').val(data.data.no_hp);
-            $('#sk_cpns').val(data.data.sk_cpns);
-            $('#tgl_sk_cpns').val(data.data.tgl_sk_cpns);
-            $('#sk_pengangkatan').val(data.data.sk_pengangkatan);
-            $('#tgl_sk_pengangkatan').val(data.data.tgl_sk_pengangkatan);
-            $('select[name="jenis_ptk"]').val(data.data.jenis_ptk).change();
-            $('select[name="pendidikan"]').val(data.data.pendidikan).change();
-            $('#bidang_studi_pendidikan').val(data.data.bidang_studi_pendidikan);
-            $('#bidang_studi_sertifikasi').val(data.data.bidang_studi_sertifikasi);
-            $('select[name="status_kepegawaian"]').val(data.data.status_kepegawaian).change();
-            $('select[name="pangkat"]').val(data.data.pangkat).change();
-            $('#alamat_lengkap').val(data.data.alamat_lengkap);
-            $('#nagari').val(data.data.alamat);
-            $('#nagari_id').val(data.data.nagari_id);
-            $('select[name="kgb_terakhir"]').val(data.data.kgb_terakhir).change();
-            $('#gelar_depan').val(data.data.gelar_depan);
-            $('#gelar_belakang').val(data.data.gelar_belakang);
+            $('select[name="rombel_id"]').val(data.data.rombel_id).change();
+            $('select[name="walas_id"]').val(data.data.walas_id).change();
         }
 
     });
 
-    $(document).on("submit", ".form-data-alamat-domisili", function (e) {
-        e.preventDefault();
-        let data = $('#data_alamat_domisili').select2('data');
-        let nagari = data[0].text.split(",", 4);
-        let result = nagari[3].split("Nagari");
+    $('#sekolah_id').change(function() {
+        var sekolah_id = $(this).val();
+        $.ajax({
+            url: "<?= base_url($uri_mod. '/AjaxGetGuruBySekolah/') ?>",
+            method : "POST",
+            data : {sekolah_id: sekolah_id},
+            async : true,
+            dataType : 'json',
+            success: function(data) {
+                if (data.status == true) {
+                    csrf_value = data.token;
+                    var html = '<option value="" selected disabled>Pilih Wali Kelas</option>';
+                    var index;
+                    var no  = 1;
 
-        $('#nagari').val(data[0].text);
-        $('#nagari_id').val(data[0].id);
-        $('#data-alamat-domisili').modal('hide'); 
+                    for (index = 0; index < data.data.length; index++) {
+                        if($('#walas_id').val() == data.data[index].id) {
+                            html += '<option value='+data.data[index].id+' selected >'+data.data[index].nama_guru+'</option>';
+                        }else{
+                            html += '<option value='+data.data[index].id+'>'+data.data[index].nama_guru+'</option>';
+                        }
+                        no++;
+                    }
+
+                    $('#walas_id').html(html);
+                }else{
+                    var html = '<option value="" selected disabled>Pilihan Tidak Tersedia</option>';
+                    $('#walas_id').html(html);
+                } 
+            }
+        });
+            return false;
     });
 
 
@@ -471,7 +119,7 @@
         $('#button-value').html("Loading...");
         grecaptcha.ready(function() {
             grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'submit'}).then(function(token) {
-                document.querySelector('.gr-token-response').value = token;
+                document.querySelector('.wl-token-response').value = token;
                 $('#formAjax').submit()
             });
         });
