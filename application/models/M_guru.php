@@ -33,7 +33,7 @@ class M_guru extends MY_Model {
        'sk_cpns'            => 'sk_cpns',
        'tgl_sk_cpns'        => 'tgl_sk_cpns',
        'sk_pengangkatan'    => 'sk_pengangkatan',
-       'tgl_sk_pengangkatan'        => 'tgl_sk_pengangkatan',
+       'tgl_sk_pengangkatan'=> 'tgl_sk_pengangkatan',
        'jenis_ptk'          => 'jenis_ptk',
        'pendidikan'         => 'pendidikan',
        'bidang_studi_pendidikan'    => 'bidang_studi_pendidikan',
@@ -42,8 +42,8 @@ class M_guru extends MY_Model {
        'pangkat'            => 'pangkat',
        'nagari_id'          => 'nagari_id',
        'alamat_lengkap'     => 'alamat_lengkap',
-       'is_kepsek'     => 'is_kepsek',
-       'kgb_terakhir'     => 'kgb_terakhir'
+       'is_kepsek'          => 'is_kepsek',
+       'kgb_terakhir'       => 'kgb_terakhir'
     ];
 
     public function __construct()
@@ -55,12 +55,12 @@ class M_guru extends MY_Model {
     public function get_guru_by_sekolah($sekolah_id){
         $this->_order_by= false;
         $this->_order = false;
-        $this->_fields_toshow = [ 'guru.id','nama_guru','nip'];
+        $this->_fields_toshow = [ 'guru.id','nama_guru','nip','gelar_depan','gelar_belakang',];
         $this->db->join('sekolah', 'guru.sekolah_id = sekolah.id');
         
         $this->db->where(['sekolah.id' =>$sekolah_id]);
 
-        return $this;
+        return $this; 
     }
 
     public function get_all_guru()

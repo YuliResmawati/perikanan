@@ -1435,5 +1435,19 @@ if (!function_exists('jk'))
     }
 }
 
+if (!function_exists('jumlah')) 
+{
+    function jumlah($jumlah, $satuan)
+    {
+        if ($jumlah == "0") {
+            $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Belum Ada $satuan</a>";
+        } else {
+            $result = "<a class='btn btn-outline-success waves-effect waves-light btn-xs'>$jumlah $satuan</a>";
+        }
+
+        return $result;
+    }
+}
+
 
     

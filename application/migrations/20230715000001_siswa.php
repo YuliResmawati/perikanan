@@ -55,37 +55,7 @@ class Migration_Siswa extends CI_Migration {
                 'type' => 'date',
                 'default' => null,
             ),
-            'provinsi_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'kabupaten_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'kecamatan_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'kelurahan_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'rt' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'rw' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => null,
-            ),
-            'kode_pos' => array(
+            'nagari_id' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,

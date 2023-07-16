@@ -1,17 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Guru extends Backend_Controller {
+class Siswa extends Backend_Controller {
 
     public function __construct()
 	{
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'admin/guru';
+		$this->data['uri_mod'] = 'admin/siswa';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Guru', 'guru');
-        $this->load->model(array('m_sekolah', 'm_app','m_guru','m_users'));  
+        $this->breadcrumbs->push('Guru', 'siswa');
+        $this->load->model(array('m_sekolah', 'm_app','m_siswa','m_users'));  
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -31,31 +31,30 @@ class Guru extends Backend_Controller {
 
     public function index()
 	{
-        $this->data['add_button_link'] = base_url('admin/guru/add');
-        $this->data['page_title'] = "Data Guru";
-        $this->data['page_description'] = "Halaman Daftar Data Guru.";
+        $this->data['add_button_link'] = base_url('admin/siswa/add');
+        $this->data['page_title'] = "Data Siswa";
+        $this->data['page_description'] = "Halaman Daftar Data Siswa.";
         $this->data['card'] = "true";
         $this->data['id_key'] = $this->id_key;
         $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
         $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
-        $this->data['jenis_ptk'] = $this->m_guru->get_distinct('jenis_ptk')->findAll();
-        $this->data['status_kepegawaian'] = $this->m_guru->get_distinct('status_kepegawaian')->findAll();
+
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
 
-		$this->load->view('guru/v_index', $this->data);
+		$this->load->view('siswa/v_index', $this->data);
     }
 
     public function add()
     {
-        $this->breadcrumbs->push('Tambah', 'admin/guru/add');
-        $this->data['page_title'] = "Tambah Data Guru";
-        $this->data['page_description'] = "Halaman Tambah Data Guru.";
+        $this->breadcrumbs->push('Tambah', 'admin/siswa/add');
+        $this->data['page_title'] = "Tambah Data Siswa";
+        $this->data['page_description'] = "Halaman Tambah Data Siswa.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
         $this->data['id_key'] = $this->id_key;
 
-        $this->load->view('guru/v_add', $this->data);
+        $this->load->view('siswa/v_add', $this->data);
     }
 
     public function edit($id = null)
@@ -66,17 +65,17 @@ class Guru extends Backend_Controller {
 			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('supadmin/sample_upload')));
         }
 
-        $this->breadcrumbs->push('Edit', 'admin/guru/edit');
-        $this->data['page_title'] = "Edit Data Guru";
-        $this->data['page_description'] = "Halaman Edit Data Guru.";
+        $this->breadcrumbs->push('Edit', 'admin/siswa/edit');
+        $this->data['page_title'] = "Edit Data Siswa";
+        $this->data['page_description'] = "Halaman Edit Data Siswa.";
         $this->data['card'] = "true";
-        $this->modal_name = 'modal-guru';
+        $this->modal_name = 'modal-siswa';
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
 
-        $this->load->view('guru/v_edit', $this->data);
+        $this->load->view('siswa/v_edit', $this->data);
     }
 
     
@@ -88,12 +87,12 @@ class Guru extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id == FALSE) {
-            $this->modal_name = 'modal-guru';
+            $this->modal_name = 'modal-siswa';
 
             $this->m_guru->push_select('status');
 
-            $edit_link = 'admin/guru/edit/'; 
-            $response = $this->m_guru->get_all_guru()->datatables();
+            $edit_link = 'admin/siswa/edit/'; 
+            $response = $this->m_siswa->get_all_siswa()->datatables();
 
             if($this->logged_level !== "3"){
                 if ($this->input->post('filter_tipe_sekolah') == FALSE) {
@@ -186,7 +185,7 @@ class Guru extends Backend_Controller {
     public function AjaxSave($id = null)
     {
         $this->output->unset_template();
-        $captcha_score = get_recapture_score($this->input->post('gr-token-response'));  
+        $captcha_score = get_recapture_score($this->input->post('sw-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(
@@ -204,17 +203,15 @@ class Guru extends Backend_Controller {
                 $sekolah_id = $this->logged_sekolah_id;
             }
             
-            $this->form_validation->set_rules('nama_guru', 'Nama Guru', 'required');
+            $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
             $this->form_validation->set_rules('nik', 'NIK', 'required');
+            $this->form_validation->set_rules('no_kk', 'No Kartu Keluarga', 'required');
+            $this->form_validation->set_rules('nipd', 'NIPD', 'required');
+            $this->form_validation->set_rules('nisn', 'NISN', 'required');
             $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
             $this->form_validation->set_rules('agama', 'Agama', 'required');
             $this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required');
             $this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required');
-            $this->form_validation->set_rules('jenjang', 'Jenjang', 'required');
-            $this->form_validation->set_rules('jenis_ptk', 'Jenis PTK', 'required');
-            $this->form_validation->set_rules('pangkat', 'Pangkat/Golongan', 'required');
-            $this->form_validation->set_rules('kgb_terakhir', 'Terakhir KGB', 'required');
-            $this->form_validation->set_rules('status_kepegawaian', 'Status Kepegawaian', 'required');
             $this->form_validation->set_rules('nagari_id', 'Alamat', 'required');
             $this->form_validation->set_rules('alamat_lengkap', ' Detail Alamat', 'required');
 
@@ -225,11 +222,11 @@ class Guru extends Backend_Controller {
             if ($this->form_validation->run() == TRUE) {
                 if ($id == FALSE) {
                     $id = null;
-                    $this->m_guru->push_to_data('status', '1');
+                    $this->m_siswa->push_to_data('status', '1');
 
                 }
     
-                $this->m_guru->push_to_data('nagari_id', $nagari_id );
+                $this->m_siswa->push_to_data('nagari_id', $nagari_id );
                 $this->m_guru->push_to_data('sekolah_id', $sekolah_id );
 
                 $this->return = $this->m_guru->save($id);

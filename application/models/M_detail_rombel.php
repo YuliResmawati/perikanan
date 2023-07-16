@@ -9,9 +9,12 @@ class M_detail_rombel extends MY_Model {
     protected $_softdelete = TRUE;
     protected $_order_by = 'id';
     protected $_order = 'ASC';
-    protected $_fields_toshow = ['id','rombel_id','sekolah_id'];
+    protected $_fields_toshow = ['id','rombel_id','sekolah_id','walas_id'];
     protected $_fields = [
-       'id' => 'id'
+       'id' => 'id',
+       'rombel_id' => 'rombel_id',
+       'sekolah_id' => 'sekolah_id',
+       'walas_id' => 'walas_id'
     ];
 
     public function __construct()
@@ -24,6 +27,18 @@ class M_detail_rombel extends MY_Model {
         parent::join('sekolah','detail_rombel.sekolah_id=sekolah.id');
         parent::join('rombel','detail_rombel.rombel_id=rombel.id');
         $this->db->where(array('detail_rombel.sekolah_id' => $sekolah_id ,'sekolah.status' =>'1'));
+        
+        return $this;
+    }
+
+    public function get_all_rombel(){
+        $this->_fields_toshow = [ 'detail_rombel.id','nama_rombel','detail_rombel.sekolah_id','sekolah.status',
+                                    'npsn','nama_sekolah','nama_guru','tingkatan',
+                                    '(select count(id) from detail_siswa where detail_rombel_id = detail_rombel.id) as jumlah_siswa'
+                                ];
+        parent::join('sekolah','detail_rombel.sekolah_id=sekolah.id');
+        parent::join('rombel','detail_rombel.rombel_id=rombel.id');
+        parent::join('guru','detail_rombel.walas_id=guru.id');
         
         return $this;
     }
