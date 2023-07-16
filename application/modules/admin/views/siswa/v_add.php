@@ -2,22 +2,6 @@
     <div class="col-12">
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="sw-token-response" name="sw-token-response">
-
-        <?php
-            if($this->logged_level !== "3"){ ?>
-                <div class="form-group row">
-                    <label for="sekolah_id" class="col-md-2 col-form-label">Nama Sekolah <?= label_required() ?></label>
-                    <div class="col-md-10">
-                        <select class="form-control select2" name="sekolah_id" id="sekolah_id">
-                            <option selected disabled>Pilih Sekolah</option>
-                            <?php 
-                            foreach($sekolah as $row): ?>
-                                <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
-                            <?php $no++; endforeach; ?>
-                        </select>            
-                    </div>
-                </div>
-        <?php } ?>
         <div class="form-group row">
             <label for="nama_siswa" class="col-md-2 col-form-label">Nama Siswa <?= label_required() ?></label>
             <div class="col-md-10">
@@ -35,7 +19,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group row mb-3">
-                    <label for="no_kk" class="col-4 col-form-label">NO Kartu Keluarga <?= label_required() ?></label>
+                    <label for="no_kk" class="col-4 col-form-label">No Kartu Keluarga <?= label_required() ?></label>
                     <div class="col-8">
                         <input type="text" class="form-control" name="no_kk" id="no_kk">
                     </div>
@@ -193,7 +177,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group row mb-3">
-                    <label for="no_kps" class="col-4 col-form-label">No. KPS</label>
+                    <label for="no_kps" class="col-4 col-form-label">No. KKS</label>
                     <div class="col-8">
                         <input type="text" class="form-control" name="no_kps" id="no_kps">
                     </div>

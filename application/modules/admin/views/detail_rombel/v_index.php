@@ -3,7 +3,7 @@
         <div class="form-group row mt-10">
             <label for="filter_sekolah" class="col-md-2 col-form-label">Sekolah</label>
             <div class="col-sm-10">
-                <select id="filter_sekolah" name="filter_sekolah" class="form-control select2" data-search="false" required>
+                <select id="filter_sekolah" name="filter_sekolah" class="form-control select2" required>
                 <option value="ALL" selected>Tampilkan Semua Sekolah</option>
                     <?php foreach($sekolah as $row): ?>
                         <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>

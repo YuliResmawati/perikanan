@@ -20,6 +20,31 @@ class M_rombel extends MY_Model {
         parent::__construct();
     }
 
+    public function get_all_rombel()
+    {   
+        parent::clear_join();
+        $this->_fields_toshow = [
+            'rombel.id as id','tingkatan','nama_rombel'
+        ];
+
+        parent::join('detail_rombel d','rombel.id=d.rombel_id');
+
+        return $this;
+    }
+
+    public function get_rombel_by_sekolah($sekolah_id){
+        $this->_order_by= false;
+        $this->_order = false;
+        $this->_fields_toshow = [ 'rombel.id','tingkatan','nama_rombel'];
+        parent::join('detail_rombel d','rombel.id=d.rombel_id');
+
+        $this->db->where(['sekolah_id' =>$sekolah_id, 'rombel.status' => '1']);
+
+        return $this;
+    }
+
+
+
 
 }
 

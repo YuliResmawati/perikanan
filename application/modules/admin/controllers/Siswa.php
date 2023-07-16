@@ -10,8 +10,8 @@ class Siswa extends Backend_Controller {
 		$this->_init();
 		$this->data['uri_mod'] = 'admin/siswa';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Guru', 'siswa');
-        $this->load->model(array('m_sekolah', 'm_app','m_siswa','m_users'));  
+        $this->breadcrumbs->push('Siswa', 'siswa');
+        $this->load->model(array('m_sekolah', 'm_app','m_siswa','m_users','m_rombel'));  
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -38,7 +38,13 @@ class Siswa extends Backend_Controller {
         $this->data['id_key'] = $this->id_key;
         $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
         $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
+        if($this->logged_level !== "3"){
+            $this->data['rombel'] = $this->m_rombel->get_all_rombel()->findAll();
+        }else{
+            $this->data['rombel'] = $this->m_rombel->get_all_rombel()->findAll();
+            $this->db->where('sekolah_id', $this->logged_sekolah_id);
 
+        }
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
 
 		$this->load->view('siswa/v_index', $this->data);
@@ -89,73 +95,60 @@ class Siswa extends Backend_Controller {
         if ($id == FALSE) {
             $this->modal_name = 'modal-siswa';
 
-            $this->m_guru->push_select('status');
+            $this->m_siswa->push_select('status');
 
             $edit_link = 'admin/siswa/edit/'; 
             $response = $this->m_siswa->get_all_siswa()->datatables();
 
             if($this->logged_level !== "3"){
                 if ($this->input->post('filter_tipe_sekolah') == FALSE) {
-                    $response->where('id', 0);
+                    $response->where('siswa.id', 0);
                 } else {
                     if ($this->input->post('filter_tipe_sekolah') !== 'ALL') {
-                        $response->where('tipe_sekolah', $this->input->post('filter_tipe_sekolah'));
+                        $response->where('s.tipe_sekolah', $this->input->post('filter_tipe_sekolah'));
                     }
                 }
 
                 if ($this->input->post('filter_sekolah') == FALSE) {
-                    $response->where('id', 0);
+                    $response->where('siswa.id', 0);
                 } else {
                     if ($this->input->post('filter_sekolah') !== 'ALL') {
-                        $response->where('sekolah_id', decrypt_url($this->input->post('filter_sekolah'), $this->id_key));
+                        $response->where('sekolah_id', decrypt_url($this->input->post('filter_sekolah'), 'app'));
                     }
                 }
             }else{
                 $response->where('sekolah_id', $this->logged_sekolah_id);
             }
 
-            if ($this->input->post('filter_ptk') == FALSE) {
-                $response->where('id', 0);
+            if ($this->input->post('filter_rombel') == FALSE) {
+                $response->where('siswa.id', 0);
             } else {
-                if ($this->input->post('filter_ptk') !== 'ALL') {
-                    $response->where('jenis_ptk', $this->input->post('filter_ptk'));
+                if ($this->input->post('filter_rombel') !== 'ALL') {
+                    $response->where('rombel_id', decrypt_url($this->input->post('filter_rombel'), 'app'));
                 }
             }
-
-            if ($this->input->post('filter_status_kepegawaian') == FALSE) {
-                $response->where('id', 0);
-            } else {
-                if ($this->input->post('filter_status_kepegawaian') !== 'ALL') {
-                    $response->where('status_kepegawaian', $this->input->post('filter_status_kepegawaian'));
-                }
-            }
-
-            
+           
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
-            $response->edit_column('jenis_ptk', '$1', "jenis_ptk(jenis_ptk)");
-            $response->edit_column('nama_guru', '$1', "name_degree(gelar_depan,nama_guru,gelar_belakang)");        
-            $response->add_column('detail_guru', '$1', "tabel_icon(id,' ','view',' ', $this->id_key, $this->modal_name)");
+            $response->edit_column('alamat', '$1', "format_alamat(nama_nagari,nama_kecamatan,nama_kabupaten,nama_provinsi,'fe-map-pin text-danger mr-1',alamat_lengkap,'fe-phone-call text-success mr-1',no_hp)");
+            $response->edit_column('kelas', '$1 $2', "tingkatan, nama_rombel");
+            $response->add_column('detail_siswa', '$1', "tabel_icon(id,' ','view',' ', $this->id_key, $this->modal_name)");
             $response->edit_column('status', '$1', "str_status(status)");
             $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link', $this->id_key),
                                                     tabel_icon(id,' ','delete',' ', $this->id_key),
                                                     active_status(id,' ',status,$this->id_key,' ')");
             
-            $response = $this->m_guru->datatables(true);
+            $response = $this->m_siswa->datatables(true);
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_guru->get_all_guru()->find($id); 
+            $this->return = $this->m_siswa->get_all_siswa()->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
                 $this->return->nagari_id = ($this->return->nagari_id) ? encrypt_url($this->return->nagari_id, 'app') : '';
-                $this->return->sekolah_id = ($this->return->sekolah_id) ? encrypt_url($this->return->sekolah_id, $this->id_key) : '';
-                $this->return->nama_guru = ($this->return->nama_guru) ? name_degree($this->return->gelar_depan,$this->return->nama_guru,$this->return->gelar_belakang) : '';
+                $this->return->sekolah_lama_id = ($this->return->sekolah_lama_id) ? encrypt_url($this->return->sekolah_lama_id, $this->id_key) : '';
                 $this->return->jenis_kelamin = ($this->return->jenis_kelamin) ? jk($this->return->jenis_kelamin) : '';
-                $this->return->kgb_terakhir = ($this->return->kgb_terakhir) ? date('d F Y', strtotime($this->return->kgb_terakhir)) : '';
-                $this->return->tgl_lahir = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_lahir)) : '';
-                $this->return->tgl_sk_cpns = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_sk_cpns)) : '';
-                $this->return->tgl_sk_pengangkatan = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_sk_pengangkatan)) : '';
+                $this->return->rombel = ($this->return->rombel_id) ? $this->return->tingkatan.' '.$this->return->nama_rombel : '';
 
                 if (decrypt_url($this->return->nagari_id, 'app') != NULL) {
                     $this->return->alamat = "Kelurahan " . uc_words($this->return->nama_nagari) . ", Kecamatan " . uc_words($this->return->nama_kecamatan) . ", " . uc_words($this->return->nama_kabupaten) . ", Provinsi " . uc_words($this->return->nama_provinsi);
@@ -196,13 +189,6 @@ class Siswa extends Backend_Controller {
             $this->result = array('status' => TRUE, 'message' => NULL);
             $id = decrypt_url($id, $this->id_key);
 
-            if($this->logged_level !== "3"){
-                $this->form_validation->set_rules('sekolah_id', 'Nama Sekolah', 'required');
-                $sekolah_id = decrypt_url($this->input->post('sekolah_id'), $this->id_key);
-            }else{
-                $sekolah_id = $this->logged_sekolah_id;
-            }
-            
             $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
             $this->form_validation->set_rules('nik', 'NIK', 'required');
             $this->form_validation->set_rules('no_kk', 'No Kartu Keluarga', 'required');
@@ -216,6 +202,8 @@ class Siswa extends Backend_Controller {
             $this->form_validation->set_rules('alamat_lengkap', ' Detail Alamat', 'required');
 
             $nagari_id = decrypt_url($this->input->post('nagari_id'), 'app');
+            $sekolah_lama_id = decrypt_url($this->input->post('sekolah_lama_id'), $this->id_key);
+
             
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
@@ -227,9 +215,9 @@ class Siswa extends Backend_Controller {
                 }
     
                 $this->m_siswa->push_to_data('nagari_id', $nagari_id );
-                $this->m_guru->push_to_data('sekolah_id', $sekolah_id );
+                $this->m_siswa->push_to_data('sekolah_lama_id', $sekolah_lama_id );
 
-                $this->return = $this->m_guru->save($id);
+                $this->return = $this->m_siswa->save($id);
     
                 if ($this->return) {
                     $this->result = array(
@@ -266,7 +254,7 @@ class Siswa extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->return = $this->m_guru->delete($id);
+            $this->return = $this->m_siswa->delete($id);
 
             if ($this->return) {
                 $this->result = array(
@@ -296,18 +284,18 @@ class Siswa extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->m_guru->push_select('status');
+            $this->m_siswa->push_select('status');
 
-            $check = $this->m_guru->find($id);
+            $check = $this->m_siswa->find($id);
 
             if ($check !== FALSE) {
                 if ($check->status == 0) {
-                    $this->m_guru->push_to_data('status', '1');
+                    $this->m_siswa->push_to_data('status', '1');
                 } else {
-                    $this->m_guru->push_to_data('status', '0');
+                    $this->m_siswa->push_to_data('status', '0');
                 }
 
-                $this->return = $this->m_guru->save($id);
+                $this->return = $this->m_siswa->save($id);
 
                 if ($this->return) {
                     $this->result = array(
@@ -345,16 +333,20 @@ class Siswa extends Backend_Controller {
 			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('master/golongan')));
         }
 
-        $this->data['page_title'] = "Data Guru";
-        $this->data['page_description'] = "Halaman Data Guru.";
+        $this->data['page_title'] = "Data Siswa";
+        $this->data['page_description'] = "Halaman Data Siswa.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
-        $this->breadcrumbs->push('Edit', 'admin/guru/edit');
+        $this->breadcrumbs->push('Edit', 'admin/siswa/edit');
 
-        $this->load->view('guru/v_edit', $this->data);
+        $this->load->view('siswa/v_edit', $this->data);
     }
+
+    
+
+
 }
 
 /* End of file Sample_upload.php */

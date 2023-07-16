@@ -142,6 +142,84 @@ class M_app extends MY_Model {
         }
     }
 
+    public function AjaxGetSekolahByTipe($tipe_sekolah = null)
+    {
+        $this->output->unset_template();
+        $tipe_sekolah = $this->input->post('tipe_sekolah');
+
+            if ($tipe_sekolah != FALSE) {
+                
+                $this->return = $this->m_sekolah->get_sekolah_by_tipe($tipe_sekolah)->findAll();
+                foreach ($this->return as $key => $value) {
+                    $this->return[$key]->id = encrypt_url($value->id, $this->id_key);
+                }
+
+                if ($this->return) {
+                    $this->result = array (
+                        'status' => TRUE,
+                        'message' => 'Berhasil mengambil data',
+                        'token' => $this->security->get_csrf_hash(),
+                        'data' => $this->return
+                    );
+                } else {
+                    $this->result = array (
+                        'status' => FALSE,
+                        'message' => 'Sekolah tidak dapat ditampilkan',
+                        'data' => []
+                    );
+                }
+            } else {
+                $this->result = array('status' => FALSE, 'message' => 'ID tidak valid');
+            }
+        
+
+        if ($this->result) {
+            $this->output->set_output(json_encode($this->result));
+        } else {
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan.']));
+        }
+
+    }
+
+    public function AjaxGetRombelBySekolah($sekolah_id = null)
+    {
+        $this->output->unset_template();
+        $sekolah_id = decrypt_url($this->input->post('sekolah_id'), $this->id_key);
+
+            if ($sekolah_id != FALSE) {
+                
+                $this->return = $this->m_rombel->get_rombel_by_sekolah($sekolah_id)->findAll();
+                foreach ($this->return as $key => $value) {
+                    $this->return[$key]->id = encrypt_url($value->id, $this->id_key);
+                }
+
+                if ($this->return) {
+                    $this->result = array (
+                        'status' => TRUE,
+                        'message' => 'Berhasil mengambil data',
+                        'token' => $this->security->get_csrf_hash(),
+                        'data' => $this->return
+                    );
+                } else {
+                    $this->result = array (
+                        'status' => FALSE,
+                        'message' => 'Sekolah tidak dapat ditampilkan',
+                        'data' => []
+                    );
+                }
+            } else {
+                $this->result = array('status' => FALSE, 'message' => 'ID tidak valid');
+            }
+        
+
+        if ($this->result) {
+            $this->output->set_output(json_encode($this->result));
+        } else {
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan.']));
+        }
+
+    }
+
 
 }
 

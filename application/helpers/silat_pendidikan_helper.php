@@ -1336,7 +1336,8 @@ if (!function_exists('btn_verifikasi_mutasi'))
     if (!function_exists('format_alamat')) {
         function format_alamat($nagari = '', $kecamatan = '', $kabupaten = '', $provinsi = '', $icon = '', $alamat_lengkap = '', $icon2 = '', $no_telp = '')
         {
-            $result = '
+            if(!empty($nagari)){
+                $result = '
                 <div class="media d-inline-flex align-items-center">
                     <div class="media-body">
                         <span class="font-13">
@@ -1357,6 +1358,31 @@ if (!function_exists('btn_verifikasi_mutasi'))
                     </div>
                 </div>
             ';
+
+            }else{
+                $result = '
+                <div class="media d-inline-flex align-items-center">
+                    <div class="media-body">
+                        <span class="font-13">
+                        '.uc_words($alamat_lengkap).'
+                        </span>
+                        <div class="mb-1">
+                            <i class="'.$icon.'"></i>
+                            <span class="font-13">
+                            -
+                            </span>
+                        </div>
+                        <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+    
+                        <i class="'.$icon2.'"></i>
+                        <span class="font-13">
+                            '.$no_telp.'
+                        </span>
+                    </div>
+                </div>
+            ';
+
+            }
     
             return $result;
         }
