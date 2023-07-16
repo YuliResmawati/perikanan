@@ -23,6 +23,11 @@ class Migration_Riwayat_kgb extends CI_Migration {
                 'type' => 'date',
                 'default' => null
             ),
+            'berkas' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
             'created_at' => array(
                 'type' => 'timestamp',
                 'default' => null,
