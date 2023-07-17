@@ -1262,133 +1262,134 @@ if (!function_exists('btn_verifikasi_mutasi'))
         }
         return $a;
     }
+}
 
 
-    if (!function_exists('tabel_icon_mutasi')) {
-        function tabel_icon_mutasi($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status)
-        {
-            $a = '';
-    
-            if ($id !== $session_id) {
-                if ($keyid !== '') {
-                    $id = encrypt_url($id, $keyid);
-                }
-    
-                if ($link_url !== '') {
-                    $a_tag = 'a';
-                    $link_url = 'href="' . base_url($link_url . $id) . '"';
-                    $modal_attr = '';
-                } else {
-                    $a_tag = 'span';
-                    $link_url = "";
-                    if ($modal_name !== '') {
-                        $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
-                    } else {
-                        $modal_attr = '';
-                    }
-                }
-    
-                if($status == '0'){
-                    if ($action == "delete") {
-                        $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-hapus btn btn-danger waves-effect waves-light btn-xs" title="Hapus" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
-                                        <i class="icon-trash"></i>
-                                </' . $a_tag . '>';
-                    } elseif ($action == "edit") {
-                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
-                                        <i class="icon-note"></i>
-                                </' . $a_tag . '>';
-                    }
-                } else {
-                    $a = '<strong>-</strong>';
-                }
-                    
-                
-            }
-    
-            return $a;
-        }
-    }}
-
-    if (!function_exists('two_row_two_line')) {
-        function two_row_two_line($first_row = '', $line_1 = '', $second_row = '', $line_2 = '')
-        {
-            $result = '
-                <div class="media d-inline-flex align-items-center">
-                    <div class="media-body">
-                        <div class="mb-1">
-                            <span class="font-13">
-                            '.$first_row.' - '.date('d-m-Y', strtotime($line_1)).'
-                            </span>
-                            <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
-
-                        </div>
-                        <span class="font-13">
-                            '.$second_row.' - '.date('d-m-Y', strtotime($line_2)).'
-                        </span>
-                    </div>
-                </div>
-            ';
-    
-            return $result;
-        }
-    }
-    
-    if (!function_exists('format_alamat')) {
-        function format_alamat($nagari = '', $kecamatan = '', $kabupaten = '', $provinsi = '', $icon = '', $alamat_lengkap = '', $icon2 = '', $no_telp = '')
-        {
-            $result = '
-                <div class="media d-inline-flex align-items-center">
-                    <div class="media-body">
-                        <span class="font-13">
-                        '.uc_words($alamat_lengkap).'
-                        </span>
-                        <div class="mb-1">
-                            <i class="'.$icon.'"></i>
-                            <span class="font-13">
-                            '.'Kelurahan ' . uc_words($nagari) . ', Kecamatan ' . uc_words($kecamatan) . ', ' . uc_words($kabupaten) . ', Provinsi ' . uc_words($provinsi).'
-                            </span>
-                        </div>
-                        <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
-    
-                        <i class="'.$icon2.'"></i>
-                        <span class="font-13">
-                            '.$no_telp.'
-                        </span>
-                    </div>
-                </div>
-            ';
-    
-            return $result;
-        }
-    }
-
-    if (!function_exists('jenis_ptk')) 
+if (!function_exists('tabel_icon_mutasi')) {
+    function tabel_icon_mutasi($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status)
     {
-        function jenis_ptk($jenis_ptk)
-        {
-            if (!empty($jenis_ptk)) {
-                if($jenis_ptk == 'Tenaga Administrasi Sekolah' || $jenis_ptk == 'Tenaga Perpustakaan'){
-                    $result = "<span class='badge bg-soft-success text-success'>$jenis_ptk</span>";
-                } else if($jenis_ptk == 'Petugas Keamanan' || $jenis_ptk == 'Penjaga Sekolah' || $jenis_ptk == 'Pesuruh/Office Boy'|| $jenis_ptk == 'Tukang Kebun'){
-                    $result = "<span class='badge bg-soft-pink text-pink'>$jenis_ptk</span>";
-                }else if($jenis_ptk == 'Guru BK' || $jenis_ptk == 'Guru Mapel' || $jenis_ptk == 'Guru TIK'|| $jenis_ptk == 'Guru Kelas'){
-                    $result = "<span class='badge bg-soft-info text-info'>$jenis_ptk</span>";
-                }else if($jenis_ptk == 'Tutor' || $jenis_ptk == 'Pamong Belajar' || $jenis_ptk == 'Guru Pengganti'|| $jenis_ptk == 'Guru Pendamping Khusus'){
-                    $result = "<span class='badge bg-soft-info text-info'>$jenis_ptk</span>";
-                }else if($jenis_ptk == 'Kepala Sekolah'){
-                    $result = "<span class='badge bg-soft-danger text-danger'>$jenis_ptk</span>";
-                }else{
-                    $result = "<span class='badge bg-soft-blue text-blue'>$jenis_ptk</span>";
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = encrypt_url($id, $keyid);
+            }
+
+            if ($link_url !== '') {
+                $a_tag = 'a';
+                $link_url = 'href="' . base_url($link_url . $id) . '"';
+                $modal_attr = '';
+            } else {
+                $a_tag = 'span';
+                $link_url = "";
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            if($status == '0'){
+                if ($action == "delete") {
+                    $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-hapus btn btn-danger waves-effect waves-light btn-xs" title="Hapus" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                                    <i class="icon-trash"></i>
+                            </' . $a_tag . '>';
+                } elseif ($action == "edit") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                    <i class="icon-note"></i>
+                            </' . $a_tag . '>';
                 }
             } else {
-                $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
+                $a = '<strong>-</strong>';
             }
-    
-            return $result;
+                
+            
         }
-    }
 
-    if (!function_exists('name_degree')) 
+        return $a;
+    }
+}
+
+if (!function_exists('two_row_two_line')) {
+    function two_row_two_line($first_row = '', $line_1 = '', $second_row = '', $line_2 = '')
+    {
+        $result = '
+            <div class="media d-inline-flex align-items-center">
+                <div class="media-body">
+                    <div class="mb-1">
+                        <span class="font-13">
+                        '.$first_row.' - '.date('d-m-Y', strtotime($line_1)).'
+                        </span>
+                        <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+
+                    </div>
+                    <span class="font-13">
+                        '.$second_row.' - '.date('d-m-Y', strtotime($line_2)).'
+                    </span>
+                </div>
+            </div>
+        ';
+
+        return $result;
+    }
+}
+
+if (!function_exists('format_alamat')) {
+    function format_alamat($nagari = '', $kecamatan = '', $kabupaten = '', $provinsi = '', $icon = '', $alamat_lengkap = '', $icon2 = '', $no_telp = '')
+    {
+        $result = '
+            <div class="media d-inline-flex align-items-center">
+                <div class="media-body">
+                    <span class="font-13">
+                    '.uc_words($alamat_lengkap).'
+                    </span>
+                    <div class="mb-1">
+                        <i class="'.$icon.'"></i>
+                        <span class="font-13">
+                        '.'Kelurahan ' . uc_words($nagari) . ', Kecamatan ' . uc_words($kecamatan) . ', ' . uc_words($kabupaten) . ', Provinsi ' . uc_words($provinsi).'
+                        </span>
+                    </div>
+                    <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+
+                    <i class="'.$icon2.'"></i>
+                    <span class="font-13">
+                        '.$no_telp.'
+                    </span>
+                </div>
+            </div>
+        ';
+
+        return $result;
+    }
+}
+
+if (!function_exists('jenis_ptk')) 
+{
+    function jenis_ptk($jenis_ptk)
+    {
+        if (!empty($jenis_ptk)) {
+            if($jenis_ptk == 'Tenaga Administrasi Sekolah' || $jenis_ptk == 'Tenaga Perpustakaan'){
+                $result = "<span class='badge bg-soft-success text-success'>$jenis_ptk</span>";
+            } else if($jenis_ptk == 'Petugas Keamanan' || $jenis_ptk == 'Penjaga Sekolah' || $jenis_ptk == 'Pesuruh/Office Boy'|| $jenis_ptk == 'Tukang Kebun'){
+                $result = "<span class='badge bg-soft-pink text-pink'>$jenis_ptk</span>";
+            }else if($jenis_ptk == 'Guru BK' || $jenis_ptk == 'Guru Mapel' || $jenis_ptk == 'Guru TIK'|| $jenis_ptk == 'Guru Kelas'){
+                $result = "<span class='badge bg-soft-info text-info'>$jenis_ptk</span>";
+            }else if($jenis_ptk == 'Tutor' || $jenis_ptk == 'Pamong Belajar' || $jenis_ptk == 'Guru Pengganti'|| $jenis_ptk == 'Guru Pendamping Khusus'){
+                $result = "<span class='badge bg-soft-info text-info'>$jenis_ptk</span>";
+            }else if($jenis_ptk == 'Kepala Sekolah'){
+                $result = "<span class='badge bg-soft-danger text-danger'>$jenis_ptk</span>";
+            }else{
+                $result = "<span class='badge bg-soft-blue text-blue'>$jenis_ptk</span>";
+            }
+        } else {
+            $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
+        }
+
+        return $result;
+    }
+}
+
+if (!function_exists('name_degree')) 
 {
     function name_degree($gelar_depan, $nama_guru, $gelar_belakang, $xss_option = FALSE)
     {
@@ -1449,5 +1450,77 @@ if (!function_exists('jumlah'))
     }
 }
 
+if (!function_exists('btn_kgb')) 
+{
+    function btn_kgb($id, $session_id, $keyid = '', $link_status = '', $modal_name = '', $attr = '', $guru = '')
+    {
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = encrypt_url($id, $keyid);
+            }
+
+            if ($link_status !== '' && $link_status !== ' ' ) {
+                $a_tag = 'a';
+                $link_status = 'href="' . base_url($link_status . $id) . '"';
+            } else {
+                $a_tag = 'span';
+                $link_status = "";
+
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            
+            $a = '<' . $a_tag . ' ' . $link_status . ' class="button-ajukan btn btn-icons btn-rounded btn-outline-success" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Ajukan KGB"  data-id="' . $id . '" data-guru="' . $guru . '" ' . $modal_attr . '>
+            <i class="mdi mdi-plus-outline"></i>
+            </' . $a_tag . '>';
+        }
+        return $a;
+    }
+}
+
+if (!function_exists('aksi_rekening_media'))
+{
+    function aksi_rekening_media($id, $session_id, $link_url = '', $keyid = '', $modal_name = '', $attr = '', $guru_id = '', $status)
+    {
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = (!empty($id)) ? encrypt_url($id, $keyid) : null;
+                $guru_id = (!empty($id)) ? encrypt_url($guru_id, $keyid) : null;
+            }
+
+            if ($link_url !== '') {
+                $a_tag = 'a';
+                $link_url = 'href="' . base_url($link_url . $id) . '"';
+                $modal_attr = '';
+            } else {
+                $a_tag = 'span';
+                $link_url = "";
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            if ($status == '1') {
+                $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-create btn btn-icons btn-rounded btn-success" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Ajukan KGB" data-id="' . $id . '" data-guru="' . $guru_id . '" ' . $modal_attr . '>
+                <i class="mdi mdi-plus">
+            </' . $a_tag . '>';
+            } else {
+                $a = '-';
+            }
+        }
+
+        return $a;
+    }
+}
 
     
