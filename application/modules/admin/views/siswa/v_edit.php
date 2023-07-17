@@ -1,33 +1,14 @@
 <div class="row mt-4">
     <div class="col-12">
     <?= form_open($uri_mod.'/AjaxSave/'.encrypt_url($id, $id_key), 'id="formAjax" class="form"') ?> 
-        <input type="hidden" class="gr-token-response" name="gr-token-response">
-
-        <?php
-            if($this->logged_level !== "3"){ ?>
-                <div class="form-group row">
-                    <label for="sekolah_id" class="col-md-2 col-form-label">Nama Sekolah <?= label_required() ?></label>
-                    <div class="col-md-10">
-                        <select class="form-control select2" name="sekolah_id" id="sekolah_id">
-                            <option selected disabled>Pilih Sekolah</option>
-                            <?php 
-                            foreach($sekolah as $row): ?>
-                                <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
-                            <?php $no++; endforeach; ?>
-                        </select>            
-                    </div>
-                </div>
-        <?php } ?>
-
+        <input type="hidden" class="sw-token-response" name="sw-token-response">
         <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="nama_guru" class="col-4 col-form-label">Nama Guru <?= label_required() ?></label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="nama_guru" id="nama_guru">
-                    </div>
-                </div>
+            <label for="nama_siswa" class="col-md-2 col-form-label">Nama Siswa <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="nama_siswa" id="nama_siswa">
             </div>
+        </div>
+        <div class="form-group row">
             <div class="col-md-6">
                 <div class="form-group row mb-3">
                     <label for="nik" class="col-4 col-form-label">NIK <?= label_required() ?></label>
@@ -36,45 +17,34 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="no_kk" class="col-4 col-form-label">No Kartu Keluarga <?= label_required() ?></label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_kk" id="no_kk">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="form-group row">
             <div class="col-md-6">
                 <div class="form-group row">
-                    <label for="gelar_depan" class="col-4 col-form-label">Gelar Depan</label>
+                    <label for="nipd" class="col-4 col-form-label">NIPD</label>
                     <div class="col-8">
-                        <input type="text" class="form-control" name="gelar_depan" id="gelar_depan">
+                        <input type="text" class="form-control" name="nipd" id="nipd">
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group row mb-3">
-                    <label for="gelar_belakang" class="col-4 col-form-label">Gelar Belakang</label>
+                    <label for="nisn" class="col-4 col-form-label">NISN</label>
                     <div class="col-8">
-                        <input type="text" class="form-control" name="gelar_belakang" id="gelar_belakang">
+                        <input type="text" class="form-control" name="nisn" id="nisn">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="nip" class="col-4 col-form-label">NIP</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="nip" id="nip">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="nuptk" class="col-4 col-form-label">NUPTK</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="nuptk" id="nuptk">
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="form-group row">
             <div class="col-md-6">
                 <div class="form-group row">
@@ -125,208 +95,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="jenjang" class="col-4 col-form-label">Jenjang <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="jenjang" id="jenjang">
-                            <option selected disabled>Pilih Jenjang</option>
-                            <option value="PAUD">PAUD</option>
-                            <option value="PNF">PNF</option>
-                            <option value="SMP">SMP</option>
-                            <option value="SD">SD</option>
-                        </select>
-                    </div>                
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="status_tugas" class="col-4 col-form-label">Status Tugas</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="status_tugas" id="status_tugas">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="sk_cpns" class="col-4 col-form-label">No. SK CPNS</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="sk_cpns" id="sk_cpns">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="tgl_sk_cpns" class="col-4 col-form-label">Tanggal SK CPNS</label>
-                    <div class="col-8">
-                        <input type="date" class="form-control" name="tgl_sk_cpns" id="tgl_sk_cpns">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="sk_pengangkatan" class="col-4 col-form-label">No. SK Pengangkatan</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="sk_pengangkatan" id="sk_pengangkatan">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="tgl_sk_pengangkatan" class="col-4 col-form-label">Tanggal SK Pengangkatan</label>
-                    <div class="col-8">
-                        <input type="date" class="form-control" name="tgl_sk_pengangkatan" id="tgl_sk_pengangkatan">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="jenis_ptk" class="col-4 col-form-label">Jenis PTK <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="jenis_ptk" id="jenis_ptk">
-                            <option selected disabled>Pilih Jenis PTK</option>
-                            <option value="Tenaga Administrasi Sekolah">Tenaga Administrasi Sekolah</option>
-                            <option value="Guru BK">Guru BK</option>
-                            <option value="Tukang Kebun">Tukang Kebun</option>
-                            <option value="Tutor">Tutor</option>
-                            <option value="Pesuruh/Office Boy">Pesuruh/Office Boy</option>
-                            <option value="Pamong Belajar">Pamong Belajar</option>
-                            <option value="Guru Pengganti">Guru Pengganti</option>
-                            <option value="Kepala Sekolah">Kepala Sekolah</option>
-                            <option value="Guru Mapel">Guru Mapel</option>
-                            <option value="Guru TIK">Guru TIK</option>
-                            <option value="Guru Pendamping Khusus">Guru Pendamping Khusus</option>
-                            <option value="Guru Kelas">Guru Kelas</option>
-                            <option value="Tenaga Perpustakaan">Tenaga Perpustakaan</option>
-                            <option value="Penjaga Sekolah">Penjaga Sekolah</option>
-                            <option value="Petugas Keamanan">Petugas Keamanan</option>
-                        </select>                    
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="pendidikan" class="col-4 col-form-label">Pendidikan Terakhir</label>
-                    <div class="col-8">
-                    <select class="form-control select2" name="pendidikan" id="pendidikan">
-                            <option selected disabled>Pilih Jenis Pendidikan Terakhir</option>
-                            <option value="SMP/Sederajat">SMP/Sederajat</option>
-                            <option value="SMA/Sederajat">SMA/Sederajat</option>
-                            <option value="D1">D1</option>
-                            <option value="D2">D2</option>
-                            <option value="D3">D3</option>
-                            <option value="D4">D4</option>
-                            <option value="S1">S1</option>
-                            <option value="S2">S2</option>
-                            <option value="S3">S3</option>
-                        </select>                     
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="bidang_studi_pendidikan" class="col-4 col-form-label">Bidang Studi Pendidikan</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="bidang_studi_pendidikan" id="bidang_studi_pendidikan">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="bidang_studi_sertifikasi" class="col-4 col-form-label">Bidang Sertifikasi</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="bidang_studi_sertifikasi" id="bidang_studi_sertifikasi">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="pangkat" class="col-4 col-form-label">Pangkat/Golongan <?= label_required() ?></label>
-                    <div class="col-8">
-                    <select class="form-control select2" name="pangkat" id="pangkat">
-                            <option selected disabled>Pilih Pangkat/Golongan Terakhir</option>
-                            <option value="I/a">I/a</option>
-                            <option value="I/b">I/b</option>
-                            <option value="I/c">I/c</option>
-                            <option value="I/d">I/d</option>
-                            <option value="II/a">II/a</option>
-                            <option value="II/b">II/b</option>
-                            <option value="II/c">II/c</option>
-                            <option value="II/d">II/d</option>
-                            <option value="III/a">III/a</option>
-                            <option value="III/b">III/b</option>
-                            <option value="III/c">III/c</option>
-                            <option value="III/d">III/d</option>
-                            <option value="IV/a">IV/a</option>
-                            <option value="IV/b">IV/b</option>
-                            <option value="IV/c">IV/c</option>
-                            <option value="IV/d">IV/d</option>
-                        </select>                     
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="kgb_terakhir" class="col-4 col-form-label">Terakhir KGB <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="kgb_terakhir" id="kgb_terakhir">
-                            <option selected disabled>Pilih Tahun</option>
-                            <?php 
-                            $sekarang = date('Y');
-                            for($i=2018;$i<=$sekarang;$i++): ?>
-                                <option value="<?= $i ?>"><?= $i ?></option>
-                            <?php $no++; endfor; ?>
-                        </select>            
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="status_kepegawaian" class="col-4 col-form-label">Status Kepegawaian <?= label_required() ?></label>
-                    <div class="col-8">
-                        <select class="form-control select2" name="status_kepegawaian" id="status_kepegawaian">
-                            <option selected disabled>Pilih Status Kepegawaian</option>
-                            <option value="Tenaga Honor Sekolah">Tenaga Honor Sekolah</option>
-                            <option value="PNS Depag">PNS Depag</option>
-                            <option value="PNS Diperbantukan">PNS Diperbantukan</option>
-                            <option value="Guru Honor Sekolah">Guru Honor Sekolah</option>
-                            <option value="GTY/PTY">GTY/PTY</option>
-                            <option value="PNS">PNS</option>
-                            <option value="Honor Daerah TK.II Kab/Kota">Honor Daerah TK.II Kab/Kota</option>
-                            <option value="PPPK">PPPK</option>
-                        </select>                      
-                </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row mb-3">
-                    <label for="no_hp" class="col-4 col-form-label">Nomor Telp</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="no_hp" id="no_hp">
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="form-group row">
             <label for="alamat" class="col-md-2 col-form-label">Alamat (Provinsi, Kota, Kecamatan, Kelurahan) <?= label_required() ?></label>
             <div class="col-md-10">
@@ -345,6 +113,211 @@
             </div>
         </div>
 
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="jenis_tinggal" class="col-4 col-form-label">Tinggal bersama</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="jenis_tinggal" id="jenis_tinggal">
+                    </div>                
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="transportasi" class="col-4 col-form-label">Transportasi</label>
+                    <div class="col-8">
+                        <select class="form-control select2" name="transportasi" id="transportasi">
+                            <option selected disabled>Pilih Jenis Transportasi</option>
+                            <option value="Mobil/bus antar jemput">Mobil/bus antar jemput</option>
+                            <option value="Kereta api">Kereta api</option>
+                            <option value="Angkutan umum/ bus/ pete-pete">Angkutan umum/ bus/ pete-pete</option>
+                            <option value="Sepeda">Sepeda</option>
+                            <option value="Kendaraan Pribadi">Kendaraan Pribadi</option>
+                            <option value="Andong/bendi/sado/dokar/delman/becak">Andong/bendi/sado/dokar/delman/becak</option>
+                            <option value="Mobil pribadi">Mobil pribadi</option>
+                            <option value="Jalan kaki">Jalan kaki</option>
+                            <option value="Sepeda Motor">Sepeda Motor</option>
+                            <option value="Ojek">Ojek</option>
+                            <option value="Naik Angkot">Naik Angkot</option>
+                            <option value="Sepeda motor">Sepeda motor</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="no_hp" class="col-4 col-form-label">Nomor Hp</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_hp" id="no_hp">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="email" class="col-4 col-form-label">Email</label>
+                    <div class="col-8">
+                        <input type="email" class="form-control" name="email" id="email">
+                </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="skhun" class="col-4 col-form-label">No. SKHUN</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="skhun" id="skhun">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="no_kps" class="col-4 col-form-label">No. KKS</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_kps" id="no_kps">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="no_peserta_un" class="col-4 col-form-label">No. Peserta UN</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_peserta_un" id="no_peserta_un">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="no_seri_ijazah" class="col-4 col-form-label">No. Seri Ijazah</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_seri_ijazah" id="no_seri_ijazah">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="no_kip" class="col-4 col-form-label">No. KIP</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_kip" id="no_kip">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="no_kks" class="col-4 col-form-label">No. KKS</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_kks" id="no_kks">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="no_akta_lahir" class="col-4 col-form-label">No. Akta Lahir</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_akta_lahir" id="no_akta_lahir">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="no_rekening" class="col-4 col-form-label">No. Rekening</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="no_rekening" id="no_rekening">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="bank" class="col-4 col-form-label">Nama Bank</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="bank" id="bank">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="atas_nama" class="col-4 col-form-label">Rekening Atas Nama</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="atas_nama" id="atas_nama">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="kelayakan_pip" class="col-4 col-form-label">Kelayakan PIP</label>
+                    <div class="col-8">
+                        <select class="form-control select2" name="kelayakan_pip" id="kelayakan_pip">
+                            <option selected disabled>Pilih Ya atau Tidak</option>
+                            <option value="Ya">Ya</option>
+                            <option value="Tidak">Tidak</option>
+                        </select>                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="alasan" class="col-4 col-form-label">Alasan Kelayakan</label>
+                    <div class="col-8">
+                        <textarea class="form-control" name="alasan" id="alasan" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="kebutuhan_khusus" class="col-4 col-form-label">Kebutuhan Khusus</label>
+                    <div class="col-8">
+                        <select class="form-control select2" name="kebutuhan_khusus" id="kebutuhan_khusus">
+                            <option selected disabled>Pilih Ada atau Tidak Ada</option>
+                            <option value="Ada">Ada</option>
+                            <option value="Tidak Ada">Tidak Ada</option>
+                        </select>                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-3">
+                    <label for="anak_ke" class="col-4 col-form-label">Anak Ke</label>
+                    <div class="col-8">
+                        <input type="number" class="form-control" name="anak_ke" id="anak_ke">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="sekolah_lama_id" class="col-md-2 col-form-label">Nama Sekolah Sebelumnya</label>
+            <div class="col-md-10">
+                <select class="form-control select2" name="sekolah_lama_id" id="sekolah_lama_id">
+                    <option selected disabled>Pilih Sekolah</option>
+                    <?php 
+                    foreach($sekolah as $row): ?>
+                        <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
+                    <?php $no++; endforeach; ?>
+                </select>            
+            </div>
+        </div>
         <div class="row mt-3">
             <div class="col-12 text-center">
                 <button type="submit" id="submit-btn" class="btn btn-success waves-effect waves-light m-1">
@@ -394,9 +367,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#nik').mask('0000000000000000');
-        $('#nuptk').mask('0000000000000000');
-        $('#nip').mask('000000000000000000');
-        $('#no_hp').mask('00000000000000000000');
+        $('#no_kk').mask('0000000000000000');
+        $('#nipd').mask('000000000000000000');
+        $('#nisn').mask('00000000000000000000');
 
         ajax_get_region = {
             element: $('#data_alamat_domisili'),
@@ -418,34 +391,38 @@
 
         data = get_data_by_id(aOption);
         if (data != false) {
-            $('select[name="sekolah_id"]').val(data.data.sekolah_id).change();
+            $('#nama_siswa').val(data.data.nama_siswa);
             $('#nik').val(data.data.nik);
-            $('#nip').val(data.data.nip);
-            $('#nama_guru').val(data.data.nama_guru);
-            $('#nuptk').val(data.data.nuptk);
+            $('#no_kk').val(data.data.no_kk);
+            $('#nipd').val(data.data.nipd);
+            $('#nisn').val(data.data.nisn);
             $('select[name="jenis_kelamin"]').val(data.data.jenis_kelamin).change();
             $('select[name="agama"]').val(data.data.agama).change();
             $('#tempat_lahir').val(data.data.tempat_lahir);
             $('#tgl_lahir').val(data.data.tgl_lahir);
-            $('#status_tugas').val(data.data.status_tugas);
-            $('select[name="jenjang"]').val(data.data.jenjang).change();
+            $('#jenis_tinggal').val(data.data.jenis_tinggal);
+            $('select[name="transportasi"]').val(data.data.transportasi).change();
             $('#no_hp').val(data.data.no_hp);
-            $('#sk_cpns').val(data.data.sk_cpns);
-            $('#tgl_sk_cpns').val(data.data.tgl_sk_cpns);
-            $('#sk_pengangkatan').val(data.data.sk_pengangkatan);
-            $('#tgl_sk_pengangkatan').val(data.data.tgl_sk_pengangkatan);
-            $('select[name="jenis_ptk"]').val(data.data.jenis_ptk).change();
-            $('select[name="pendidikan"]').val(data.data.pendidikan).change();
-            $('#bidang_studi_pendidikan').val(data.data.bidang_studi_pendidikan);
-            $('#bidang_studi_sertifikasi').val(data.data.bidang_studi_sertifikasi);
-            $('select[name="status_kepegawaian"]').val(data.data.status_kepegawaian).change();
-            $('select[name="pangkat"]').val(data.data.pangkat).change();
+            $('#email').val(data.data.email);
+            $('#skhun').val(data.data.skhun);
+            $('#no_kps').val(data.data.no_kps);
+            $('#no_peserta_un').val(data.data.no_peserta_un);
+            $('#no_seri_ijazah').val(data.data.no_seri_ijazah);
+            $('#no_kip').val(data.data.no_kip);
+            $('#no_kks').val(data.data.no_kks);
+            $('#no_akta_lahir').val(data.data.no_akta_lahir);
+            $('#no_rekening').val(data.data.no_rekening);
+            $('#bank').val(data.data.bank);
+            $('#atas_nama').val(data.data.atas_nama);
+            $('select[name="kelayakan_pip"]').val(data.data.kelayakan_pip).change();
+            $('#alasan').val(data.data.alasan);
+            $('select[name="kebutuhan_khusus"]').val(data.data.kebutuhan_khusus).change();
+            $('#anak_ke').val(data.data.anak_ke);
+            $('select[name="sekolah_lama_id"]').val(data.data.sekolah_lama_id).change();
             $('#alamat_lengkap').val(data.data.alamat_lengkap);
             $('#nagari').val(data.data.alamat);
             $('#nagari_id').val(data.data.nagari_id);
-            $('select[name="kgb_terakhir"]').val(data.data.kgb_terakhir).change();
-            $('#gelar_depan').val(data.data.gelar_depan);
-            $('#gelar_belakang').val(data.data.gelar_belakang);
+
         }
 
     });
@@ -471,7 +448,7 @@
         $('#button-value').html("Loading...");
         grecaptcha.ready(function() {
             grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'submit'}).then(function(token) {
-                document.querySelector('.gr-token-response').value = token;
+                document.querySelector('.sw-token-response').value = token;
                 $('#formAjax').submit()
             });
         });

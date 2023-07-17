@@ -97,7 +97,7 @@ class Guru extends Backend_Controller {
 
             if($this->logged_level !== "3"){
                 if ($this->input->post('filter_tipe_sekolah') == FALSE) {
-                    $response->where('id', 0);
+                    $response->where('guru.id', 0);
                 } else {
                     if ($this->input->post('filter_tipe_sekolah') !== 'ALL') {
                         $response->where('tipe_sekolah', $this->input->post('filter_tipe_sekolah'));
@@ -105,10 +105,10 @@ class Guru extends Backend_Controller {
                 }
 
                 if ($this->input->post('filter_sekolah') == FALSE) {
-                    $response->where('id', 0);
+                    $response->where('guru.id', 0);
                 } else {
                     if ($this->input->post('filter_sekolah') !== 'ALL') {
-                        $response->where('sekolah_id', decrypt_url($this->input->post('filter_sekolah'), $this->id_key));
+                        $response->where('sekolah_id', decrypt_url($this->input->post('filter_sekolah'), 'app'));
                     }
                 }
             }else{
@@ -116,7 +116,7 @@ class Guru extends Backend_Controller {
             }
 
             if ($this->input->post('filter_ptk') == FALSE) {
-                $response->where('id', 0);
+                $response->where('guru.id', 0);
             } else {
                 if ($this->input->post('filter_ptk') !== 'ALL') {
                     $response->where('jenis_ptk', $this->input->post('filter_ptk'));
@@ -124,7 +124,7 @@ class Guru extends Backend_Controller {
             }
 
             if ($this->input->post('filter_status_kepegawaian') == FALSE) {
-                $response->where('id', 0);
+                $response->where('guru.id', 0);
             } else {
                 if ($this->input->post('filter_status_kepegawaian') !== 'ALL') {
                     $response->where('status_kepegawaian', $this->input->post('filter_status_kepegawaian'));

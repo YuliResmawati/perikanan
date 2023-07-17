@@ -1,53 +1,7 @@
 <?php
 $form_name = "form-siswa";
 $modal_name = "modal-siswa";
-
-if($this->logged_level !== "3"){ ?>
-    <div class="form-group row mt-10">
-        <label for="filter_tipe_sekolah" class="col-md-2 col-form-label">Tingkatan Sekolah</label>
-        <div class="col-sm-10">
-            <select id="filter_tipe_sekolah" name="filter_tipe_sekolah" class="form-control select2" data-search="false" required>
-                <option value="ALL" selected>Tampilkan Semua Tingkatan</option>
-                <?php foreach($tipe_sekolah as $row): ?>
-                    <option value="<?= $row->tipe_sekolah ?>"><?= $row->tipe_sekolah ?></option>
-                <?php $no++; endforeach; ?>
-            </select>
-        </div>
-    </div>
-
-    <div class="form-group row mt-10">
-        <label for="filter_sekolah" class="col-md-2 col-form-label">Sekolah</label>
-        <div class="col-sm-10">
-            <select id="filter_sekolah" name="filter_sekolah" class="form-control select2" required>
-            <option value="ALL" selected>Tampilkan Semua Sekolah</option>
-                <?php foreach($sekolah as $row): ?>
-                    <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
-                <?php $no++; endforeach; ?>
-            </select>
-        </div>
-    </div>
-<?php    }
 ?>
-    <div class="form-group row mt-10">
-        <label for="filter_rombel" class="col-md-2 col-form-label">Rombel</label>
-        <div class="col-sm-10">
-            <select id="filter_rombel" name="filter_rombel" class="form-control select2" required>
-            <option value="ALL" selected>Pilihan Tidak Tersedia</option>
-            </select>
-        </div>
-    </div>
-
-
-<div class="form-group row mb-0">
-    <div class="col-sm-2">
-    </div>
-    <div class="col-sm-10 col-12">
-        <span class="btn btn-blue" id="cari"><i class="icon-magnifier"></i>
-            Cari</span>
-        <div style="display: none" id="spinner" class='spinner-border spinner-border-sm text-info'
-            role='status'><span class='sr-only'></span></div>
-    </div>
-</div>
 <div class="table-responsive mb-4 mt-4">
     <table id="table-siswa" class="table table-striped w-100">
         <thead>
@@ -60,8 +14,6 @@ if($this->logged_level !== "3"){ ?>
                 <th style="vertical-align: middle;">Sekolah</th>
                 <th style="vertical-align: middle;">Kelas</th>
                 <th style="vertical-align: middle;">Data Siswa</th>
-                <th style="vertical-align: middle;">Status</th>
-                <th style="vertical-align: middle;">Aksi</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -383,18 +335,14 @@ if($this->logged_level !== "3"){ ?>
         table_name = '#table-siswa';
         modal_name = "#<?= $modal_name ?>";
         form_name = "#<?= $form_name ?>";
+        let id ='<?= encrypt_url($id, $id_key) ?>';
 
-        url_get_data = "<?= base_url($uri_mod.'/AjaxGet') ?>";
+        url_get_data = "<?= base_url($uri_mod.'/AjaxGetDetail/list/') ?>" + id;
 
         datatables = {
             table: $(table_name),
             ordering: true,
             url: url_get_data,
-            data: function (data){
-                data.filter_tipe_sekolah = $('[name="filter_tipe_sekolah"]').val();
-                data.filter_sekolah = $('[name="filter_sekolah"]').val();
-                data.filter_rombel = $('[name="filter_rombel"]').val();
-            }, 
             columns: [
                 {"data": "id", searchable:false, orderable:false, "sClass": "text-center"},
                 {"data": "nama_siswa", "sClass": "text-nowrap"},
@@ -404,8 +352,6 @@ if($this->logged_level !== "3"){ ?>
                 {"data": "nama_sekolah"},
                 {"data": "kelas", searchable:false, orderable:false, "sClass": "text-nowrap"},
                 {"data": "detail_siswa", searchable:false, orderable:false, "sClass": "text-nowrap"},
-                {"data": "status", searchable:false, orderable:false, "sClass": "text-nowrap"},
-                {"data": "aksi", searchable:false, orderable:false, "sClass": "text-nowrap"},
             ]
         }
 
@@ -415,34 +361,11 @@ if($this->logged_level !== "3"){ ?>
             oTable.ajax.reload();
         });
 
-        $(document).on("click", ".button-hapus", function (e) {
-            e.preventDefault();
-            aOption = {
-                title: "Hapus Data?",
-                message: "Yakin ingin hapus data?",
-                url: "<?= base_url($uri_mod.'/AjaxDel/')?>" + $(this).attr('data-id'),
-                table: oTable,
-            };
-            
-            btn_confirm_action(aOption);
-        })
-
-        $(document).on("click", ".button-status", function (e) {
-            e.preventDefault();
-            aOption = {
-                title: "Ubah status?",
-                message: "Yakin ingin ubah status data?",
-                url: "<?= base_url($uri_mod.'/AjaxActive/')?>" + $(this).attr('data-id'),
-                table: oTable,
-            };
-
-            btn_confirm_action(aOption);
-        });
 
         $(document).on("click", ".button-view", function (e) {
             e.preventDefault();
             aOption = {
-                url: "<?= base_url($uri_mod. '/AjaxGet/') ?>" + $(this).data('id'),
+                url: "<?= base_url($uri_mod. '/AjaxGetDetail/det/') ?>" + $(this).data('id'),
                 data: {
                     simpeg_c_token : csrf_value
                 }
@@ -488,68 +411,6 @@ if($this->logged_level !== "3"){ ?>
                 $('#rombel').val(data.data.rombel);
             }
         });
-    });
-
-    $('#filter_tipe_sekolah').change(function() {
-        var tipe_sekolah = $(this).val();
-        $.ajax({
-            url: "<?= base_url('app/AjaxGetSekolahByTipe') ?>",
-            method : "POST",
-            data : {tipe_sekolah: tipe_sekolah},
-            async : true,
-            dataType : 'json',
-            success: function(data) {
-                if (data.status == true) {
-                    csrf_value = data.token;
-                    var html = '<option value="ALL" selected>Tampilkan Semua Sekolah</option>';
-
-                    var index;
-                    var no  = 1;
-
-                    for (index = 0; index < data.data.length; index++) {
-                        html += '<option value='+data.data[index].id+'>'+data.data[index].nama_sekolah+'</option>';
-                        no++;
-                    }
-
-                    $('#filter_sekolah').html(html);
-                }else{
-                    var html = '<option value="" selected disabled>Pilihan Tidak Tersedia</option>';
-                    $('#filter_sekolah').html(html);
-                } 
-            }
-        });
-                return false;
-    });
-
-    $('#filter_sekolah').change(function() {
-        var sekolah_id = $(this).val();
-        $.ajax({
-            url: "<?= base_url('app/AjaxGetRombelBySekolah') ?>",
-            method : "POST",
-            data : {sekolah_id: sekolah_id},
-            async : true,
-            dataType : 'json',
-            success: function(data) {
-                if (data.status == true) {
-                    csrf_value = data.token;
-                    var html = '<option value="ALL" selected>Tampilkan Semua Rombel</option>';
-
-                    var index;
-                    var no  = 1;
-
-                    for (index = 0; index < data.data.length; index++) {
-                        html += '<option value='+data.data[index].id+'>'+data.data[index].tingkatan+data.data[index].nama_rombel+'</option>';
-                        no++;
-                    }
-
-                    $('#filter_rombel').html(html);
-                }else{
-                    var html = '<option value="" selected disabled>Pilihan Tidak Tersedia</option>';
-                    $('#filter_rombel').html(html);
-                } 
-            }
-        });
-                return false;
     });
 
 </script>

@@ -17,7 +17,7 @@ $modal_name = "modal-guru";
         <div class="form-group row mt-10">
             <label for="filter_sekolah" class="col-md-2 col-form-label">Sekolah</label>
             <div class="col-sm-10">
-                <select id="filter_sekolah" name="filter_sekolah" class="form-control select2" data-search="false" required>
+                <select id="filter_sekolah" name="filter_sekolah" class="form-control select2" required>
                 <option value="ALL" selected>Tampilkan Semua Sekolah</option>
                     <?php foreach($sekolah as $row): ?>
                         <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
@@ -338,6 +338,7 @@ $modal_name = "modal-guru";
 </div><!-- /.modal -->
 
 <script type="text/javascript">
+    
     $(document).ready(function() {
         table_name = '#table-guru';
         modal_name = "#<?= $modal_name ?>";
@@ -446,9 +447,36 @@ $modal_name = "modal-guru";
 
             }
         });
+    });
 
+    $('#filter_tipe_sekolah').change(function() {
+        var tipe_sekolah = $(this).val();
+        $.ajax({
+            url: "<?= base_url('app/AjaxGetSekolahByTipe') ?>",
+            method : "POST",
+            data : {tipe_sekolah: tipe_sekolah},
+            async : true,
+            dataType : 'json',
+            success: function(data) {
+                if (data.status == true) {
+                    csrf_value = data.token;
+                    var html = '<option value="ALL" selected>Tampilkan Semua Sekolah</option>';
 
-        
+                    var index;
+                    var no  = 1;
 
+                    for (index = 0; index < data.data.length; index++) {
+                        html += '<option value='+data.data[index].id+'>'+data.data[index].nama_sekolah+'</option>';
+                        no++;
+                    }
+
+                    $('#filter_sekolah').html(html);
+                }else{
+                    var html = '<option value="" selected disabled>Pilihan Tidak Tersedia</option>';
+                    $('#filter_sekolah').html(html);
+                } 
+            }
+        });
+                return false;
     });
 </script>
