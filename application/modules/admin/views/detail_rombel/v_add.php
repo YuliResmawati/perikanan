@@ -2,6 +2,18 @@
     <div class="col-12">
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="wl-token-response" name="wl-token-response">
+        <?php 
+        foreach ($tahun_ajaran as $rows) { ?>
+            <div class="form-group row">
+                <label for="tahun_ajaran_id" class="col-md-2 col-form-label">Tahun Ajaran <?= label_required() ?></label>
+                <div class="col-md-10">
+                    <input type="hidden" class="form-control" name="tahun_ajaran_id" id="tahun_ajaran_id" value="<?= encrypt_url($rows->id, $id_key) ?>">
+                    <input type="text" class="form-control" name="tahun_ajaran" id="tahun_ajaran" value="<?= $rows->tahun_ajaran?>" readonly>
+                </div>
+            </div>
+        <?php }
+        ?>
+
         <?php
             if($this->logged_level !== "3"){ ?>
                 <div class="form-group row">

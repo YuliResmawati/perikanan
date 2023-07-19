@@ -32,6 +32,7 @@
                 <th style="vertical-align: middle;">Rombel</th>
                 <th style="vertical-align: middle;">Wali Kelas</th>
                 <th style="vertical-align: middle;">Jumlah Siswa</th>
+                <th style="vertical-align: middle;">Tahun Ajaran</th>
                 <th style="vertical-align: middle;">Status</th>
                 <th style="vertical-align: middle;">Aksi</th>
             </tr>
@@ -57,6 +58,7 @@
                 {"data": "nama_rombel", "sClass": "text-nowrap"},
                 {"data": "nama_guru", "sClass": "text-nowrap"},
                 {"data": "jumlah_siswa", "sClass": "text-nowrap"},
+                {"data": "tahun_ajaran", "sClass": "text-nowrap"},
                 {"data": "status", searchable:false, orderable:false, "sClass": "text-nowrap"},
                 {"data": "aksi", searchable:false, orderable:false, "sClass": "text-nowrap"},
             ]

@@ -19,6 +19,13 @@ class M_tahun_ajaran extends MY_Model {
         parent::__construct();
     }
 
+    public function get_aktif_ta(){
+        $this->_fields_toshow = [ 'id','tahun_ajaran'];
+        $this->db->where(['status' => '1']);
+
+        return $this;
+    }
+
 
 }
 

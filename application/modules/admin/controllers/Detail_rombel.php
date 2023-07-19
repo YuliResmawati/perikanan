@@ -11,7 +11,7 @@ class Detail_rombel extends Backend_Controller {
 		$this->data['uri_mod'] = 'admin/detail_rombel';
         $this->id_key = $this->private_key;
         $this->breadcrumbs->push('Wali Kelas', 'detail_rombel');
-        $this->load->model(array('m_detail_rombel','m_rombel','m_sekolah','m_guru','m_siswa'));  
+        $this->load->model(array('m_detail_rombel','m_rombel','m_sekolah','m_guru','m_siswa','m_tahun_ajaran','m_detail_siswa'));  
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -21,6 +21,9 @@ class Detail_rombel extends Backend_Controller {
         $this->load->js($this->data['theme_path'] . '/libs/dropify/js/dropify.min.js');
         $this->load->js($this->data['global_custom_path'] . '/js/file-upload-init.js');
         $this->load->js($this->data['global_plugin_path'] . '/jquerymask/jquery-mask.min.js');
+        $this->load->css($this->data['theme_path'] . '/libs/bootstrap-select/css/bootstrap-select.min.css');
+        $this->load->js($this->data['theme_path'] . '/libs/bootstrap-select/js/bootstrap-select.min.js');
+
 
 	}
 
@@ -53,6 +56,7 @@ class Detail_rombel extends Backend_Controller {
         $this->data['id_key'] = $this->id_key;
         $this->data['rombel'] = $this->m_rombel->findAll();
         $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
+        $this->data['tahun_ajaran'] = $this->m_tahun_ajaran->get_aktif_ta()->findAll();
         if($this->logged_level == "3"){
             $this->data['guru'] = $this->m_guru->get_guru_by_sekolah($this->logged_sekolah_id)->findAll();
         }
@@ -83,6 +87,49 @@ class Detail_rombel extends Backend_Controller {
         }
 
         $this->load->view('detail_rombel/v_edit', $this->data);
+    }
+
+    public function index_detail($id = null)
+	{
+        $id = decrypt_url($id, $this->id_key);
+		
+		if ($id == FALSE) {
+			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('supadmin/sample_upload')));
+        }
+
+        $rombel = $this->m_detail_rombel->get_detail_rombel_by_rombel($id)->findAll()['0']; // detail_rombel_id
+
+        $this->data['add_button_link'] = base_url('admin/detail_rombel/add_detail/').encrypt_url($id, $this->id_key);
+        $this->data['page_title'] = "Daftar Siswa Rombel ".$rombel->tingkatan." ".$rombel->nama_rombel;
+        $this->data['page_description'] = $rombel->nama_sekolah." - ".$rombel->tahun_ajaran;
+        $this->data['card'] = "true";
+        $this->data['id_key'] = $this->id_key;
+        $this->data['id'] = $id;
+        $this->data['rombel'] = $rombel;
+        $this->data['siswa'] = $this->m_siswa->get_all_siswa()->findAll();
+        $this->db->where(['rombel_id' => $id, 'siswa.status' => '1']);
+        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
+        
+		$this->load->view('detail_rombel/v_index_detail', $this->data);
+    }
+
+    public function add_detail($id = NULL)
+    {
+        $id = decrypt_url($id, $this->id_key);
+        $rombel = $this->m_detail_rombel->get_detail_rombel_by_rombel($id)->findAll()['0'];
+
+        $this->breadcrumbs->push('Tambah', 'admin/detail_rombel/add_detail');
+        $this->data['page_title'] = "Tambah Siswa ".$rombel->tingkatan." ".$rombel->nama_rombel;
+        $this->data['page_description'] = $rombel->nama_sekolah." - ".$rombel->tahun_ajaran;
+        $this->data['card'] = "true";
+        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
+        $this->data['id_key'] = $this->id_key;
+        $this->data['id'] = $id;
+        $this->data['siswa'] = $this->m_siswa->get_siswa_for_rombel()->findAll();
+        $this->data['rombel'] = $rombel;
+        
+
+        $this->load->view('detail_rombel/v_add_detail', $this->data);
     }
 
     public function AjaxGet($id = NULL)
@@ -131,6 +178,7 @@ class Detail_rombel extends Backend_Controller {
                 $this->return->sekolah_id = ($this->return->sekolah_id) ? encrypt_url($this->return->sekolah_id, $this->id_key) : '';
                 $this->return->rombel_id = ($this->return->rombel_id) ? encrypt_url($this->return->rombel_id, $this->id_key) : '';
                 $this->return->walas_id = ($this->return->walas_id) ? encrypt_url($this->return->walas_id, $this->id_key) : '';
+                $this->return->tahun_ajaran_id = ($this->return->tahun_ajaran_id) ? encrypt_url($this->return->tahun_ajaran_id, $this->id_key) : '';
 
                 $response = array(
                     'status' => TRUE,
@@ -171,13 +219,13 @@ class Detail_rombel extends Backend_Controller {
             }else{
                 $sekolah_id = $this->logged_sekolah_id;
             }
-            $this->form_validation->set_rules('rombel_id', 'Nama Rombel', 'required');
             $this->form_validation->set_rules('walas_id', 'Nama Wali Kelas', 'required');
+            $this->form_validation->set_rules('tahun_ajaran_id', 'Tahun Ajaran', 'required');
 
             $rombel_id = decrypt_url($this->input->post('rombel_id'), $this->id_key);
             $walas_id = decrypt_url($this->input->post('walas_id'), $this->id_key);
+            $tahun_ajaran_id = decrypt_url($this->input->post('tahun_ajaran_id'), $this->id_key);
 
-            
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
             if ($this->form_validation->run() == TRUE) {
@@ -189,6 +237,7 @@ class Detail_rombel extends Backend_Controller {
                 $this->m_detail_rombel->push_to_data('sekolah_id', $sekolah_id );
                 $this->m_detail_rombel->push_to_data('rombel_id', $rombel_id );
                 $this->m_detail_rombel->push_to_data('walas_id', $walas_id );
+                $this->m_detail_rombel->push_to_data('tahun_ajaran_id', $tahun_ajaran_id );
 
                 $this->return = $this->m_detail_rombel->save($id);
 
@@ -339,31 +388,6 @@ class Detail_rombel extends Backend_Controller {
 
     }
 
-    public function index_detail($id = null)
-	{
-        $id = decrypt_url($id, $this->id_key);
-		
-		if ($id == FALSE) {
-			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('supadmin/sample_upload')));
-        }
-
-        $rombel = $this->m_detail_rombel->get_detail_rombel_by_rombel($id)->findAll()['0'];
-
-        $this->data['add_button_link'] = base_url('admin/detail_rombel/add_detail/$id');
-        $this->data['page_title'] = "Daftar Siswa Rombel ".$rombel->tingkatan." ".$rombel->nama_rombel;
-        $this->data['page_description'] = $rombel->nama_sekolah;
-        $this->data['card'] = "true";
-        $this->data['id_key'] = $this->id_key;
-        $this->data['id'] = $id;
-        $this->data['rombel'] = $rombel;
-        $this->data['siswa'] = $this->m_siswa->get_all_siswa()->findAll();
-        $this->db->where(['rombel_id' => $id, 'siswa.status' => '1']);
-
-        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
-        
-		$this->load->view('detail_rombel/v_index_detail', $this->data);
-    }
-
     public function AjaxGetDetail($add = NULL, $id = NULL)
     {
         $this->output->unset_template();
@@ -376,23 +400,25 @@ class Detail_rombel extends Backend_Controller {
 
                 $this->m_siswa->push_select('status');
     
-                $response = $this->m_siswa->get_all_siswa()->datatables();
-                $response->where('rombel_id', $id);
+                $response = $this->m_detail_siswa->get_all_detail_siswa()->datatables();
+                $response->where('detail_rombel_id', $id);
     
                 if($this->logged_level == "3"){
                     $response->where('sekolah_id', $this->logged_sekolah_id);
                 }
                
                 $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
+                $response->edit_column('detail_siswa_id', '$1', "encrypt_url(detail_siswa_id,' ', $this->id_key)");
                 $response->edit_column('alamat', '$1', "format_alamat(nama_nagari,nama_kecamatan,nama_kabupaten,nama_provinsi,'fe-map-pin text-danger mr-1',alamat_lengkap,'fe-phone-call text-success mr-1',no_hp)");
                 $response->edit_column('kelas', '$1 $2', "tingkatan, nama_rombel");
                 $response->add_column('detail_siswa', '$1', "tabel_icon(id,' ','view',' ', $this->id_key, $this->modal_name)");
-                
-                $response = $this->m_siswa->datatables(true);
+                $response->add_column('aksi', '$1', "tabel_icon(id,' ','delete',' ', $this->id_key)");
+
+                $response = $this->m_detail_siswa->datatables(true);
         
                 $this->output->set_output($response);
             }else{
-                $this->return = $this->m_siswa->get_all_siswa()->find($id); 
+                $this->return = $this->m_detail_siswa->get_all_detail_siswa()->find($id); 
 
                 if ($this->return !== FALSE) {
                     unset($this->return->id);
@@ -428,21 +454,100 @@ class Detail_rombel extends Backend_Controller {
         return $this->output->set_output($response);
     }
 
-    public function add_detail($id = NULL)
+    public function AjaxSaveDetail($id = null)
     {
-        $rombel = $this->m_detail_rombel->get_detail_rombel_by_rombel($id)->findAll()['0'];
+        $this->output->unset_template();
+        $captcha_score = get_recapture_score($this->input->post('ds-token-response'));  
+        if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
+            $this->result = array(
+                'status' => FALSE,
+                'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Request yang anda jalankan dianggap SPAM oleh sistem.</span>'
+            );
+        } else {
+            $this->result = array('status' => TRUE, 'message' => NULL);
+            $id = decrypt_url($id, $this->id_key);
 
-        $this->breadcrumbs->push('Tambah', 'admin/detail_rombel/add_detail');
-        $this->data['page_title'] = "Tambah Siswa ".$rombel->tingkatan." ".$rombel->nama_rombel;
-        $this->data['page_description'] = "Halaman Tambah Siswa.";
-        $this->data['card'] = "true";
-        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
-        $this->data['id_key'] = $this->id_key;
-        if($this->logged_level == "3"){
-            $this->data['guru'] = $this->m_guru->get_guru_by_sekolah($this->logged_sekolah_id)->findAll();
+            $this->form_validation->set_rules('siswa_multiple[]', 'Siswa', 'required');
+            $this->form_validation->set_rules('detail_rombel_id', 'Rombel', 'required');
+            $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
+
+            if ($this->form_validation->run() == TRUE) {
+                if ($id == FALSE) {
+                    $id = null;
+
+                    $arr_siswa = $this->input->post('siswa_multiple[]');
+                    $data = [];
+        
+                    foreach ($arr_siswa as $key => $value) {
+                        $data[] = array(
+                            'siswa_id' => decrypt_url($value, $this->id_key),
+                            'detail_rombel_id' => decrypt_url($this->input->post('detail_rombel_id'), $this->id_key),
+                            'status' => '1'
+                        );  
+                    }
+
+                }
+
+                $this->return = $this->m_detail_siswa->save_batch($data);
+
+                if ($this->return) {
+                    $this->result = array(
+                        'status' => TRUE,
+                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Data berhasil disimpan.</span>'
+                    );
+                } else {
+                    $this->result = array(
+                        'status' => FALSE,
+                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal disimpan.</span>'
+                    );
+                }
+            } else {
+                $this->result = array(
+                    'status' => FALSE,
+                    'message' => validation_errors()
+                );
+            }
+    
+            if ($this->result) {
+                $this->output->set_output(json_encode($this->result));
+            } else {
+                $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Gagal mengambil data.']));
+            }
         }
-        $this->load->view('detail_rombel/v_add', $this->data);
     }
+
+    public function AjaxDelDetail($id = null)
+    {
+        $this->output->unset_template();
+
+        $id = decrypt_url($id, $this->id_key);
+        if ($id !== FALSE) {
+            $this->return = $this->m_detail_siswa->delete($id);
+            if ($this->return) {
+                $this->m_detail_siswa->push_to_data('status', '0');
+                $this->return = $this->m_detail_siswa->save($id);
+    
+                $this->result = array(
+                    'status'   => TRUE,
+                    'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Data berhasil dihapus.</span>'
+                );
+            } else {
+                $this->result = array(
+                    'status'   => FALSE,
+                    'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal dihapus.</span>'
+                );
+            }
+        } else {
+            $this->result = array(
+                'status'   => FALSE,
+                'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
+            );
+        }
+
+        $this->output->set_output(json_encode($this->result));
+    }
+
+    
 
 }
 

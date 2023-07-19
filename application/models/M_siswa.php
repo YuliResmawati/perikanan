@@ -7,7 +7,7 @@ class M_siswa extends MY_Model {
     protected $_timestamps = TRUE;
     protected $_log_user = TRUE;
     protected $_softdelete = TRUE;
-    protected $_order_by = 'id';
+    protected $_order_by = 'nama_siswa';
     protected $_order = 'ASC';
     protected $_fields_toshow = ['id','nik','no_kk','nipd','nisn', 'nama_siswa','jenis_kelamin','status',
                                 'agama','tempat_lahir','tgl_lahir','nagari_id','alamat_lengkap','jenis_tinggal',
@@ -80,7 +80,7 @@ class M_siswa extends MY_Model {
             'sekolah_lama_id','anak_ke','nama_nagari','nama_kecamatan','nama_kabupaten','nama_provinsi',
             's.nama_sekolah as nama_sekolah',
             'tingkatan','nama_rombel','s.tipe_sekolah as tipe_sekolah','s.id as sekolah_id',
-            'sek.nama_sekolah as sekolah_lama_nama','r.id as rombel_id'
+            'sek.nama_sekolah as sekolah_lama_nama','r.id as rombel_id','d.id as detail_rombel_id','dd.id as detail_siswa_id'
         ];
 
         parent::join('detail_siswa dd','dd.siswa_id=siswa.id', 'left');
@@ -93,6 +93,23 @@ class M_siswa extends MY_Model {
         parent::join('provinsi', 'provinsi.id=kabupaten.provinsi_id', 'left');
         parent::join('sekolah sek','sek.id=siswa.sekolah_lama_id', 'left');
 
+        return $this;
+    }
+
+    public function get_siswa_for_rombel()
+    {   
+        parent::clear_join();
+        $this->_fields_toshow = [
+            'siswa.id as id','nama_siswa','nik','nisn','detail_rombel_id','siswa_id','tahun_ajaran_id','d.status'
+        ];
+
+        parent::join('detail_siswa b','b.siswa_id=siswa.id', 'left');
+        parent::join('detail_rombel c','c.id=b.detail_rombel_id', 'left');
+        parent::join('tahun_ajaran d','c.tahun_ajaran_id=d.id', 'left');
+
+        $this->db->where('detail_rombel_id is null', NULL);
+        $this->db->or_where('d.status != ', '1');
+        $this->db->or_where('b.status != ', '1');
         return $this;
     }
 

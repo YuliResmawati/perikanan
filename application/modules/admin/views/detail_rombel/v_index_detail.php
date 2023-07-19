@@ -11,9 +11,8 @@ $modal_name = "modal-siswa";
                 <th style="vertical-align: middle;">NIK</th>
                 <th style="vertical-align: middle;">NISN</th>
                 <th style="vertical-align: middle;">Alamat</th>
-                <th style="vertical-align: middle;">Sekolah</th>
-                <th style="vertical-align: middle;">Kelas</th>
                 <th style="vertical-align: middle;">Data Siswa</th>
+                <th style="vertical-align: middle;">Aksi</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -349,9 +348,8 @@ $modal_name = "modal-siswa";
                 {"data": "nik", "sClass": "text-nowrap"},
                 {"data": "nisn", "sClass": "text-nowrap"},
                 {"data": "alamat", searchable:false, orderable:false},
-                {"data": "nama_sekolah"},
-                {"data": "kelas", searchable:false, orderable:false, "sClass": "text-nowrap"},
                 {"data": "detail_siswa", searchable:false, orderable:false, "sClass": "text-nowrap"},
+                {"data": "aksi", searchable:false, orderable:false, "sClass": "text-nowrap"}
             ]
         }
 
@@ -361,6 +359,17 @@ $modal_name = "modal-siswa";
             oTable.ajax.reload();
         });
 
+        $(document).on("click", ".button-hapus", function (e) {
+            e.preventDefault();
+            aOption = {
+                title: "Hapus Data?",
+                message: "Yakin ingin hapus data?",
+                url: "<?= base_url($uri_mod.'/AjaxDelDetail/')?>" + $(this).attr('data-id'),
+                table: oTable,
+            };
+            
+            btn_confirm_action(aOption);
+        });
 
         $(document).on("click", ".button-view", function (e) {
             e.preventDefault();
@@ -411,6 +420,9 @@ $modal_name = "modal-siswa";
                 $('#rombel').val(data.data.rombel);
             }
         });
+
+        
+
     });
 
 </script>

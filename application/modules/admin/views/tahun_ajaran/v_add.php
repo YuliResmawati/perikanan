@@ -2,7 +2,6 @@
     <div class="col-12">
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="ta-token-response" name="ta-token-response">
-        
         <div class="form-group row">
             <label for="tahun_ajaran" class="col-md-2 col-form-label">Tahun Ajaran <?= label_required() ?></label>
             <div class="col-md-10">

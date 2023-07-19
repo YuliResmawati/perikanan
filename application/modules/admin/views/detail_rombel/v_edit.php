@@ -2,18 +2,21 @@
     <div class="col-12">
     <?= form_open($uri_mod.'/AjaxSave/'.encrypt_url($id, $id_key), 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="wl-token-response" name="wl-token-response">
+        <div class="form-group row">
+            <label for="tahun_ajaran_id" class="col-md-2 col-form-label">Tahun Ajaran <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input type="hidden" class="form-control" name="tahun_ajaran_id" id="tahun_ajaran_id">
+                <input type="text" class="form-control" name="tahun_ajaran" id="tahun_ajaran" readonly>
+            </div>
+        </div>
+
         <?php
             if($this->logged_level !== "3"){ ?>
                 <div class="form-group row">
                     <label for="sekolah_id" class="col-md-2 col-form-label">Nama Sekolah <?= label_required() ?></label>
                     <div class="col-md-10">
-                        <select class="form-control select2" name="sekolah_id" id="sekolah_id">
-                            <option selected disabled>Pilih Sekolah</option>
-                            <?php 
-                            foreach($sekolah as $row): ?>
-                                <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
-                            <?php $no++; endforeach; ?>
-                        </select>            
+                        <input type="text" class="form-control" name="nama_sekolah" id="nama_sekolah" readonly>
+                        <input type="hidden" class="form-control" name="sekolah_id" id="sekolah_id" readonly>
                     </div>
                 </div>
         <?php } ?>
@@ -21,13 +24,8 @@
         <div class="form-group row">
             <label for="rombel_id" class="col-md-2 col-form-label">Nama Rombel <?= label_required() ?></label>
             <div class="col-md-10">
-                <select class="form-control select2" name="rombel_id" id="rombel_id">
-                    <option selected disabled>Pilih Rombel</option>
-                    <?php 
-                    foreach($rombel as $row): ?>
-                        <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->tingkatan."-".$row->nama_rombel ?></option>
-                    <?php $no++; endforeach; ?>
-                </select>            
+                <input type="text" class="form-control" name="nama_rombel" id="nama_rombel" readonly>
+                <input type="hidden" class="form-control" name="rombel_id" id="rombel_id" readonly>
             </div>
         </div>
 
@@ -68,15 +66,16 @@
 
         data = get_data_by_id(aOption);
         if (data != false) {
-            $('select[name="sekolah_id"]').val(data.data.sekolah_id).change();
-            $('select[name="rombel_id"]').val(data.data.rombel_id).change();
             $('select[name="walas_id"]').val(data.data.walas_id).change();
+            $('#tahun_ajaran').val(data.data.tahun_ajaran);
+            $('#tahun_ajaran_id').val(data.data.tahun_ajaran_id);
+            $('#sekolah_id').val(data.data.sekolah_id);
+            $('#nama_sekolah').val(data.data.nama_sekolah);
+            $('#nama_rombel').val(data.data.tingkatan+data.data.nama_rombel);
+            $('#rombel_id').val(data.data.rombel_id);
         }
 
-    });
-
-    $('#sekolah_id').change(function() {
-        var sekolah_id = $(this).val();
+        var sekolah_id = $('#sekolah_id').val();
         $.ajax({
             url: "<?= base_url($uri_mod. '/AjaxGetGuruBySekolah/') ?>",
             method : "POST",
@@ -106,9 +105,8 @@
                 } 
             }
         });
-            return false;
-    });
 
+    });
 
     $('#submit-btn').click(function(e) {
         e.preventDefault();
@@ -124,6 +122,8 @@
             });
         });
     });
+
+
 
     $('#formAjax').submit(function(e) {
         e.preventDefault();
