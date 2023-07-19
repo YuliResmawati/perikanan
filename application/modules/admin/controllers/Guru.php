@@ -152,11 +152,16 @@ class Guru extends Backend_Controller {
                 $this->return->nagari_id = ($this->return->nagari_id) ? encrypt_url($this->return->nagari_id, 'app') : '';
                 $this->return->sekolah_id = ($this->return->sekolah_id) ? encrypt_url($this->return->sekolah_id, $this->id_key) : '';
                 $this->return->nama_guru = ($this->return->nama_guru) ? name_degree($this->return->gelar_depan,$this->return->nama_guru,$this->return->gelar_belakang) : '';
-                $this->return->jenis_kelamin = ($this->return->jenis_kelamin) ? jk($this->return->jenis_kelamin) : '';
-                $this->return->kgb_terakhir = ($this->return->kgb_terakhir) ? date('d F Y', strtotime($this->return->kgb_terakhir)) : '';
-                $this->return->tgl_lahir = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_lahir)) : '';
-                $this->return->tgl_sk_cpns = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_sk_cpns)) : '';
-                $this->return->tgl_sk_pengangkatan = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_sk_pengangkatan)) : '';
+                $this->return->jenis_kelamin = ($this->return->jenis_kelamin) ? $this->return->jenis_kelamin : '';
+                $this->return->jenis_kelamin_view = ($this->return->jenis_kelamin) ? jk($this->return->jenis_kelamin) : '';
+                $this->return->kgb_terakhir = ($this->return->kgb_terakhir) ? $this->return->kgb_terakhir : '';
+                $this->return->kgb_terakhir_view = ($this->return->kgb_terakhir) ? date('d F Y', strtotime($this->return->kgb_terakhir)) : '';
+                $this->return->tgl_lahir = ($this->return->tgl_lahir) ? $this->return->tgl_lahir : '';
+                $this->return->tgl_lahir_view = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_lahir)) : '';
+                $this->return->tgl_sk_cpns_view = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_sk_cpns)) : '';
+                $this->return->tgl_sk_cpns = ($this->return->tgl_lahir) ? $this->return->tgl_sk_cpns : '';
+                $this->return->tgl_sk_pengangkatan_view = ($this->return->tgl_lahir) ? date('d F Y', strtotime($this->return->tgl_sk_pengangkatan)) : '';
+                $this->return->tgl_sk_pengangkatan = ($this->return->tgl_lahir) ? $this->return->tgl_sk_pengangkatan : '';
 
                 if (decrypt_url($this->return->nagari_id, 'app') != NULL) {
                     $this->return->alamat = "Kelurahan " . uc_words($this->return->nama_nagari) . ", Kecamatan " . uc_words($this->return->nama_kecamatan) . ", " . uc_words($this->return->nama_kabupaten) . ", Provinsi " . uc_words($this->return->nama_provinsi);

@@ -286,14 +286,7 @@
                 <div class="form-group row mb-3">
                     <label for="kgb_terakhir" class="col-4 col-form-label">Terakhir KGB <?= label_required() ?></label>
                     <div class="col-8">
-                        <select class="form-control select2" name="kgb_terakhir" id="kgb_terakhir">
-                            <option selected disabled>Pilih Tahun</option>
-                            <?php 
-                            $sekarang = date('Y');
-                            for($i=2018;$i<=$sekarang;$i++): ?>
-                                <option value="<?= $i ?>"><?= $i ?></option>
-                            <?php $no++; endfor; ?>
-                        </select>            
+                        <input type="date" class="form-control" name="kgb_terakhir" id="kgb_terakhir">
                     </div>
                 </div>
             </div>

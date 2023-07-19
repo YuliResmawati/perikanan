@@ -214,6 +214,10 @@ if (!function_exists('tabel_icon')) {
                         $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-check btn btn-warning waves-effect waves-light btn-xs" title="Verifikasi" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                         <i class="icon-check"></i>
                                 </' . $a_tag . '>';
+                    } elseif ($action == "detail") {
+                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Siswa" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                        <i class="icon-people"></i>
+                                </' . $a_tag . '>';
                     }
                 }
             } else {
@@ -252,6 +256,10 @@ if (!function_exists('tabel_icon')) {
                 }elseif ($action == "reset_pass") {
                     $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-reset_pass btn btn-info waves-effect waves-light btn-xs" title="Reset Password" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
                                     Reset Password
+                            </' . $a_tag . '>';
+                } elseif ($action == "detail") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Siswa" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                    <i class="icon-people"></i>
                             </' . $a_tag . '>';
                 }
             }

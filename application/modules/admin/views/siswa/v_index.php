@@ -458,7 +458,7 @@ if($this->logged_level !== "3"){ ?>
                 $('#no_kk').val(data.data.no_kk);
                 $('#nipd').val(data.data.nipd);
                 $('#nisn').val(data.data.nisn);
-                $('#jenis_kelamin').val(data.data.jenis_kelamin);
+                $('#jenis_kelamin').val(data.data.jenis_kelamin_view);
                 $('#agama').val(data.data.agama);
                 $('#tempat_lahir').val(data.data.tempat_lahir);
                 $('#tgl_lahir').val(data.data.tgl_lahir);

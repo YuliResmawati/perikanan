@@ -147,7 +147,8 @@ class Siswa extends Backend_Controller {
                 unset($this->return->id);
                 $this->return->nagari_id = ($this->return->nagari_id) ? encrypt_url($this->return->nagari_id, 'app') : '';
                 $this->return->sekolah_lama_id = ($this->return->sekolah_lama_id) ? encrypt_url($this->return->sekolah_lama_id, $this->id_key) : '';
-                $this->return->jenis_kelamin = ($this->return->jenis_kelamin) ? jk($this->return->jenis_kelamin) : '';
+                $this->return->jenis_kelamin = ($this->return->jenis_kelamin) ? $this->return->jenis_kelamin : '';
+                $this->return->jenis_kelamin_view = ($this->return->jenis_kelamin) ? jk($this->return->jenis_kelamin) : '';
                 $this->return->rombel = ($this->return->rombel_id) ? $this->return->tingkatan.' '.$this->return->nama_rombel : '';
 
                 if (decrypt_url($this->return->nagari_id, 'app') != NULL) {
