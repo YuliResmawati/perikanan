@@ -218,6 +218,10 @@ if (!function_exists('tabel_icon')) {
                         $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Siswa" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                         <i class="icon-people"></i>
                                 </' . $a_tag . '>';
+                    } elseif ($action == "list_materi") {
+                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-list btn btn-info waves-effect waves-light btn-xs" title="Lihat Materi" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                        <i class="icon-directions"></i>
+                                </' . $a_tag . '>';
                     }
                 }
             } else {
@@ -260,6 +264,14 @@ if (!function_exists('tabel_icon')) {
                 } elseif ($action == "detail") {
                     $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Siswa" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                     <i class="icon-people"></i>
+                            </' . $a_tag . '>';
+                } elseif ($action == "list_materi") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-list-materi btn btn-info waves-effect waves-light btn-xs" title="Lihat Materi" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                    <i class="icon-notebook"></i>
+                            </' . $a_tag . '>';
+                } elseif ($action == "jadwal") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-jadwal btn btn-pink waves-effect waves-light btn-xs" title="Lihat Jadwal" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                    <i class="icon-layers"></i>
                             </' . $a_tag . '>';
                 }
             }

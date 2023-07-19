@@ -57,7 +57,7 @@
                 {"data": "nama_sekolah", "sClass": "text-nowrap"},
                 {"data": "nama_rombel", "sClass": "text-nowrap"},
                 {"data": "nama_guru", "sClass": "text-nowrap"},
-                {"data": "jumlah_siswa", "sClass": "text-nowrap"},
+                {"data": "jumlah_siswa", searchable:false, orderable:false, "sClass": "text-nowrap"},
                 {"data": "tahun_ajaran", "sClass": "text-nowrap"},
                 {"data": "status", searchable:false, orderable:false, "sClass": "text-nowrap"},
                 {"data": "aksi", searchable:false, orderable:false, "sClass": "text-nowrap"},

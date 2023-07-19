@@ -11,7 +11,11 @@ class Migration_Jadwal extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'detail_guru_id' => array(
+            'guru_id' => array(
+                'type' => 'INT4',
+                'default' => null
+            ),
+            'mapel_id' => array(
                 'type' => 'INT4',
                 'default' => null
             ),
@@ -20,11 +24,14 @@ class Migration_Jadwal extends CI_Migration {
                 'default' => null
             ),
             'jadwal_awal' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
+                'type' => 'timestamp',
                 'default' => null,
             ),
             'jadwal_akhir' => array(
+                'type' => 'timestamp',
+                'default' => null,
+            ),
+            'lama_pembelajaran' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
