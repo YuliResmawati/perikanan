@@ -1508,45 +1508,4 @@ if (!function_exists('btn_kgb'))
     }
 }
 
-if (!function_exists('aksi_rekening_media'))
-{
-    function aksi_rekening_media($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr = '', $status)
-    {
-        $a = '';
-
-        if ($id !== $session_id) {
-            if ($keyid !== '') {
-                $id = (!empty($id)) ? encrypt_url($id, $keyid) : null;
-            }
-
-            if ($link_url !== '') {
-                $a_tag = 'a';
-                $link_url = 'href="' . base_url($link_url . $id) . '"';
-                $modal_attr = '';
-            } else {
-                $a_tag = 'span';
-                $link_url = "";
-                if ($modal_name !== '') {
-                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
-                } else {
-                    $modal_attr = '';
-                }
-            }
-            if ($action == "ajukan"){
-                if ($status == '1') {
-                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
-                    <i class="icon-note"></i>
-                    </' . $a_tag . '>';
-                } else {
-                    $a = '-';
-                   
-                }
-            }
-           
-        }
-
-        return $a;
-    }
-}
-
     
