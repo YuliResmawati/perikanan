@@ -273,6 +273,10 @@ if (!function_exists('tabel_icon')) {
                     $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-jadwal btn btn-pink waves-effect waves-light btn-xs" title="Lihat Jadwal" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                     <i class="icon-layers"></i>
                             </' . $a_tag . '>';
+                }elseif ($action == "ajukan") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-ajukan btn btn-icons btn-rounded btn-success btn-xs" title="Ajukan KGB" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                    <i class="mdi mdi-plus"></i>
+                            </' . $a_tag . '>';
                 }
             }
         }
@@ -1506,14 +1510,13 @@ if (!function_exists('btn_kgb'))
 
 if (!function_exists('aksi_rekening_media'))
 {
-    function aksi_rekening_media($id, $session_id, $link_url = '', $keyid = '', $modal_name = '', $attr = '', $guru_id = '', $status)
+    function aksi_rekening_media($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr = '', $status)
     {
         $a = '';
 
         if ($id !== $session_id) {
             if ($keyid !== '') {
                 $id = (!empty($id)) ? encrypt_url($id, $keyid) : null;
-                $guru_id = (!empty($id)) ? encrypt_url($guru_id, $keyid) : null;
             }
 
             if ($link_url !== '') {
@@ -1529,14 +1532,17 @@ if (!function_exists('aksi_rekening_media'))
                     $modal_attr = '';
                 }
             }
-
-            if ($status == '1') {
-                $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-create btn btn-icons btn-rounded btn-success" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Ajukan KGB" data-id="' . $id . '" data-guru="' . $guru_id . '" ' . $modal_attr . '>
-                <i class="mdi mdi-plus">
-            </' . $a_tag . '>';
-            } else {
-                $a = '-';
+            if ($action == "ajukan"){
+                if ($status == '1') {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                    <i class="icon-note"></i>
+                    </' . $a_tag . '>';
+                } else {
+                    $a = '-';
+                   
+                }
             }
+           
         }
 
         return $a;
