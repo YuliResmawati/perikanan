@@ -20,7 +20,7 @@ class M_riwayat_kgb extends MY_Model {
     }
 
     public function get_riwayat_kgb(){
-        $this->_fields_toshow = ['riwayat_kgb.id','guru.id as id_guru', 'guru_id', 'sekolah_id','nik','nip','nama_guru','nuptk','guru.status as status',
+        $this->_fields_toshow = ['riwayat_kgb.id', 'guru_id', 'sekolah_id','nik','nip','nama_guru','nuptk','guru.status as status',
         'jenis_kelamin','agama','tempat_lahir','tgl_lahir','status_tugas','gelar_depan','gelar_belakang',
         'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','tgl_sk_pengangkatan','jenis_ptk','pendidikan',
         'bidang_studi_pendidikan', 'bidang_studi_sertifikasi','status_kepegawaian','pangkat', 'tmt_awal'];

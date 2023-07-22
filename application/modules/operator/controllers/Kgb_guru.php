@@ -44,26 +44,24 @@ class Kgb_guru extends Backend_Controller {
 		$this->load->view('kgb_guru/v_index', $this->data);
     }
 
-    public function edit($id = null)
-    {        
+    public function add($id = null)
+    {
         $id = decrypt_url($id, $this->id_key);
-		
-		if ($id == FALSE) {
-			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('operator/mutasi_guru/edit')));
+
+        if ($id == FALSE) {
+			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('operator/kgb_guru/add')));
         }
 
-        $this->breadcrumbs->push('Edit', 'operator/mutasi_guru/edit');
-        $this->data['page_title'] = "Edit Data Mutasi Guru";
-        $this->data['page_description'] = "Halaman Edit Data Mutasi Guru.";
+        $this->breadcrumbs->push('Add', 'operator/kgb_guru/add');
+        $this->data['page_title'] = "Edit Data KGB Guru";
+        $this->data['page_description'] = "Halaman Edit Data KGB Guru.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
 
-        $this->load->view('mutasi_guru/v_edit', $this->data);
+        $this->load->view('kgb_guru/v_add', $this->data);
     }
-
-    
 
     public function AjaxGet($id = NULL)
     {
@@ -76,7 +74,7 @@ class Kgb_guru extends Backend_Controller {
         if ($id == FALSE) {
             $this->m_riwayat_kgb->push_select('riwayat_kgb.status');
 
-            $edit_link = 'operator/mutasi_guru/edit/'; 
+            $ajukan = 'operator/kgb_guru/add/'; 
             $response = $this->m_riwayat_kgb->get_riwayat_kgb()->datatables();
             
             if ($this->input->post('filter_bulan') == FALSE) {
@@ -92,18 +90,19 @@ class Kgb_guru extends Backend_Controller {
             $response->edit_column('status', '$1', "str_status(status)");   
             $response->edit_column('jk', '$1', "jeniskelamin(jenis_kelamin)");   
             $response->edit_column('tanggal', '$1', "indo_date(tmt_awal)"); 
-            $response->add_column('aksi', '$1', "aksi_rekening_media(id, ' ', ' ', $this->id_key, $this->modal_name, ' ',  guru_id, status)");  
+            $response->add_column('aksi', '$1', "tabel_icon(id,' ','ajukan','$ajukan', $this->id_key)");
             
             $response = $this->m_riwayat_kgb->datatables(true);
     
             $this->output->set_output($response);
-        } else {
-            $this->return = $this->m_riwayat_kgb->get_riwayat_kgb()->find($id); 
+        } else { 
+            $this->return = $this->m_riwayat_kgb->find($id); 
 
             if ($this->return !== FALSE) {
-                $this->return->id = encrypt_url($this->return->id, $this->id_key);
-                $this->return->id_guru = encrypt_url($this->return->id_guru, $this->id_key);
-                // unset($this->return->id);
+                $this->return->guru_id = encrypt_url($this->return->guru_id, $this->id_key);
+                unset($this->return->id);
+                unset($this->return->tmt_akhir);
+                unset($this->return->tmt_awal);
 
                 $response = array(
                     'status' => TRUE,
@@ -171,11 +170,10 @@ class Kgb_guru extends Backend_Controller {
         return $this->result;
     }
 
-    public function AjaxSave($id = NULL)
+    public function AjaxSave($id = null)
     {
         $this->output->unset_template();
-
-        $captcha_score = get_recapture_score($this->input->post('kgb-token-response')); 
+        $captcha_score = get_recapture_score($this->input->post('kgb-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(
@@ -185,44 +183,45 @@ class Kgb_guru extends Backend_Controller {
         } else {
             $this->result = array('status' => TRUE, 'message' => NULL);
             $id = decrypt_url($id, $this->id_key);
-
-                // if (empty($_FILES["berkas"]["name"]) && $id == FALSE) {
-                //     $_POST["berkas"] = null;
-                    $this->form_validation->set_rules('berkas', 'File', 'required');
-                // }
-
-                $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
-
-                if ($this->form_validation->run() == TRUE) {
-                    if ($id == FALSE) {
-                        $id = null;
-                        $behavior = 'add';
     
-                        $this->m_riwayat_kgb->push_to_data('status', '0');
-                        $this->m_riwayat_kgb->push_to_data('guru_id', decrypt_url($this->input->post('guru_id'), $this->id_key));
-                    } else {
-                        $behavior = 'edit';
-                    }
+            if (empty($_FILES["berkas"]["name"]) && $id == FALSE) {
+                $_POST["berkas"] = null;
+                $this->form_validation->set_rules('berkas', 'File', 'required');
+            }
+
+            $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
+
+            if ($this->form_validation->run() == TRUE) {    
+                if ($id == FALSE) {
+                    $id = null;
+                    $behavior = 'add';
+
+                    $this->m_riwayat_kgb->push_to_data('status', '0');
+                } else {
+                    $behavior = 'edit';
+                }
+
+                if (!empty($_FILES['berkas']['name'])) {
+                    $data_upload = $this->upload_files_sample($id, $behavior);
     
-                    if (!empty($_FILES['berkas']['name'])) {
-                        $data_upload = $this->upload_files_sample($id, 'add');
-        
-                        if ($data_upload['status'] == TRUE) {
-                            $berkas = $data_upload['file_berkas'];
-        
-                            if (!empty($berkas)) {
-                                $this->m_riwayat_kgb->push_to_data('berkas', $berkas);
-                            }
-                        } else {
-                            $this->result = $data_upload;
+                    if ($data_upload['status'] == TRUE) {
+                        $berkas = $data_upload['file_berkas'];
+    
+                        if (!empty($berkas)) {
+                            $this->m_riwayat_kgb->push_to_data('berkas', $berkas);
                         }
+                    } else {
+                        $this->result = $data_upload;
                     }
-                    $this->return = $this->m_riwayat_kgb->save();
-
+                }
+    
+                if ($this->result['status'] !== FALSE) {
+                    $this->return = $this->m_riwayat_kgb->save($id);
+    
                     if ($this->return) {
                         $this->result = array(
                             'status' => TRUE,
-                            'message' => '<span class="text-success"><i class="mdi mdi-check"></i> Data berhasil disimpan.</span>'
+                            'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Data berhasil disimpan.</span>'
                         );
                     } else {
                         $this->result = array(
@@ -230,12 +229,13 @@ class Kgb_guru extends Backend_Controller {
                             'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal disimpan.</span>'
                         );
                     }
-                } else {
-                    $this->result = array(
-                        'status' => FALSE,
-                        'message' => validation_errors()
-                    );
                 }
+            } else {
+                $this->result = array(
+                    'status' => FALSE,
+                    'message' => validation_errors()
+                );
+            }
         }
 
         if ($this->result) {
@@ -244,7 +244,6 @@ class Kgb_guru extends Backend_Controller {
             $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Gagal mengambil data.']));
         }
     }
-
 
     public function AjaxDel($id = null)
     {

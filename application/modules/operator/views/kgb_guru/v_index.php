@@ -50,7 +50,7 @@
     </table>
 </div>
 
-<div class="modal fade" id="<?= $modal_name ?>" tabindex="-1" role="dialog"  aria-hidden="true">
+<!-- <div class="modal fade" id="<?= $modal_name ?>" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,7 +59,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?= form_open($uri_mod.'/AjaxSave', 'id="'.$form_name.'" data-id="" class="form-tambah"');?>
+            <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?>
                 <input class="form-control custom-form" type="hidden" name="type" id="type" value="add" />
                 <input type="hidden" class="kgb-token-response" name="kgb-token-response">
                 <input type="hidden" name="guru_id" id="guru_id" class="form-control custom-form">
@@ -80,13 +80,13 @@
             <?= form_close(); ?>
         </div>
     </div>
-</div>
+</div> -->
 
 <script type="text/javascript">
     $(document).ready(function() {
         table_name = '#table-kgb';
-        modal_name = "#<?= $modal_name ?>";
-        form_name = "#<?= $form_name ?>";
+        // modal_name = "#<?= $modal_name ?>";
+        // form_name = "#<?= $form_name ?>";
 
         url_get_data = "<?= base_url($uri_mod.'/AjaxGet') ?>";
 
@@ -115,54 +115,6 @@
         $("#cari").click(function() {
             oTable.ajax.reload();
         });
-    });
-
-    $(document).on("click", ".button-create", function (e) {
-        e.preventDefault();
-
-        $(form_name).addClass('form-tambah');
-        $('#title-modal').html('Ajukan Kenaikan Gaji Berkala ');
-        $('#guru_id').val($(this).attr('data-guru'));
-    });
-
-    $('#submit-btn').click(function(e) {
-        e.preventDefault();
-
-        $('#loading-process').show();
-        $('#submit-btn').attr('disabled', true);
-        $('#spinner-status').show();
-        $('#icon-button').hide();
-        $('#button-value').html("Loading...");
-
-        grecaptcha.ready(function() {
-            grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'submit'}).then(function(token) {
-                document.querySelector('.kgb-token-response').value = token;
-                $('.form-tambah').submit();
-            });
-        });
-    });
-
-    $(document).on("submit", ".form-tambah", function (e) {
-        e.preventDefault();
-        formData = new FormData(this);
-
-        option_save = {
-            async: true,
-            enctype: 'multipart/form-data',
-            submit_btn: $('#submit-btn'),
-            spinner: $('#spinner-status'),
-            icon_save: $('#icon-save'),
-            button_value: $('#button-value'),
-            url: $(this).attr('action'),
-            data: formData,
-            redirect: "<?= base_url($uri_mod) ?>"
-        }
-
-        aksi = btn_save_form_with_file(option_save);
-
-        if (aksi == true) {
-            $(modal_name).modal('hide'); 
-        }     
     });
 
    
