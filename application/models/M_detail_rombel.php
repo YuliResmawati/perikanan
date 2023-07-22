@@ -33,7 +33,7 @@ class M_detail_rombel extends MY_Model {
     }
 
     public function get_detail_rombel_by_rombel($detail_rombel_id){
-        $this->_fields_toshow = [ 'detail_rombel.id','nama_rombel','detail_rombel.sekolah_id','sekolah.status','tingkatan','nama_sekolah','tahun_ajaran_id','nama_guru','gelar_depan','gelar_belakang','tahun_ajaran_id','tahun_ajaran'];
+        $this->_fields_toshow = [ 'detail_rombel.id','detail_rombel.rombel_id','nama_rombel','detail_rombel.sekolah_id','sekolah.status','tingkatan','nama_sekolah','tahun_ajaran_id','nama_guru','gelar_depan','gelar_belakang','tahun_ajaran_id','tahun_ajaran'];
         parent::join('sekolah','detail_rombel.sekolah_id=sekolah.id');
         parent::join('rombel','detail_rombel.rombel_id=rombel.id');
         parent::join('guru','detail_rombel.walas_id=guru.id');

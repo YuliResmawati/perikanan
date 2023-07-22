@@ -1215,6 +1215,32 @@ if (!function_exists('two_row')) {
     }
 }
 
+if (!function_exists('jadwal_format')) {
+    function jadwal_format($awal = '', $akhir = '', $hari = '')
+    {
+        $result = '
+            <div class="media d-inline-flex align-items-center">
+                <div class="media-body">
+                    <div class="mb-1">
+                        <span class="font-13">
+                        '.$hari.'
+                        </span>
+                    </div>
+                    <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+
+                    <i class="fe-clock text-success mr-1"></i>
+                    <span class="font-13">
+                        '.$awal.' s.d '.$akhir.'
+                    </span>
+                </div>
+            </div>
+        ';
+
+        return $result;
+    }
+}
+
+
 if (!function_exists('tipe_sekolah')) 
 {
     function tipe_sekolah($tipe_sekolah)
@@ -1353,6 +1379,8 @@ if (!function_exists('two_row_two_line')) {
         return $result;
     }
 }
+
+
 
 if (!function_exists('format_alamat')) {
     function format_alamat($nagari = '', $kecamatan = '', $kabupaten = '', $provinsi = '', $icon = '', $alamat_lengkap = '', $icon2 = '', $no_telp = '')

@@ -19,16 +19,21 @@ class Migration_Jadwal extends CI_Migration {
                 'type' => 'INT4',
                 'default' => null
             ),
-            'kelas_id' => array(
+            'detail_rombel_id' => array(
                 'type' => 'INT4',
                 'default' => null
             ),
+            'hari' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => null,
+            ),
             'jadwal_awal' => array(
-                'type' => 'timestamp',
+                'type' => 'time',
                 'default' => null,
             ),
             'jadwal_akhir' => array(
-                'type' => 'timestamp',
+                'type' => 'time',
                 'default' => null,
             ),
             'lama_pembelajaran' => array(

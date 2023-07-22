@@ -10,8 +10,8 @@ class Detail_rombel extends Backend_Controller {
 		$this->_init();
 		$this->data['uri_mod'] = 'admin/detail_rombel';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Wali Kelas', 'detail_rombel');
-        $this->load->model(array('m_detail_rombel','m_rombel','m_sekolah','m_guru','m_siswa','m_tahun_ajaran','m_detail_siswa'));  
+        $this->breadcrumbs->push('Rombel', 'detail_rombel');
+        $this->load->model(array('m_detail_rombel','m_rombel','m_sekolah','m_guru','m_siswa','m_tahun_ajaran','m_detail_siswa','m_mapel','m_jadwal'));  
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -35,8 +35,8 @@ class Detail_rombel extends Backend_Controller {
     public function index()
 	{
         $this->data['add_button_link'] = base_url('admin/detail_rombel/add');
-        $this->data['page_title'] = "Data Wali Kelas";
-        $this->data['page_description'] = "Halaman Daftar Data Wali Kelas.";
+        $this->data['page_title'] = "Data Rombel";
+        $this->data['page_description'] = "Halaman Daftar Data Rombel.";
         $this->data['card'] = "true";
         $this->data['id_key'] = $this->id_key;
         $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
@@ -49,8 +49,8 @@ class Detail_rombel extends Backend_Controller {
     public function add()
     {
         $this->breadcrumbs->push('Tambah', 'admin/detail_rombel/add');
-        $this->data['page_title'] = "Tambah Data Wali Kelas";
-        $this->data['page_description'] = "Halaman Tambah Data Wali Kelas.";
+        $this->data['page_title'] = "Tambah Data Rombel";
+        $this->data['page_description'] = "Halaman Tambah Data Rombel.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
@@ -72,8 +72,8 @@ class Detail_rombel extends Backend_Controller {
         }
 
         $this->breadcrumbs->push('Edit', 'admin/detail_rombel/edit');
-        $this->data['page_title'] = "Edit Data Wali Kelas";
-        $this->data['page_description'] = "Halaman Edit Data Wali Kelas.";
+        $this->data['page_title'] = "Edit Data Rombel";
+        $this->data['page_description'] = "Halaman Edit Data Rombel.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
@@ -165,17 +165,21 @@ class Detail_rombel extends Backend_Controller {
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
-        
-        $this->load->view('detail_rombel/v_add_materi', $this->data);
+        $this->data['guru'] = $this->m_guru->get_guru_by_sekolah($rombel->sekolah_id)->findAll();
+        $this->data['mapel'] = $this->m_mapel->findAll();
+
+        $this->load->view('detail_rombel/v_add_jadwal', $this->data);
     }
 
     public function edit_jadwal($id = null)
     {        
-        $id = decrypt_url($id, $this->id_key); // materi_id
+        $id = decrypt_url($id, $this->id_key); 
 		
 		if ($id == FALSE) {
 			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('supadmin/sample_upload')));
         }
+
+        $jadwal = $this->m_jadwal->findAll($id)['0'];
 
         $this->breadcrumbs->push('Edit', 'admin/detail_rombel/edit_materi');
         $this->data['page_title'] = "Edit Data Jadwal";
@@ -184,6 +188,7 @@ class Detail_rombel extends Backend_Controller {
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
+        $this->data['detail_rombel_id'] = $jadwal->detail_rombel_id;
 
         $this->load->view('detail_rombel/v_edit_jadwal', $this->data);
     }
@@ -610,45 +615,45 @@ class Detail_rombel extends Backend_Controller {
     {
         $this->output->unset_template();
 
-        $id = decrypt_url($id, $this->id_key);
+        $id = decrypt_url($id, $this->id_key); // detail rombel
 
         if ($id !== FALSE) {
             if($add == 'list'){
                 $this->m_jadwal->push_select('status');
-    // sampai siniiiiii
-                $response = $this->m_jadwal->get_all_detail_siswa()->datatables();
-                $response->where('detail_rombel_id', $id);
-    
-                if($this->logged_level == "3"){
-                    $response->where('sekolah_id', $this->logged_sekolah_id);
-                }
-               
-                $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
-                $response->edit_column('detail_siswa_id', '$1', "encrypt_url(detail_siswa_id,' ', $this->id_key)");
-                $response->edit_column('alamat', '$1', "format_alamat(nama_nagari,nama_kecamatan,nama_kabupaten,nama_provinsi,'fe-map-pin text-danger mr-1',alamat_lengkap,'fe-phone-call text-success mr-1',no_hp)");
-                $response->edit_column('kelas', '$1 $2', "tingkatan, nama_rombel");
-                $response->add_column('detail_siswa', '$1', "tabel_icon(id,' ','view',' ', $this->id_key, $this->modal_name)");
-                $response->add_column('aksi', '$1', "tabel_icon(id,' ','delete',' ', $this->id_key)");
+                $edit_link = 'admin/detail_rombel/edit_jadwal/'; 
 
-                $response = $this->m_detail_siswa->datatables(true);
+                $response = $this->m_jadwal->get_all_jadwal()->datatables();
+                $response->where('detail_rombel_id', $id);
+
+                if ($this->input->post('filter_hari') == FALSE) {
+                    $response->where('jadwal.id', 0);
+                } else {
+                    if ($this->input->post('filter_hari') !== 'ALL') {
+                        $response->where('hari', $this->input->post('filter_hari'));
+                    }
+                }
+    
+                $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
+                $response->edit_column('nama_guru', '$1', "name_degree(gelar_depan,nama_guru,gelar_belakang)");        
+                $response->edit_column('jadwal_format', '$1', "jadwal_format(jadwal_awal, jadwal_akhir,hari)");
+                $response->edit_column('status', '$1', "str_status(status)");
+                $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link', $this->id_key),
+                                                            tabel_icon(id,' ','delete',' ', $this->id_key),
+                                                            active_status(id,' ',status,$this->id_key,' ')");
+
+                $response = $this->m_jadwal->datatables(true);
         
                 $this->output->set_output($response);
             }else{
-                $this->return = $this->m_detail_siswa->get_all_detail_siswa()->find($id); 
+                $this->return = $this->m_jadwal->get_all_jadwal()->find($id); 
 
                 if ($this->return !== FALSE) {
                     unset($this->return->id);
-                    $this->return->nagari_id = ($this->return->nagari_id) ? encrypt_url($this->return->nagari_id, 'app') : '';
-                    $this->return->sekolah_lama_id = ($this->return->sekolah_lama_id) ? encrypt_url($this->return->sekolah_lama_id, $this->id_key) : '';
-                    $this->return->jenis_kelamin = ($this->return->jenis_kelamin) ? jk($this->return->jenis_kelamin) : '';
-                    $this->return->rombel = ($this->return->rombel_id) ? $this->return->tingkatan.' '.$this->return->nama_rombel : '';
-    
-                    if (decrypt_url($this->return->nagari_id, 'app') != NULL) {
-                        $this->return->alamat = "Kelurahan " . uc_words($this->return->nama_nagari) . ", Kecamatan " . uc_words($this->return->nama_kecamatan) . ", " . uc_words($this->return->nama_kabupaten) . ", Provinsi " . uc_words($this->return->nama_provinsi);
-                    } else {
-                        $this->return->alamat = NULL;
-                    }
-        
+                    $this->return->guru_id = ($this->return->guru_id) ? encrypt_url($this->return->guru_id, $this->id_key) : '';
+                    $this->return->mapel_id = ($this->return->mapel_id) ? encrypt_url($this->return->mapel_id, $this->id_key) : '';
+                    $this->return->detail_rombel_id = ($this->return->detail_rombel_id) ? encrypt_url($this->return->detail_rombel_id, $this->id_key) : '';
+                    $this->return->nama_guru = ($this->return->nama_guru) ? name_degree($this->return->gelar_depan,$this->return->nama_guru,$this->return->gelar_belakang) : '';
+
                     $response = array(
                         'status' => TRUE,
                         'message' => 'Berhasil mengambil data',
@@ -670,7 +675,149 @@ class Detail_rombel extends Backend_Controller {
         return $this->output->set_output($response);
     }
 
+    public function AjaxSaveJadwal($id = null)
+    {
+        $this->output->unset_template();
+        $captcha_score = get_recapture_score($this->input->post('jd-token-response'));  
+        if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
+            $this->result = array(
+                'status' => FALSE,
+                'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Request yang anda jalankan dianggap SPAM oleh sistem.</span>'
+            );
+        } else {
+            $this->result = array('status' => TRUE, 'message' => NULL);
+            $id = decrypt_url($id, $this->id_key);
+
+            $this->form_validation->set_rules('guru_id', 'Guru', 'required');
+            $this->form_validation->set_rules('detail_rombel_id', 'Rombel', 'required');
+            $this->form_validation->set_rules('mapel_id', 'Mata Pelajaran', 'required');
+            $this->form_validation->set_rules('hari', 'Hari', 'required');
+            $this->form_validation->set_rules('jadwal_akhir', 'Jadwal Akhir', 'required');
+            $this->form_validation->set_rules('jadwal_awal', 'Jadwal Awal', 'required');
+            $this->form_validation->set_rules('lama_pembelajaran', 'Lama Pembelajaran', 'required');
+            $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
+
+            $guru_id = decrypt_url($this->input->post('guru_id'), $this->id_key);
+            $detail_rombel_id = decrypt_url($this->input->post('detail_rombel_id'), $this->id_key);
+            $mapel_id = decrypt_url($this->input->post('mapel_id'), $this->id_key);
+
+
+            if ($this->form_validation->run() == TRUE) {
+                if ($id == FALSE) {
+                    $id = null;
+                    $this->m_jadwal->push_to_data('status', '1');
+                }
+
+                $this->m_jadwal->push_to_data('guru_id', $guru_id );
+                $this->m_jadwal->push_to_data('detail_rombel_id', $detail_rombel_id );
+                $this->m_jadwal->push_to_data('mapel_id', $mapel_id );
+
+                $this->return = $this->m_jadwal->save($id);
+
+                if ($this->return) {
+                    $this->result = array(
+                        'status' => TRUE,
+                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Data berhasil disimpan.</span>'
+                    );
+                } else {
+                    $this->result = array(
+                        'status' => FALSE,
+                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal disimpan.</span>'
+                    );
+                }
+            } else {
+                $this->result = array(
+                    'status' => FALSE,
+                    'message' => validation_errors()
+                );
+            }
     
+            if ($this->result) {
+                $this->output->set_output(json_encode($this->result));
+            } else {
+                $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Gagal mengambil data.']));
+            }
+        }
+    }
+
+    public function AjaxDelJadwal($id = null)
+    {
+        $this->output->unset_template();
+
+        $id = decrypt_url($id, $this->id_key);
+
+        if ($id !== FALSE) {
+            $this->return = $this->m_jadwal->delete($id);
+
+            if ($this->return) {
+                $this->result = array(
+                    'status'   => TRUE,
+                    'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Data berhasil dihapus.</span>'
+                );
+            } else {
+                $this->result = array(
+                    'status'   => FALSE,
+                    'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal dihapus.</span>'
+                );
+            }
+        } else {
+            $this->result = array(
+                'status'   => FALSE,
+                'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
+            );
+        }
+
+        $this->output->set_output(json_encode($this->result));
+    }
+
+    public function AjaxActiveJAdwal($id = null)
+    {
+        $this->output->unset_template();
+
+        $id = decrypt_url($id, $this->id_key);
+
+        if ($id !== FALSE) {
+            $this->m_jadwal->push_select('status');
+
+            $check = $this->m_jadwal->find($id);
+
+            if ($check !== FALSE) {
+                if ($check->status == 0) {
+                    $this->m_jadwal->push_to_data('status', '1');
+                } else {
+                    $this->m_jadwal->push_to_data('status', '0');
+                }
+
+                $this->return = $this->m_jadwal->save($id);
+
+                if ($this->return) {
+                    $this->result = array(
+                        'status'   => TRUE,
+                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Status berhasil dirubah.</span>'
+                    );
+                } else {
+                    $this->result = array(
+                        'status'   => FALSE,
+                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Status gagal dirubah.</span>'
+                    );
+                }
+            } else {
+                $this->result = array(
+                    'status'   => FALSE,
+                    'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
+                );
+            }
+        } else {
+            $this->result = array(
+                'status'   => FALSE,
+                'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
+            );
+        }
+
+        $this->output->set_output(json_encode($this->result));
+    }
+
+
 
 }
 
