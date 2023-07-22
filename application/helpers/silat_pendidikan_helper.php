@@ -457,6 +457,28 @@ if (!function_exists('str_status')) {
     }
 }
 
+if (!function_exists('str_status_cuti')) {
+    function str_status_cuti($status, $alasan = '')
+    {
+        $a = '';
+
+        if ($status == '0') {
+            $a = '<h6><span class="badge bg-soft-warning text-warning">Menunggu Persetujuan</span></h6>';
+        } else if ($status == '1') {
+            $a = '<h6><span class="badge bg-soft-success text-success">Permohonan Disetujui</span></h6>';
+        } else if ($status == '2') {
+            $a = '<h6><span class="badge bg-soft-danger text-danger">Permohonan Ditolak</span></h6><br>'.$alasan.'';
+        } else if ($status == '3') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary">Permohonan Dibatalkan</span></h6>';
+        } else {
+            $a = '<h6><span class="badge bg-soft-info text-info">Status Tidak Diketahui</span></h6>';
+        }
+
+        return $a;
+    }
+}
+
+
 if (!function_exists('str_status_mutasi')) {
     function str_status_mutasi($status)
     {
@@ -1194,9 +1216,13 @@ if (!function_exists('btn_link'))
 }
 
 if (!function_exists('two_row')) {
-    function two_row($first_row = '', $icon1 = '', $second_row = '', $icon2 = '')
+    function two_row($first_row = '', $icon1 = '', $second_row = '', $icon2 = '', $ket = '')
     {
-        $result = '
+        if(empty($second_row)){
+            $second_row = "0";
+        }
+        if(!empty($ket)){
+            $result = '
             <div class="media d-inline-flex align-items-center">
                 <div class="media-body">
                     <div class="mb-1">
@@ -1209,11 +1235,33 @@ if (!function_exists('two_row')) {
 
                     <i class="'.$icon2.'"></i>
                     <span class="font-13">
-                        '.$second_row.'
+                        '.$second_row.' hari cuti sudah dipakai
                     </span>
                 </div>
             </div>
         ';
+
+        }else{
+            $result = '
+                <div class="media d-inline-flex align-items-center">
+                    <div class="media-body">
+                        <div class="mb-1">
+                            <i class="'.$icon1.'"></i>
+                            <span class="font-13">
+                            '.$first_row.'
+                            </span>
+                        </div>
+                        <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+
+                        <i class="'.$icon2.'"></i>
+                        <span class="font-13">
+                            '.$second_row.'
+                        </span>
+                    </div>
+                </div>
+            ';
+
+        }
 
         return $result;
     }
@@ -1243,6 +1291,32 @@ if (!function_exists('jadwal_format')) {
         return $result;
     }
 }
+
+if (!function_exists('lama_cuti')) {
+    function lama_cuti($awal = '', $akhir = '', $hari = '')
+    {
+        $result = '
+            <div class="media d-inline-flex align-items-center">
+                <div class="media-body">
+                    <div class="mb-1">
+                        <span class="font-13">
+                        '.$hari.' Hari Kerja
+                        </span>
+                    </div>
+                    <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+
+                    <i class="fe-clock text-success mr-1"></i>
+                    <span class="font-13">
+                        '.date('d-M-Y', strtotime($awal)).' s.d '.date('d-M-Y', strtotime($akhir)).'
+                    </span>
+                </div>
+            </div>
+        ';
+
+        return $result;
+    }
+}
+
 
 
 if (!function_exists('tipe_sekolah')) 
@@ -1536,4 +1610,48 @@ if (!function_exists('btn_kgb'))
     }
 }
 
+if (!function_exists('tabel_icon_cuti')) {
+    function tabel_icon_cuti($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status)
+    {
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = encrypt_url($id, $keyid);
+            }
+
+            if ($link_url !== '') {
+                $a_tag = 'a';
+                $link_url = 'href="' . base_url($link_url . $id) . '"';
+                $modal_attr = '';
+            } else {
+                $a_tag = 'span';
+                $link_url = "";
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            if($status == '0'){
+                if ($action == "batal") {
+                    $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-batal btn btn-danger waves-effect waves-light btn-xs" title="Batalkan Pengajuan" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                                    <i class="icon-close"></i>
+                            </' . $a_tag . '>';
+                } elseif ($action == "edit") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                    <i class="icon-note"></i>
+                            </' . $a_tag . '>';
+                }
+            } else {
+                $a = '<strong>-</strong>';
+            }
+                
+            
+        }
+
+        return $a;
+    }
+}
     
