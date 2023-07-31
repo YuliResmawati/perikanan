@@ -38,12 +38,8 @@ class Siswa extends Backend_Controller {
         $this->data['id_key'] = $this->id_key;
         $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
         $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
-        if($this->logged_level !== "3"){
-            $this->data['rombel'] = $this->m_rombel->get_all_rombel()->findAll();
-        }else{
-            $this->data['rombel'] = $this->m_rombel->get_all_rombel()->findAll();
-            $this->db->where('sekolah_id', $this->logged_sekolah_id);
-
+        if($this->logged_level == "3"){
+            $this->data['rombel'] = $this->m_rombel->get_rombel_by_sekolah($this->logged_sekolah_id)->findAll();
         }
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
 
@@ -93,7 +89,7 @@ class Siswa extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id == FALSE) {
-            $this->modal_name = 'modal-siswa';
+            $this->modal_name = 'modal-siswa'; 
 
             $this->m_siswa->push_select('status');
 
@@ -116,17 +112,25 @@ class Siswa extends Backend_Controller {
                         $response->where('sekolah_id', decrypt_url($this->input->post('filter_sekolah'), 'app'));
                     }
                 }
+                if ($this->input->post('filter_rombel') == FALSE) {
+                    $response->where('siswa.id', 0);
+                } else {
+                    if ($this->input->post('filter_rombel') !== 'ALL') {
+                        $response->where('rombel_id', decrypt_url($this->input->post('filter_rombel'), 'app'));
+                    }
+                }
             }else{
                 $response->where('sekolah_id', $this->logged_sekolah_id);
-            }
-
-            if ($this->input->post('filter_rombel') == FALSE) {
-                $response->where('siswa.id', 0);
-            } else {
-                if ($this->input->post('filter_rombel') !== 'ALL') {
-                    $response->where('rombel_id', decrypt_url($this->input->post('filter_rombel'), 'app'));
+                if ($this->input->post('filter_rombel') == FALSE) {
+                    $response->where('siswa.id', 0);
+                } else {
+                    if ($this->input->post('filter_rombel') !== 'ALL') {
+                        $response->where('rombel_id', decrypt_url($this->input->post('filter_rombel'), $this->id_key));
+                    }
                 }
             }
+
+            
            
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
             $response->edit_column('alamat', '$1', "format_alamat(nama_nagari,nama_kecamatan,nama_kabupaten,nama_provinsi,'fe-map-pin text-danger mr-1',alamat_lengkap,'fe-phone-call text-success mr-1',no_hp)");

@@ -8,10 +8,15 @@ class M_mutasi_guru extends MY_Model {
     protected $_log_user = TRUE;
     protected $_softdelete = TRUE;
     protected $_order_by = 'id';
-    protected $_order = 'ASC';
-    protected $_fields_toshow = ['id','guru_id','sekolah_awal_id','sekolah_tujuan_id'];
+    protected $_order = 'DESC';
+    protected $_fields_toshow = ['id','guru_id','sekolah_awal_id','sekolah_tujuan_id','tipe_mutasi','sekolah_luar'];
     protected $_fields = [
-       'id' => 'id'
+       'id' => 'id',
+       'guru_id' => 'guru_id',
+       'sekolah_awal_id' => 'sekolah_awal_id',
+       'sekolah_tujuan_id' => 'sekolah_tujuan_id',
+       'tipe_mutasi' => 'tipe_mutasi',
+       'sekolah_luar' => 'sekolah_luar'
     ];
 
     public function __construct()
@@ -24,12 +29,12 @@ class M_mutasi_guru extends MY_Model {
         parent::clear_join();
         $this->_fields_toshow = [
             'mutasi_guru.id','s_awal.nama_sekolah as sekolah_awal','s_tujuan.nama_sekolah as sekolah_tujuan',
-            'nama_guru', 'nip','link', 'mutasi_guru.status'
+            'nama_guru', 'nip','link', 'mutasi_guru.status','tipe_mutasi','sekolah_luar'
         ];
 
         parent::join('guru g','g.id=mutasi_guru.guru_id');
         parent::join('sekolah s_awal','s_awal.id=mutasi_guru.sekolah_awal_id');
-        parent::join('sekolah s_tujuan','s_tujuan.id=mutasi_guru.sekolah_tujuan_id');
+        parent::join('sekolah s_tujuan','s_tujuan.id=mutasi_guru.sekolah_tujuan_id','left');
 
         return $this;
     }

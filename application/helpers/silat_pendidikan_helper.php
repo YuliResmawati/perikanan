@@ -467,7 +467,8 @@ if (!function_exists('str_status_cuti')) {
         } else if ($status == '1') {
             $a = '<h6><span class="badge bg-soft-success text-success">Permohonan Disetujui</span></h6>';
         } else if ($status == '2') {
-            $a = '<h6><span class="badge bg-soft-danger text-danger">Permohonan Ditolak</span></h6><br>'.$alasan.'';
+            $a = '<h6><span class="badge bg-soft-danger text-danger">Permohonan Ditolak</span></h6>
+                  <h6><span class="badge bg-soft-dark text-dark">Alasan : '.$alasan.'</span></h6><br>';
         } else if ($status == '3') {
             $a = '<h6><span class="badge bg-soft-secondary text-secondary">Permohonan Dibatalkan</span></h6>';
         } else {
@@ -1611,7 +1612,7 @@ if (!function_exists('btn_kgb'))
 }
 
 if (!function_exists('tabel_icon_cuti')) {
-    function tabel_icon_cuti($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status)
+    function tabel_icon_cuti($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status = '', $logged_level = '')
     {
         $a = '';
 
@@ -1635,23 +1636,58 @@ if (!function_exists('tabel_icon_cuti')) {
             }
 
             if($status == '0'){
-                if ($action == "batal") {
-                    $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-batal btn btn-danger waves-effect waves-light btn-xs" title="Batalkan Pengajuan" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
-                                    <i class="icon-close"></i>
-                            </' . $a_tag . '>';
-                } elseif ($action == "edit") {
-                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
-                                    <i class="icon-note"></i>
-                            </' . $a_tag . '>';
+                if ($logged_level !== '3') {
+                    if ($action == "terima") {
+                        $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-terima btn btn-success waves-effect waves-light btn-xs" title="Terima Pengajuan" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                                        <i class="icon-check"></i>
+                                </' . $a_tag . '>';
+                    } elseif ($action == "tolak") {
+                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-tolak btn btn-danger waves-effect waves-light btn-xs" title="Tolak Pengajuan" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                        <i class="icon-close"></i>
+                                </' . $a_tag . '>';
+                    }
+                }else if($logged_level == '3'){
+                    if ($action == "batal") {
+                        $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-batal btn btn-danger waves-effect waves-light btn-xs" title="Batalkan Pengajuan" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                                        <i class="icon-close"></i>
+                                </' . $a_tag . '>';
+                    } elseif ($action == "edit") {
+                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                        <i class="icon-note"></i>
+                                </' . $a_tag . '>';
+                    }
+                }else{
+                    $a = '<strong>-</strong>';
                 }
+                
             } else {
                 $a = '<strong>-</strong>';
             }
+
+
                 
             
         }
 
         return $a;
+    }
+}
+
+if (!function_exists('tipe_mutasi')) 
+{
+    function tipe_mutasi($tipe_mutasi)
+    {
+        if ($tipe_mutasi !== NULL) {
+            if($tipe_mutasi == "0"){
+                $result = "<span class='badge bg-soft-success text-success'>Mutasi Luar Kota</span>";
+            }else if($tipe_mutasi == "1"){
+                $result = "<span class='badge bg-soft-warning text-warning'>Mutasi Dalam Kota</span>";
+            }
+        } else {
+            $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
+        }
+
+        return $result;
     }
 }
     

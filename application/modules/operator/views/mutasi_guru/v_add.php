@@ -4,6 +4,16 @@
         <input type="hidden" class="mguru-token-response" name="mguru-token-response">
             <div class="form-row">
                 <div class="form-group col-md-12">
+                    <label for="tipe_mutasi" class="col-form-label">Jenis Mutasi Guru  <?= label_required() ?></label>
+                    <select class="form-control select2" name="tipe_mutasi" id="tipe_mutasi">
+                        <option selected disabled>Pilih Jenis Mutasi Guru</option>
+                        <option value="0">Mutasi Keluar Kota Bukittinggi</option>
+                        <option value="1">Mutasi Antar Sekolah di Kota Bukittinggi</option>
+                    </select>            
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
                     <label for="guru_id" class="col-form-label">Pilih Guru  <?= label_required() ?></label>
                     <select class="form-control select2" name="guru_id" id="guru_id"></select>
                 </div>
@@ -15,10 +25,16 @@
                     <input type="hidden" class="form-control" name="sekolah_awal_id" id="sekolah_awal_id" readonly>
                 </div>
             </div>
-            <div class="form-row">
+            <div class="form-row" id="_tujuan_id" style="display:none">
                 <div class="form-group col-md-12">
                     <label for="sekolah_tujuan" class="col-form-label">Pilih Sekolah Tujuan  <?= label_required() ?></label>
                     <select class="form-control select2" name="sekolah_tujuan" id="sekolah_tujuan"></select>
+                </div>
+            </div>
+            <div class="form-row" id="_tujuan_nama" style="display:none">
+                <div class="form-group col-md-12">
+                    <label for="sekolah_luar" class="col-form-label">Sekolah Tujuan  <?= label_required() ?></label>
+                    <input type="text" class="form-control" name="sekolah_luar" id="sekolah_luar">
                 </div>
             </div>
             <div class="form-row">
@@ -42,6 +58,16 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $("#tipe_mutasi").on('change', function(e) {
+            var tipe_mutasi = $(this).val();
+            if(tipe_mutasi == '0'){
+                $('#_tujuan_nama').show();
+                $('#_tujuan_id').hide();
+            }else{
+                $('#_tujuan_nama').hide();
+                $('#_tujuan_id').show();
+            }
+        });
 
         ajax_get_guru = {
             element: $('#guru_id'),

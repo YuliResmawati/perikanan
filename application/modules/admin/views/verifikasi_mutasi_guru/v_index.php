@@ -1,3 +1,46 @@
+<div class="form-group row mt-10">
+    <label for="filter_tipe" class="col-md-2 col-form-label">Jenis Mutasi</label>
+    <div class="col-sm-10">
+        <select id="filter_tipe" name="filter_tipe" class="form-control select2" data-search="false" required>
+            <option value="ALL" selected>Tampilkan Semua Jenis</option>
+            <option value="<?= encrypt_url('0', $id_key) ?>">Mutasi Keluar Kota Bukittinggi</option>
+            <option value="<?= encrypt_url('1', $id_key) ?>">Mutasi Antar Sekolah di Kota Bukittinggi</option>
+        </select>
+    </div>
+</div>
+<div class="form-group row mt-10">
+    <label for="filter_sekolah" class="col-md-2 col-form-label">Sekolah Awal</label>
+    <div class="col-sm-10">
+        <select id="filter_sekolah" name="filter_sekolah" class="form-control select2" required>
+            <option value="ALL" selected>Tampilkan Sekolah</option>
+            <?php foreach($sekolah as $row): ?>
+                <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->nama_sekolah ?></option>
+            <?php $no++; endforeach; ?>
+        </select>
+    </div>
+</div>
+<div class="form-group row mt-10">
+    <label for="filter_status" class="col-md-2 col-form-label">Status Mutasi</label>
+    <div class="col-sm-10">
+        <select id="filter_status" name="filter_status" class="form-control select2" required>
+            <option value="ALL" selected>Tampilkan Semua Status</option>
+            <option value="<?= encrypt_url('0', $id_key) ?>">Dalam Proses</option>
+            <option value="<?= encrypt_url('1', $id_key) ?>">Diterima</option>
+            <option value="<?= encrypt_url('2', $id_key) ?>">Ditolak</option>
+        </select>
+    </div>
+</div>
+<div class="form-group row mb-0">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-10 col-12">
+        <span class="btn btn-blue" id="cari"><i class="icon-magnifier"></i>
+            Cari</span>
+        <div style="display: none" id="spinner" class='spinner-border spinner-border-sm text-info'
+            role='status'><span class='sr-only'></span></div>
+    </div>
+</div>
+
 <div class="table-responsive mb-4 mt-3">
     <table id="table-mutasi_guru" class="table table-striped w-100">
         <thead>
@@ -8,6 +51,7 @@
                 <th class="text-nowrap text-center">Nama Guru
                     <hr class="m-0">NIP
                 </th>
+                <th style="text-align: center; vertical-align: middle;">Tipe</th>
                 <th style="text-align: center; vertical-align: middle;">Sekolah Asal</th>
                 <th class="text-nowrap text-center">Usulan mutasi
                     <hr class="m-0">Sekolah Tujuan
@@ -62,14 +106,18 @@ $(document).ready(function() {
         url: url_get_data,
         data: function (data){
             data.silatpendidikan_c_token = csrf_value;
+            data.filter_tipe = $('[name="filter_tipe"]').val();
+            data.filter_status = $('[name="filter_status"]').val();
+            data.filter_sekolah = $('[name="filter_sekolah"]').val();
         }, 
         columns: [
             {"data": "id", searchable:false, orderable:false, "sClass": "text-center"},
             {"data": "nip", "visible": false},
             {"data": "nama_guru","visible": false},
             {"data": "nama", searchable: false},
+            {"data": "tipe", "sClass": "text-center",searchable: false},
             {"data": "sekolah_awal", "sClass": "text-center",searchable: false},
-            {"data": "sekolah_tujuan", "sClass": "text-center",searchable: false},
+            {"data": "tujuan", "sClass": "text-center",searchable: false},
             {"data": "link", searchable: false},
             {"data": "status", searchable:false, orderable:false, "sClass": "text-center text-nowrap"},
             {"data": "aksi", searchable:false, orderable:false, "sClass": "text-center text-nowrap"},

@@ -8,7 +8,7 @@ class M_cuti extends MY_Model {
     protected $_log_user = TRUE;
     protected $_softdelete = FALSE;
     protected $_order_by = 'id';
-    protected $_order = 'ASC';
+    protected $_order = 'DESC';
     protected $_fields_toshow = ['id','tahun_ajaran_id','guru_id','files','tgl_awal','tgl_akhir','lama_cuti','alasan'];
     protected $_fields = [
        'tahun_ajaran_id' => 'tahun_ajaran_id',
@@ -27,13 +27,14 @@ class M_cuti extends MY_Model {
 
     public function get_all_cuti()
     {
-        $this->_fields_toshow = ['cuti.id','tahun_ajaran_id','guru_id','files','tgl_awal','tgl_akhir','lama_cuti',
+        $this->_fields_toshow = ['cuti.id','tahun_ajaran_id','guru_id','files','tgl_awal','tgl_akhir','lama_cuti','nama_sekolah',
                                 'tahun_ajaran','nama_guru','gelar_depan','gelar_belakang','sekolah_id','cuti.status as status','alasan',
                                 "(select sum(lama_cuti) from cuti a where a.guru_id = cuti.guru_id and a.status='1') as total_cuti"
                             ];
 
         parent::join('tahun_ajaran', 'tahun_ajaran.id=cuti.tahun_ajaran_id', 'left');
         parent::join('guru', 'guru.id=cuti.guru_id', 'left');
+        parent::join('sekolah', 'sekolah.id=guru.sekolah_id', 'left');
 
         return $this;
     }

@@ -26,8 +26,6 @@ if($this->logged_level !== "3"){ ?>
             </select>
         </div>
     </div>
-<?php    }
-?>
     <div class="form-group row mt-10">
         <label for="filter_rombel" class="col-md-2 col-form-label">Rombel</label>
         <div class="col-sm-10">
@@ -36,7 +34,19 @@ if($this->logged_level !== "3"){ ?>
             </select>
         </div>
     </div>
-
+<?php    }else{ ?>
+    <div class="form-group row mt-10">
+        <label for="filter_rombel" class="col-md-2 col-form-label">Rombel</label>
+        <div class="col-sm-10">
+            <select id="filter_rombel" name="filter_rombel" class="form-control select2" required>
+            <option value="ALL" selected>Pilih Rombel</option>
+            <?php foreach($rombel as $row): ?>
+                <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $row->tingkatan.$row->nama_rombel ?></option>
+            <?php $no++; endforeach; ?>
+            </select>
+        </div>
+    </div>
+<?php } ?>
 
 <div class="form-group row mb-0">
     <div class="col-sm-2">
@@ -443,13 +453,9 @@ if($this->logged_level !== "3"){ ?>
             e.preventDefault();
             aOption = {
                 url: "<?= base_url($uri_mod. '/AjaxGet/') ?>" + $(this).data('id'),
-                data: {
-                    simpeg_c_token : csrf_value
-                }
             }
             data = get_data_by_id(aOption);
             if(data!=false){
-                console.log(data);
                 $(form_name).addClass('form-edit');
                 $(form_name).removeClass('form-tambah');
                 $(form_name).attr('data-id', $(this).data('id'));

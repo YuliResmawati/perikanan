@@ -11,7 +11,7 @@ class Mutasi_guru extends Backend_Controller {
 		$this->data['uri_mod'] = 'operator/mutasi_guru';
         $this->id_key = $this->private_key;
         $this->breadcrumbs->push('Mutasi Guru', 'operator/mutasi_guru');
-        $this->load->model(['m_mutasi_guru','m_sekolah']);
+        $this->load->model(['m_mutasi_guru','m_sekolah','m_guru']);
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -35,6 +35,8 @@ class Mutasi_guru extends Backend_Controller {
         $this->data['page_title'] = "Data Mutasi Guru";
         $this->data['page_description'] = "Halaman Daftar Data Mutasi Guru.";
         $this->data['card'] = "true";
+        $this->data['id_key'] = $this->id_key;
+
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         
 		$this->load->view('mutasi_guru/v_index', $this->data);
@@ -84,10 +86,29 @@ class Mutasi_guru extends Backend_Controller {
 
             $edit_link = 'operator/mutasi_guru/edit/'; 
             $response = $this->m_mutasi_guru->get_detail_mutasi_guru()->datatables();
+            
+            $response->where('sekolah_awal_id', $this->logged_sekolah_id);
 
+            if ($this->input->post('filter_tipe') == FALSE) {
+                $response->where('mutasi_guru.id', 0);
+            } else {
+                if ($this->input->post('filter_tipe') !== 'ALL') {
+                    $response->where('mutasi_guru.tipe_mutasi', decrypt_url($this->input->post('filter_tipe'), $this->id_key));
+                }
+            }
+
+            if ($this->input->post('filter_status') == FALSE) {
+                $response->where('mutasi_guru.id', 0);
+            } else {
+                if ($this->input->post('filter_status') !== 'ALL') {
+                    $response->where('mutasi_guru.status', decrypt_url($this->input->post('filter_status'), $this->id_key));
+                }
+            }
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
             $response->edit_column('nama', '$1', "two_row(nama_guru,'fe-user text-danger mr-1', nip,' fe-clipboard text-success mr-1')");
+            $response->edit_column('tipe', '$1', "tipe_mutasi(tipe_mutasi)");
+            $response->edit_column('tujuan', '$1 $2', "sekolah_tujuan, sekolah_luar");
             $response->edit_column('link', '$1', "btn_link(link)");
             $response->edit_column('status', '$1', "str_status_mutasi(status)");  
             $response->add_column('aksi', '$1', "tabel_icon_mutasi(id,' ','delete',' ', $this->id_key,' ',' ',status)");
@@ -171,11 +192,19 @@ class Mutasi_guru extends Backend_Controller {
             $this->result = array('status' => TRUE, 'message' => NULL);
             $id = decrypt_url($id, $this->id_key);
 
+            $this->form_validation->set_rules('tipe_mutasi', 'Jenis Mutasi', 'required');
             $this->form_validation->set_rules('guru_id', 'Nama Guru', 'required');
-            $this->form_validation->set_rules('sekolah_tujuan', 'Sekolah Tujuan', 'required');
             $this->form_validation->set_rules('link', 'Link Dokumen', 'required');
     
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
+
+            if($this->input->post('tipe_mutasi') == "0"){
+                $this->form_validation->set_rules('sekolah_luar', 'Nama Sekolah Tujuan', 'required');
+            }else{
+                $this->form_validation->set_rules('sekolah_tujuan', 'Sekolah Tujuan', 'required');
+            }
+
+            $guru_id = decrypt_url($this->input->post('guru_id'), 'silat_pendidikan');
 
             if ($this->form_validation->run() == TRUE) {
                 if ($id == FALSE) {
@@ -183,10 +212,17 @@ class Mutasi_guru extends Backend_Controller {
                     $this->m_mutasi_guru->push_to_data('status', '0');
                 }
 
-                $this->m_mutasi_guru->push_to_data('guru_id', decrypt_url($this->input->post('guru_id'), 'silat_pendidikan'))
-                    ->push_to_data('sekolah_tujuan_id', decrypt_url($this->input->post('sekolah_tujuan'), 'silat_pendidikan'))
+                $this->m_mutasi_guru
+                    ->push_to_data('tipe_mutasi', $this->input->post('tipe_mutasi'))
+                    ->push_to_data('guru_id', $guru_id)
                     ->push_to_data('sekolah_awal_id', decrypt_url($this->input->post('sekolah_awal_id'), 'silat_pendidikan'))
                     ->push_to_data('link', $this->input->post('link'));
+
+                if($this->input->post('tipe_mutasi') == "0"){
+                    $this->m_mutasi_guru->push_to_data('sekolah_luar', $this->input->post('sekolah_luar'));
+                }else{
+                    $this->m_mutasi_guru->push_to_data('sekolah_tujuan_id', decrypt_url($this->input->post('sekolah_tujuan'), 'silat_pendidikan'));
+                }
     
                 $this->return = $this->m_mutasi_guru->save($id);
     

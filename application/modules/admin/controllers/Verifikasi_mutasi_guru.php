@@ -39,6 +39,8 @@ class Verifikasi_mutasi_guru extends Backend_Controller {
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['form_name'] = "form-verifikasi-guru";
         $this->data['modal_name'] = $this->modal_name;
+        $this->data['id_key'] = $this->id_key;
+        $this->data['sekolah'] = $this->m_sekolah->get_all_sekolah()->findAll();
         
 		$this->load->view('verifikasi_mutasi_guru/v_index', $this->data);
     }
@@ -55,10 +57,34 @@ class Verifikasi_mutasi_guru extends Backend_Controller {
 
             $edit_link = 'admin/mutasi_guru/edit/'; 
             $response = $this->m_mutasi_guru->get_detail_mutasi_guru()->datatables();
+            if ($this->input->post('filter_tipe') == FALSE) {
+                $response->where('mutasi_guru.id', 0);
+            } else {
+                if ($this->input->post('filter_tipe') !== 'ALL') {
+                    $response->where('mutasi_guru.tipe_mutasi', decrypt_url($this->input->post('filter_tipe'), $this->id_key));
+                }
+            }
 
+            if ($this->input->post('filter_status') == FALSE) {
+                $response->where('mutasi_guru.id', 0);
+            } else {
+                if ($this->input->post('filter_status') !== 'ALL') {
+                    $response->where('mutasi_guru.status', decrypt_url($this->input->post('filter_status'), $this->id_key));
+                }
+            }
+
+            if ($this->input->post('filter_sekolah') == FALSE) {
+                $response->where('mutasi_guru.id', 0);
+            } else {
+                if ($this->input->post('filter_sekolah') !== 'ALL') {
+                    $response->where('mutasi_guru.sekolah_awal_id', decrypt_url($this->input->post('filter_sekolah'), $this->id_key));
+                }
+            }
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
             $response->edit_column('nama', '$1', "two_row(nama_guru,'fe-user text-danger mr-1', nip,' fe-clipboard text-success mr-1')");
+            $response->edit_column('tipe', '$1', "tipe_mutasi(tipe_mutasi)");
+            $response->edit_column('tujuan', '$1 $2', "sekolah_tujuan, sekolah_luar");
             $response->edit_column('link', '$1', "btn_link(link)");
             $response->edit_column('status', '$1', "str_status_mutasi(status)");  
             $response->add_column('aksi', '$1', "btn_verifikasi_mutasi(id,' ',status,$this->id_key,' ',$this->modal_name)");
@@ -123,6 +149,11 @@ class Verifikasi_mutasi_guru extends Backend_Controller {
 
                     $this->db->where('id', $guru_id);
                     $this->db->update('guru', $data);
+
+                    if($check->tipe_mutasi == "0"){
+                        $this->m_guru->push_to_data('status', '0');
+                        $this->m_guru->save($guru_id);
+                    }
 
                     $this->result = array(
                         'status'   => TRUE,

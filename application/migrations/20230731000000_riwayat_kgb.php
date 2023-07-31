@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Mutasi_guru extends CI_Migration {
+class Migration_Riwayat_kgb extends CI_Migration {
 
     public function up()
     {
@@ -15,15 +15,15 @@ class Migration_Mutasi_guru extends CI_Migration {
                 'type' => 'INT4',
                 'default' => null
             ),
-            'sekolah_awal_id' => array(
-                'type' => 'INT4',
+            'tmt_awal' => array(
+                'type' => 'date',
                 'default' => null
             ),
-            'sekolah_tujuan_id' => array(
-                'type' => 'INT4',
+            'tmt_akhir' => array(
+                'type' => 'date',
                 'default' => null
             ),
-            'link' => array(
+            'berkas' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => null,
@@ -69,12 +69,12 @@ class Migration_Mutasi_guru extends CI_Migration {
             ),      
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('mutasi_guru');
+        $this->dbforge->create_table('riwayat_kgb');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('mutasi_guru');
+        $this->dbforge->drop_table('riwayat_kgb');
     }
 }
 ?>
