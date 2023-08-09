@@ -114,7 +114,7 @@ class Verifikasi_kgb extends Backend_Controller {
         if ($id !== FALSE) {
             $this->m_riwayat_kgb->push_select('status');
 
-            $date_now = date('Y-m-d H:i:s');
+            $date_now = date('Y-m-d');
             $check = $this->m_riwayat_kgb->find($id);
 
             $guru_id = $check->guru_id;
