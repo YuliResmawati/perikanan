@@ -3,6 +3,14 @@
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="kgb-token-response" name="kgb-token-response">
         <input type="hidden" class="form-control" name="guru_id" id="guru_id">
+
+        <div class="form-group row">
+            <label for="nama_guru" class="col-md-2 col-form-label">Nama Guru <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="nama_guru" id="nama_guru">
+            </div>
+        </div>
+
         <div class="form-group row">
             <label for="files" class="col-md-2 col-form-label">File <?= label_required() ?></label>
             <div class="col-md-10">
@@ -25,9 +33,8 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
+$(document).ready(function() {
         let id ='<?= encrypt_url($id, $id_key) ?>';
-
         aOption = {
             url: "<?= base_url($uri_mod. '/AjaxGet/') ?>" + id,
         }
@@ -35,8 +42,10 @@
         data = get_data_by_id(aOption);
         if (data != false) {
             $('#guru_id').val(data.data.guru_id);
+            $('#nama_guru').val(data.data.nama_guru);
         }
-    });   
+    }); 
+
 
     $('#submit-btn').click(function(e) {
         e.preventDefault();

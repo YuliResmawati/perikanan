@@ -1355,7 +1355,7 @@ if (!function_exists('btn_verifikasi_mutasi'))
     function btn_verifikasi_mutasi($id, $session_id, $status_field, $keyid = '', $link_status = '', $modal_name = '')
     {
         $a = '';
-
+        
         if ($id !== $session_id) {
             if ($keyid !== '') {
                 $id = encrypt_url($id, $keyid);
@@ -1688,6 +1688,37 @@ if (!function_exists('tipe_mutasi'))
         }
 
         return $result;
+    }
+}
+
+if (!function_exists('tgl')) 
+{
+    function tgl($tgl_awal)
+    {
+        if ($tgl_awal !== NULL) {
+            $tmt = indo_date($tgl_awal);
+            $result = "<span class='badge bg-soft-warning text-info'>$tmt</span>";
+        } else {
+            $result = '<h6><span class="badge bg-soft-danger text-danger"><i class="mdi mdi-bookmark-remove"></i>TMT Belum Ada</span></h6>';
+        }
+        return $result;
+    }
+}
+
+if (!function_exists('status_kgb')) {
+    function status_kgb($status)
+    {
+        $a = '';
+
+        if ($status == '1') {
+            $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-bookmark-check"></i> Aktif</span></h6>';
+        } else if ($status == '2') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-bookmark-remove"></i> Tidak Aktif</span></h6>';
+        } else {
+            $a = '<h6><span class="badge bg-soft-info text-info"><i class="mdi mdi-bookmark-check"></i> Dalam Proses</span></h6>';
+        }
+
+        return $a;
     }
 }
     

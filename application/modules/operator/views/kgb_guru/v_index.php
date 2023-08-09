@@ -34,7 +34,8 @@
     <table id="table-kgb" class="table table-striped w-100">
         <thead>
             <tr>
-                <th style="vertical-align: middle;">#</th> <th>_Nip</th>
+                <th style="vertical-align: middle;">#</th> 
+                <th>_Nip</th>
                 <th>_Nama</th>
                 <th class="text-nowrap text-center">Nama Guru
                     <hr class="m-0">NIP
@@ -85,8 +86,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         table_name = '#table-kgb';
-        // modal_name = "#<?= $modal_name ?>";
-        // form_name = "#<?= $form_name ?>";
 
         url_get_data = "<?= base_url($uri_mod.'/AjaxGet') ?>";
 
