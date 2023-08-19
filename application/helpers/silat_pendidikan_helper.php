@@ -646,6 +646,23 @@ if (!function_exists('str_images_authorization'))
     }
 }
 
+if (!function_exists('btn_article_view')) 
+{
+    function btn_article_view($link)
+    {
+        $a = '';
+        $_link = base_url('artikel/'). $link;
+
+        if (!empty($link)) {
+            $a = "<a class='btn btn-blue btn-xs' href=".$_link." target='_blank'>Lihat Artikel</a>";
+        } else {
+            $a = '<label class="btn btn-danger btn-xs">-</label>';
+        }
+
+        return $a;
+    }
+}
+
 if (!function_exists('btn_view_images')) 
 {
     function btn_view_images($path, $filename)
@@ -1099,6 +1116,26 @@ if (!function_exists('generate_otp')) {
         }
 
         return $result;
+    }
+}
+
+if (!function_exists('generate_slug')) {
+    function generate_slug($table = '', $name = '', $data = null)
+    {
+        
+        $CI =& get_instance();
+        
+        $config = array(
+            'table' 		=> $table,
+            'name'  		=> $name,
+            'id' 			=> 'id',
+            'field' 		=> 'slug',
+            'replacement' 	=> 'dash'
+        );
+
+        $CI->load->library('slug', $config);
+
+        return $CI->slug->create_uri($data);
     }
 }
 

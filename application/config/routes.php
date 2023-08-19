@@ -62,3 +62,6 @@ $route['manifest/site\.webmanifest'] = 'manifest/site';
 
 #== Core Routes ==#
 $route['logout'] = 'auth/do_logout';
+
+## frontend routes ##
+$route['kontak'] = 'frontend/contact';

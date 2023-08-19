@@ -1,28 +1,21 @@
-<div class="welcome-area hero2 bg-white">
-    <div class="hero-background-shape">
-        <img src="<?= $theme_path ?>/img/core-img/hero-2.png" alt="core image">
-    </div>
-    <div class="background-animation">
-        <div class="item1"></div>
-        <div class="item4"></div>
-        <div class="item5"></div>
-    </div>
-    <div class="hero2-big-circle"></div>
-    <div class="container h-100 <?= ($this->agent->is_mobile()) ? 'mt-4' : '' ?>">
-        <div class="row h-100 align-items-center justify-content-between">
-            <div class="col-12 col-sm-10 col-md-6">
-                <div class="welcome-content">
-                    <h2 class="wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="200ms">Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
-                    <p class="mb-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-                    <p class="mb-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms" style="font-size:17px;"><strong>#loremipsum</strong></p>
-                    <div class="d-flex align-items-center wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <a class="btn btn-warning mt-3" href="<?= base_url('auth') ?>"><?= strtoupper('Masuk Ke Silat Pendidikan') ?></a>
-                    </div>
+<div class="slider-section-04 section">
+    <img class="shape-1 parallaxed animate-02" src="<?= $theme_path ?>/images/shape/shape-18.svg" alt="Shape">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="slider-content">
+                    <h2 class="title">A learning platform that helps you to learning faster</h2>
+                    <p>World-class training and development programs developed by top teachers</p>
+                    <a href="#" class="btn btn-primary btn-hover-heading-color">Explore All Courses</a>
                 </div>
             </div>
-            <div class="col-12 col-sm-10 col-md-6">
-                <div class="welcome-thumb ms-xl-5 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">
-                    <img src="<?= $theme_path ?>/img/illustrator/hero-6.png" alt="core image">
+            <div class="col-md-6 col-sm-8">
+                <div class="slider-images-04">
+                    <img class="image-shape-01 parallaxed animate-01" src="<?= $theme_path ?>/images/shape/shape-17.png" alt="Shape">
+
+                    <div class="image">
+                        <img src="<?= $theme_path ?>/images/hero-3.png" alt="Hero">
+                    </div>
                 </div>
             </div>
         </div>

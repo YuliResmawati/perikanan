@@ -1,50 +1,67 @@
-<div class="mb-120 d-block"></div>
-<div class="register-area">
+<div class="section page-banner-section bg-color-1">
+    <img class="shape-1" src="<?= $theme_path ?>/images/shape/shape-5.png" alt="shape">
+    <img class="shape-2" src="<?= $theme_path ?>/images/shape/shape-6.png" alt="shape">
+    <img class="shape-3" src="<?= $theme_path ?>/images/shape/shape-7.png" alt="shape">
+    <img class="shape-4" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
+    <img class="shape-5" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
+
     <div class="container">
-        <div class="row g-4 g-lg-5 align-items-center justify-content-between <?= ($this->agent->is_mobile()) ? 'mt-3' : '' ?>">
-            <div class="col-12 col-lg-6">
-                <div class="register-thumbnail">
-                    <img src="<?= $theme_path ?>/img/illustrator/hero-3.png" alt="ilustrator">
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card register-card bg-gray p-2 p-sm-4">
-                    <div class="card-body">
-                        <h4>Selamat Datang!</h4>
-                        <p>tidak tau informasi login? <a class="ms-2" href="#">Hubungi Kami</a></p>
-                        <div class="register-form my-4 my-lg-5">
+        <div class="page-banner-content">
+            <h2 class="title">Halaman Login</h2>
+            <ul class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
+                <li class="breadcrumb-item active">Login</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section section-padding">
+    <div class="container">
+        <div class="login-register-wrapper">
+            <div class="row gx-5">
+                <div class="col-lg-6 mx-auto">
+                    <div class="login-register-box">
+                        <div class="section-title">
+                            <h2 class="title text-center">Masukkan Kredensial Anda</h2>
+                            <hr>
+                        </div>
+                        <div class="login-register-form">
                             <?= form_open('auth/do_login', 'id="formLogin"'); ?>
                                 <input type="hidden" class="g-recaptcha-response" name="g-recaptcha-response">
-                                <div class="form-group mb-3">
-                                    <input class="form-control rounded-0" type="text" name="silatpendidikan_username" id="silatpendidikan_username" placeholder="Email atau Nama Pengguna" required>
+                                <div class="single-form">
+                                    <input type="text" class="form-control" name="silatpendidikan_username" id="silatpendidikan_username" placeholder="nama pengguna ">
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label class="label-psswd" for="registerPassword">Show</label>
-                                    <input class="form-control rounded-0" id="registerPassword" name="silatpendidikan_password" type="password" placeholder="Kata Sandi" required>
+                                <div class="single-form">
+                                    <input type="password" class="form-control" name="silatpendidikan_password" id="silatpendidikan_password" placeholder="kata sandi ">
                                 </div>
-                                <button class="btn btn-primary w-100" id="submit-login">
-                                    <span class="spinner-border spinner-border-sm mr-1" id="spinner-status" role="status" aria-hidden="true" style="display:none"></span>
-                                    <i class="bi bi-unlock me-2" id="login-icon"></i> <span id="text-button">Login</span> 
-                                </button>
-                                <div class="login-meta-data d-flex align-items-center justify-content-between">
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" id="rememberMe" type="checkbox" name="rememberMe" value="checked">
-                                        <label class="form-check-label" for="rememberMe">Biarkan saya tetap login</label>
-                                    </div>
-                                    <a class="forgot-password mt-3" href="<?= base_url('forget') ?>">Lupa Password?</a>
+                                <div class="single-form form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label for="flexCheckDefault">Lihat Kata Sandi</label>
+                                </div>
+                                <div class="single-form">
+                                    <button class="btn btn-primary btn-hover-heading-color w-100" id="submit-login">
+                                        <span class="spinner-border spinner-border-sm mr-1" id="spinner-status" role="status" aria-hidden="true" style="display:none"></span>
+                                        <i class="bi bi-unlock me-2" id="login-icon"></i> <span id="text-button">Login</span> 
+                                    </button>
                                 </div>
                             <?= form_close(); ?>
                         </div>
-                      
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="mb-120 d-block"></div>
 
 <script type="text/javascript">
+    $('#flexCheckDefault').click(function() {
+        if ('password' == $('#silatpendidikan_password').attr('type')) {
+            $('#silatpendidikan_password').prop('type', 'text');
+        } else {
+            $('#silatpendidikan_password').prop('type', 'password');
+        }
+    });
+
     $('#submit-login').click(function(e) {
         e.preventDefault();
         $('#spinner-status').show();
@@ -68,6 +85,7 @@
             data: $(this).serialize(),
             dataType : 'json',
             beforeSend : function() {
+                $('#loading-process').show();
                 $('#spinner-status').show();
                 $('#login-icon').hide();
                 $('#text-button').html('Loading...');
@@ -84,7 +102,7 @@
                         title: 'Informasi!',
                         html: data.message,
                         icon: 'success',
-                        confirmButtonColor: '#0d6efd',
+                        confirmButtonColor: '#3bbca7',
                         confirmButtonText: 'OK'
                     }).then(function() {
                         window.location = '<?= base_url('dashboard') ?>';
@@ -94,10 +112,12 @@
                         title: 'Informasi!',
                         html: data.message,
                         icon: 'error',
-                        confirmButtonColor: '#0d6efd',
+                        confirmButtonColor: '#3bbca7',
                         confirmButtonText: 'OK'
                     })
                 }
+
+                $('#loading-process').hide();
             },
             error : function() {
                 $('#spinner-status').hide();
@@ -109,9 +129,11 @@
                     title: 'Informasi!',
                     text: 'Oops, terjadi kesalahan saat menghubungkan ke server. Silahkan periksa koneksi internet anda atau refresh ulang halaman ini.',
                     icon: 'error',
-                    confirmButtonColor: '#0d6efd',
+                    confirmButtonColor: '#3bbca7',
                     confirmButtonText: 'OK'
-                })
+                });
+
+                $('#loading-process').hide();
             }
         });
     });

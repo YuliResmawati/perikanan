@@ -16,7 +16,7 @@ class Auth extends Frontend_Controller {
     
     public function _init()
     {
-        $this->output->set_template('frontend');
+        $this->output->set_template('auth');
     }
 
     public function index()
@@ -61,7 +61,7 @@ class Auth extends Frontend_Controller {
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $data = array(
                 'status' => FALSE,
-                'message' => '<span class="text-danger"><i class="fa fa-window-close"></i> Request yang anda jalankan dianggap SPAM oleh sistem.</span>'
+                'message' => '<span class="text-danger"> Request yang anda jalankan dianggap SPAM oleh sistem.</span>'
             );
         } else {
             $this->form_validation->set_rules('silatpendidikan_username', 'Nama Pengguna', 'trim|required|min_length[3]|max_length[50]');
@@ -88,12 +88,12 @@ class Auth extends Frontend_Controller {
     
                     $data = array(
                         'status' => TRUE,
-                        'message' => '<span class="text-success"><i class="fa fa-check-square"></i> Berhasil Login.</span>'
+                        'message' => '<span class="text-success"> Berhasil Login.</span>'
                     );
                 } else {
                     $data = array(
                         'status' => FALSE,
-                        'message' => '<span class="text-danger"><i class="fa fa-window-close"></i> Nama Pengguna atau Kata Sandi salah.</span>'
+                        'message' => '<span class="text-danger"> Nama Pengguna atau Kata Sandi salah.</span>'
                     );
                 }
             } else {

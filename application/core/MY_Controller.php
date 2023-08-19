@@ -72,9 +72,6 @@ class Frontend_Controller extends MY_Controller
         $this->data['theme_path']       = base_url('assets/frontend');
         $this->data['page_title']       = '';
         $this->data['page_description'] = '';
-
-        $this->load->section('header', 'partials/frontend/header');
-        $this->load->section('footer', 'partials/frontend/footer');
     }
 }
 

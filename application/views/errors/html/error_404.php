@@ -1,65 +1,78 @@
-<!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Error 404 Page</title>
+        <link rel="icon" href="<?= config_item('base_url') ?>assets/frontend/images/favicon.png">
+        <link rel="stylesheet" href="./error_page.css" />
+        <script src="https://kit.fontawesome.com/66aa7c98b3.js" crossorigin="anonymous"></script>
+        <style type="text/css">
+            @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-   
-    <title>404 Halaman Tidak Di Temukan</title>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-    <!-- Favicon -->
-    <link rel="icon" href="<?= config_item('base_url') ?>assets/global/images/new_simpeg.png">
+            body {
+                font-family: "Poppins", sans-serif;
+            }
 
-    <!-- App css -->
-    <link rel="stylesheet" href="<?= config_item('base_url') ?>/assets/frontend/css/all-css-libraries.css">
-    <link rel="stylesheet" href="<?= config_item('base_url') ?>/assets/frontend/style.css">
-</head>
+            .container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
 
-<body class="authentication-bg authentication-bg-pattern">
-    <div class="preloader" id="preloader">
-        <div class="spinner-grow text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
-    <div class="container">
-        <div class="logo-area text-center">
-            <a href="<?= config_item('base_url') ?>">
-                <img src="<?= config_item('base_url') ?>/assets/global/images/logo_simpeg_404.png" alt="logo simpeg">
-            </a>
-        </div>
-    </div>
-    <div class="container">
-        <div class="border"></div>
-    </div>
-    <div class="mb-50 d-block"></div>
-    <div class="saasbox-coming-soon-area text-center">
+            .gif {
+                display: flex;
+                justify-content: center;
+            }
+
+            .content {
+                text-align: center;
+                margin: 3rem 0;
+            }
+
+            .content .main-heading {
+                font-size: 2.5rem;
+                font-weight: 700;
+            }
+
+            p {
+                font-size: 1.3rem;
+                padding: 0.7rem 0;
+            }
+
+            button {
+                padding: 1rem;
+                border-radius: 15px;
+                outline: none;
+                border: none;
+                background: #3bbca7;
+                color: #fff;
+                font-size: 1.3rem;
+                cursor: pointer;
+            }
+
+        </style>
+    </head>
+    <body>
         <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-12 col-lg-7">
-                    <img class="mb-30" src="<?= config_item('base_url') ?>/assets/frontend/img/illustrator/hero-7.png" width="60%" alt="ilustrasi 404">
-                    <h2>Oops! Halaman tidak ditemukan</h2>
-                    <a class="btn btn-primary mt-4" href="<?= config_item('base_url') ?>">Kembali Ke Home</a>
-                </div>
+            <div class="gif">
+                <img src="https://i.postimg.cc/2yrFyxKv/giphy.gif" alt="gif_ing" />
+            </div>
+            <div class="content">
+                <h1 class="main-heading">This page is gone.</h1>
+                <p> ...maybe the page you're looking for is not found or never existed. </p>
+                <a href="<?= config_item('base_url') ?>">
+                    <button>Back to home <i class="far fa-hand-point-right"></i>
+                    </button>
+                </a>
             </div>
         </div>
-    </div>
-    <footer class="footer-area">
-        <div class="container">
-            <div class="copywrite-wrapper mt-5 rounded d-lg-flex align-items-lg-center justify-content-lg-between">
-                <div class="copywrite-text text-center text-lg-start mb-3 mb-lg-0 me-lg-4">
-                    <p class="mb-0"><?= date('Y') ?> &copy; All rights reserved by <a href="#">Dinas Komunikasi dan Informatika Kabupaten Agam</a></p>
-            </div>
-        </div>
-    </footer>
-    <div id="scrollTopButton">
-        <i class="bi bi-arrow-up-short"></i>
-    </div>
-    <div class="mb-3 d-block"></div>
-
-     <!-- Vendor js -->
-    <script src="<?= config_item('base_url') ?>/assets/frontend/js/all-js-libraries.js"></script>
-    <script src="<?= config_item('base_url') ?>/assets/frontend/js/active.js"></script>
-</body>
-
+    </body>
 </html>
