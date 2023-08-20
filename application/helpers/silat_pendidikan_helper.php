@@ -1734,7 +1734,7 @@ if (!function_exists('tgl'))
     {
         if ($tgl_awal !== NULL) {
             $tmt = indo_date($tgl_awal);
-            $result = "<span class='badge bg-soft-warning text-info'>$tmt</span>";
+            $result = "<span class='badge bg-soft-info text-info'>$tmt</span>";
         } else {
             $result = '<h6><span class="badge bg-soft-danger text-danger"><i class="mdi mdi-bookmark-remove"></i>TMT Belum Ada</span></h6>';
         }
@@ -1743,19 +1743,65 @@ if (!function_exists('tgl'))
 }
 
 if (!function_exists('status_kgb')) {
-    function status_kgb($status)
+    function status_kgb($status,$alasan = '')
     {
         $a = '';
-
-        if ($status == '1') {
-            $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-bookmark-check"></i> Aktif</span></h6>';
+ 
+        if ($status == '0') {
+            $a = '<h6><span class="badge bg-soft-warning text-warning"><i class="mdi mdi-bookmark-check"></i> Menunggu Persetujuan</span></h6>';
+        }else if ($status == '1') {
+            $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-bookmark-check"></i> Disetujui</span></h6>';
         } else if ($status == '2') {
-            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-bookmark-remove"></i> Tidak Aktif</span></h6>';
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-bookmark-remove"></i> Ditolak</span></h6>
+                <h6><span class="badge bg-soft-dark text-dark">Alasan : '.$alasan.'</span></h6><br>';
         } else {
-            $a = '<h6><span class="badge bg-soft-info text-info"><i class="mdi mdi-bookmark-check"></i> Dalam Proses</span></h6>';
+            $a = '<h6><span class="badge bg-soft-info text-info"><i class="mdi mdi-bookmark-check"></i> Belum Diajukan</span></h6>';
         }
 
         return $a;
     }
 }
+
+if (!function_exists('tabel_icon_kgb')) {
+    function tabel_icon_kgb($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status)
+    {
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = encrypt_url($id, $keyid);
+            }
+
+            if ($link_url !== '') {
+                $a_tag = 'a';
+                $link_url = 'href="' . base_url($link_url . $id) . '"';
+                $modal_attr = '';
+            } else {
+                $a_tag = 'span';
+                $link_url = "";
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            if($status == '0' || $status == '1' || $status == '2'){
+                $a = '<strong>-</strong>';
+            } else {
+                if ($action == "ajukan") {
+                    $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-ajukan btn btn-icons btn-rounded btn-success btn-xs" title="Ajukan KGB" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                    <i class="mdi mdi-plus"></i>
+                    </' . $a_tag . '>';
+                } 
+
+            }
+                
+            
+        }
+
+        return $a;
+    }
+}
+
     

@@ -4,12 +4,12 @@
         <input type="hidden" class="kls-token-response" name="kls-token-response">
         <div class="form-group row">
             <label for="tipe_sekolah" class="col-md-2 col-form-label">Tingkatan Sekolah <?= label_required() ?></label>
-            <div class="col-md-10">
+            <div class="col-md-10"> 
                 <select class="form-control select2" name="tipe_sekolah" id="tipe_sekolah">
-                    <option selected disabled>Pilih Tingkatan Sekolah</option>
-                    <option value="TK">Taman Kanak-Kanak</option>
-                    <option value="SD">Sekolah Dasar</option>
-                    <option value="SMP">Sekolah Menengah Pertama</option>
+                    <option value="ALL" selected>Tampilkan Semua Tingkatan</option>
+                    <?php foreach($tipe_sekolah as $row): ?>
+                        <option value="<?= $row->tipe_sekolah ?>"><?= $row->tipe_sekolah ?></option>
+                    <?php $no++; endforeach; ?>
                 </select>
             </div>
         </div>

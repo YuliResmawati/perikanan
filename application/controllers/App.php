@@ -326,6 +326,46 @@ class App extends Backend_Controller {
 
     }
 
+    public function AjaxGetGuruBySekolah($sekolah_id = null)
+    {
+        $this->output->unset_template();
+        $sekolah_id = decrypt_url($this->input->post('sekolah_id'), 'app');
+
+            if ($sekolah_id != FALSE) {
+                
+                $this->return = $this->m_guru->get_guru_by_sekolah($sekolah_id)->findAll();
+                foreach ($this->return as $key => $value) {
+                    $this->return[$key]->id = encrypt_url($value->id, 'app');
+                }
+
+                if ($this->return) {
+                    $this->result = array (
+                        'status' => TRUE,
+                        'message' => 'Berhasil mengambil data',
+                        'token' => $this->security->get_csrf_hash(),
+                        'data' => $this->return
+                    );
+                } else {
+                    $this->result = array (
+                        'status' => FALSE,
+                        'message' => 'Sekolah tidak dapat ditampilkan',
+                        'data' => []
+                    );
+                }
+            } else {
+                $this->result = array('status' => FALSE, 'message' => 'ID tidak valid');
+            }
+        
+
+        if ($this->result) {
+            $this->output->set_output(json_encode($this->result));
+        } else {
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan.']));
+        }
+
+    }
+
+
    
 }
 

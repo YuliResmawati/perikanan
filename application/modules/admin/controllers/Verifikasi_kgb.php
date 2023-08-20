@@ -75,6 +75,7 @@ class Verifikasi_kgb extends Backend_Controller {
             $response->edit_column('status_', '$1', "status_kgb(status_kgb)");   
             $response->edit_column('jk', '$1', "jeniskelamin(jenis_kelamin)");   
             $response->edit_column('tanggal', '$1', "tgl(tmt_awal)");
+            $response->edit_column('berkas', '$1', "str_file_datatables(berkas, kgb/)"); 
             $response->add_column('aksi', '$1', "btn_verifikasi_mutasi(id,' ',status_kgb,$this->id_key,' ',$this->modal_name)");
             
             $response = $this->m_riwayat_kgb->datatables(true);
@@ -121,35 +122,31 @@ class Verifikasi_kgb extends Backend_Controller {
 
             if ($check !== FALSE) {
                 if ($check->status == 0) {
-
-                    $data = array(
-                        'status' => '2',
-                        'tmt_akhir' => $date_now
-                    );
-
                     $this->m_riwayat_kgb->push_to_data('status', '1');
-                    $this->m_riwayat_kgb->push_to_data('tmt_awal', $date_now);
+                    $this->m_riwayat_kgb->push_to_data('tmt_akhir', $date_now);
 
                 } else {
                     $this->m_riwayat_kgb->push_to_data('status', '0');
                 }
 
-                $this->db->where(['guru_id' => $guru_id, 'status' => '1']);
-                $this->db->update('riwayat_kgb', $data);
-
-                
                 $this->return = $this->m_riwayat_kgb->save($id);
 
                 if ($this->return) {
+                    $data = array(
+                        'kgb_terakhir' => $date_now
+                    );
 
+                    $this->db->where(['id' => $guru_id, 'status' => '1']);
+                    $this->db->update('guru', $data);
+    
                     $this->result = array(
                         'status'   => TRUE,
-                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> KGB berhasil diterima.</span>'
+                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> KGB berhasil disetujui.</span>'
                     );
                 } else {
                     $this->result = array(
                         'status'   => FALSE,
-                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> KGB gagal diterima.</span>'
+                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> KGB gagal disetujui.</span>'
                     );
                 }
             } else {
@@ -183,20 +180,20 @@ class Verifikasi_kgb extends Backend_Controller {
                     $id = null;
                 }
 
-                $this->m_mutasi_guru->push_to_data('alasan', $this->input->post('keterangan'))
+                $this->m_riwayat_kgb->push_to_data('alasan', $this->input->post('keterangan'))
                     ->push_to_data('status', '2');
 
-                $this->return = $this->m_mutasi_guru->save($id);
+                $this->return = $this->m_riwayat_kgb->save($id);
 
                 if ($this->return) {
                     $this->result = array(
                         'status' => TRUE,
-                        'message' => '<span class="text-success"><i class="mdi mdi-check"></i> Data berhasil ditolak.</span>'
+                        'message' => '<span class="text-success"><i class="mdi mdi-check"></i> KGB berhasil ditolak.</span>'
                     );
                 } else {
                     $this->result = array(
                         'status' => FALSE,
-                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Data gagal ditolak.</span>'
+                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> KGB gagal ditolak.</span>'
                     );
                 }
             } else {
