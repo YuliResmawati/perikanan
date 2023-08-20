@@ -19,10 +19,6 @@ class Migration_Cookie extends CI_Migration {
                                 'type' => 'VARCHAR',
                                 'default' => null,
                         ),
-                        'subscription' => array(
-                                'type' => 'jsonb',
-                                'default' => null,
-                        ),
                         'user_agent' => array(
                                 'type' => 'VARCHAR',
                                 'default' => null,

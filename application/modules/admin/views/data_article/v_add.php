@@ -18,7 +18,7 @@
                 <label for="image" class="col-md-3 col-form-label">Thumbnail <?= label_required() ?></label>
                 <div class="col-md-9">
                     <input type="file" class="form-control" id="image" name="image" data-plugins="dropify">
-                    <p class="text-muted font-13 mt-2">Maksimal 1MB dengan rekomendasi ukuran <b>410 x 257</b>. Format yang didukung: .jpg | .gif | .png | .jpeg | .jpg | .png</p>
+                    <p class="text-muted font-13 mt-2">Maksimal 1MB dengan rekomendasi ukuran <b>850 x 427</b>. Format yang didukung: .jpg | .gif | .png | .jpeg | .jpg | .png</p>
                 </div>
             </div>
             <div class="row mt-3">

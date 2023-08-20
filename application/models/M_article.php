@@ -62,15 +62,15 @@ class M_article extends MY_Model {
         return parent::find($slug);
     }
 
-    public function get_related_article($limit = '') 
+    public function get_related_article($limit = '', $blacklist_id = '') 
     {
         parent::clear_join();
         if ($limit) {
-            $this->db->limit($limit, '', $blacklist_id = '');
+            $this->db->limit($limit, '');
         }
 
         if ($blacklist_id) {
-            $this->db->where('produk.id !=', $blacklist_id);
+            $this->db->where('id !=', $blacklist_id);
         }
 
         $this->_fields_toshow = [
