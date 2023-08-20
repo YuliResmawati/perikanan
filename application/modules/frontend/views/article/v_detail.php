@@ -3,15 +3,15 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
     }
 
-    .max-lines-des {
+    .max-lines-p {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
     }
 </style>
@@ -24,10 +24,11 @@
     <img class="shape-5" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
     <div class="container">
         <div class="page-banner-content">
-            <h2 class="title">Artikel</h2>
+            <h2 class="title">Detail Artikel</h2>
             <ul class="breadcrumb justify-content-center">
                 <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
-                <li class="breadcrumb-item active">Artikel</li>
+                <li class="breadcrumb-item"><a href="<?= base_url('artikel') ?>">Artikel</a></li>
+                <li class="breadcrumb-item active max-lines"><?= xss_escape($detail_article->title) ?></li>
             </ul>
         </div>
     </div>
@@ -36,36 +37,24 @@
     <div class="container">
         <div class="blog-wrapper-02">
             <div class="row justify-content-between">
-            <?php if (!empty($article)): ?>
                 <div class="col-lg-8">
-                    <div class="blog-wrapper">
-                        <div class="row">
-                            <?php foreach ($article as $row): ?>
-                                <div class="col-md-6">
-                                    <div class="single-blog single-blog-02">
-                                        <div class="blog-image">
-                                            <a href="<?= base_url('artikel/') .$row->slug ?>">
-                                                <?= $this->img->rimg_f($row->image,  array('height'=>257, 'width'=>410, 'crop'=>true, 'alt'=>$row->title.' thumbnail','attr' => 'loading="lazy"'), $config);  ?>
-                                            </a>
-                                        </div>
-                                        <div class="blog-content">
-                                            <div class="meta">
-                                                <a class="date" href="#"><?= indo_date($row->tanggal) ?></a>
-                                                <a class="author" href="#">Admin Silat Pendidikan</a>
-                                            </div>
-                                            <h3 class="title"><a href="<?= base_url('artikel/') .$row->slug ?>" class="max-lines text-justify"><?= xss_escape($row->title) ?></a></h3>
-                                            <p class="max-lines-des text-justify"><?= $row->description ?></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach ?>
+                    <div class="blog-details-wrapper">
+                        <div class="blog-details-image">
+                            <a href="<?= base_url('artikel/') .$detail_article->slug ?>">
+                                <img src="<?= str_files_images('article/', $detail_article->image) ?>" alt="<?= xss_escape($detail_article->title) ?> thumbnail">
+                            </a>
+                        </div>
+                        <div class="blog-details-content">
+                            <div class="meta">
+                                <a href="#"><i class="fa fa-user-o"></i> Admin Silat Pendidikan</a>
+                                <a href="#"><i class="fa fa-calendar"></i> <?= indo_date($detail_article->tanggal) ?></a>
+                            </div>
+                            <h3 class="title"><?= xss_escape($detail_article->title) ?></h3>
+                            <p style="text-align: justify;">
+                                <?= (!empty($detail_article)) ? $detail_article->description : "" ?>
+                            </p>
                         </div>
                     </div>
-                    <?php if ($status_paging == 'show'): ?>
-                        <div class="page-pagination">
-                            <?= $this->pagination->create_links() ?>
-                        </div>
-                    <?php endif; ?>
                 </div>
                 <div class="col-xl-3 col-lg-4">
                     <div class="sidebar-wrap">
@@ -81,7 +70,7 @@
                                                 </a>
                                             </div>
                                             <div class="mini-post-content">
-                                                <h5 class="title"><a href="<?= base_url('artikel/') .$row->slug ?>" class="max-lines text-justify"><?= xss_escape($row->title) ?></a></h5>
+                                                <h5 class="title"><a href="<?= base_url('artikel/') .$row->slug ?>" class="max-lines-p text-justify"><?= xss_escape($row->title) ?></a></h5>
                                                 <span class="date"><i class="fa fa-calendar"></i> <?= indo_date($row->tanggal) ?></span>
                                             </div>
                                         </div>
@@ -97,15 +86,6 @@
                         </div>
                     </div>
                 </div>
-            <?php else: ?>
-                <div class="section">
-                    <div class="container">
-                        <div class="brand-wrapper section-padding text-center border-0">
-                            <h3 class="brand-title">Belum ada artikel yang tersedia. </h3>
-                        </div>
-                    </div>
-                </div>
-            <?php endif ?>
             </div>
         </div>
     </div>

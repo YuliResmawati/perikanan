@@ -559,6 +559,17 @@ if (!function_exists('str_files_images'))
     }
 }
 
+if (!function_exists('cut_character_datatables')) {
+    function cut_character_datatables($string, $lenght)
+    {
+        if (strlen($string) <= $lenght) {
+            return $string;
+        } else {
+            return substr($string, 0, $lenght) . '...'; 
+        }
+    }
+}
+
 if (!function_exists('str_my_images')) 
 {
     function str_my_images($path, $filename)

@@ -65,3 +65,7 @@ $route['logout'] = 'auth/do_logout';
 
 ## frontend routes ##
 $route['kontak'] = 'frontend/contact';
+$route['artikel'] = 'frontend/article';
+$route['artikel/page'] = 'frontend/article';
+$route['artikel/page/(:any)'] = 'frontend/article/index/$1';
+$route['artikel/(:any)'] = 'frontend/article/detail/$1';

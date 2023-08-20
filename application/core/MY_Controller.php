@@ -72,6 +72,32 @@ class Frontend_Controller extends MY_Controller
         $this->data['theme_path']       = base_url('assets/frontend');
         $this->data['page_title']       = '';
         $this->data['page_description'] = '';
+        $this->paging                   = array(
+            'full_tag_open' => '<div class="pagination justify-content-center">',
+            'full_tag_close' => '</div>',
+
+            'first_link' => '&laquo;',
+            'first_tag_open' => '<li class="prev page">',
+            'first_tag_close' => '</li>',
+
+            'last_link' => '&raquo;',
+            'last_tag_open' => '<li class="next page">',
+            'last_tag_close' => '</li>',
+
+            'next_link' => '&#10095;',
+            'next_tag_open' => '<li class="">',
+            'next_tag_close' => '</li>',
+
+            'prev_link' => '&#10094;',
+            'prev_tag_open' => '<li class="">',
+            'prev_tag_close' => '</li>',
+
+            'cur_tag_open' => '<li><a href="" class="active">',
+            'cur_tag_close' => '</a></li>',
+
+            'num_tag_open' => '<li class="page">',
+            'num_tag_close' => '</li>'
+        );
     }
 }
 
