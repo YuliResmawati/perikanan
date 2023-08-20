@@ -86,6 +86,7 @@
     </style>
 
     <script src="https://www.google.com/recaptcha/api.js?render=<?php echo RECAPTCHA_SITE_KEY; ?>"></script>
+    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=64e233a0ad58d0001240b933&product=inline-share-buttons' async='async'></script>
 
 </head>
 
