@@ -2,12 +2,19 @@
     <div class="col-12">
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="kgb-token-response" name="kgb-token-response">
-        <input type="text" class="form-control" name="guru_id" id="guru_id" >
+        <input type="hidden" class="form-control" name="guru_id" id="guru_id" >
 
         <div class="form-group row">
             <label for="nama_guru" class="col-md-2 col-form-label">Nama Guru <?= label_required() ?></label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="nama_guru" id="nama_guru">
+                <input type="text" class="form-control" name="nama_guru" id="nama_guru" readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="tmt_awal" class="col-md-2 col-form-label">KGB Terakhir <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="tmt_awal" id="tmt_awal" readonly>
             </div>
         </div>
 
@@ -40,8 +47,9 @@
 
         data = get_data_by_id(aOption);
         if (data != false) {
-            $('#guru_id').val(data.data.guru_id);
+            $('#guru_id').val(id);
             $('#nama_guru').val(data.data.nama_guru);
+            $('#tmt_awal').val(data.data.tmt_awal);
         }
     }); 
 

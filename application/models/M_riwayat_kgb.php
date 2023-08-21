@@ -25,9 +25,9 @@ class M_riwayat_kgb extends MY_Model {
     }
 
     public function get_riwayat_kgb(){
-        $this->_fields_toshow = ['riwayat_kgb.id', 'guru_id', 'sekolah_id','nik','nip','nama_guru','nuptk','guru.status as status',
+        $this->_fields_toshow = ['guru_id', 'sekolah_id','nik','nip','nama_guru','nuptk','guru.status as status',
         'jenis_kelamin','agama','tempat_lahir','tgl_lahir','status_tugas','gelar_depan','gelar_belakang','nama_sekolah','npsn',
-        'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','tgl_sk_pengangkatan','jenis_ptk','pendidikan',
+        'jenjang','no_hp','sk_cpns','tgl_sk_cpns','sk_pengangkatan','tgl_sk_pengangkatan','jenis_ptk','pendidikan','berkas','tipe_sekolah',
         'bidang_studi_pendidikan', 'bidang_studi_sertifikasi','status_kepegawaian','pangkat', 'tmt_awal','alasan', 'riwayat_kgb.status as status_kgb'];
 
         parent::join('guru','riwayat_kgb.guru_id=guru.id');

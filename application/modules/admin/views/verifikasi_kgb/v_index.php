@@ -38,6 +38,7 @@
                 <th style="vertical-align: middle;">Jenis Kelamin</th>             
                 <th style="vertical-align: middle;">Bidang Studi</th>             
                 <th style="vertical-align: middle;">Tanggal KGB</th>
+                <th style="vertical-align: middle;">File</th>
                 <th style="vertical-align: middle;">Status</th>
                 <th style="vertical-align: middle;">Aksi</th>
             </tr>
@@ -100,6 +101,7 @@ $(document).ready(function() {
                 {"data": "jk", searchable:false, orderable:false, "sClass": "text-nowrap"},
                 {"data": "bidang_studi_pendidikan", searchable:false, orderable:false},
                 {"data": "tanggal", searchable:false, orderable:false},
+                {"data": "berkas", searchable:false, orderable:false, "sClass": "text-center text-nowrap align-middle"},
                 {"data": "status_", searchable:false, orderable:false, "sClass": "text-nowrap"},
                 {"data": "aksi", searchable:false, orderable:false, "sClass": "text-nowrap"},
         ]

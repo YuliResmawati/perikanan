@@ -11,7 +11,7 @@ class Permohonan_kgb extends Backend_Controller {
 		$this->data['uri_mod'] = 'operator/permohonan_kgb';
         $this->id_key = $this->private_key;
         $this->breadcrumbs->push('KGB (Kenaikan Gaji Berkala)', 'permohonan_kgb');
-        $this->load->model(array('m_riwayat_kgb'));  
+        $this->load->model(array('m_riwayat_kgb','m_guru'));  
 
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/dropify/css/dropify.min.css');
@@ -29,9 +29,9 @@ class Permohonan_kgb extends Backend_Controller {
 
     public function index()
 	{
-        $this->data['add_button_link'] = base_url('operator/permohonan_kgb/add');
-        $this->data['page_title'] = "Data Permohonan KGB (Kenaikan Gaji Berkala";
-        $this->data['page_description'] = "Halaman Daftar Data Permohonan KGB.";
+        $this->data['add_button_link'] = false;
+        $this->data['page_title'] = "Data Permohonan KGB (Kenaikan Gaji Berkala)";
+        $this->data['page_description'] = "Halaman Daftar Data Permohonan KGB pada Bulan ".bulan(date('m'))." ".date('Y');
         $this->data['card'] = "true";
         $this->data['id_key'] = $this->id_key;
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
@@ -41,7 +41,7 @@ class Permohonan_kgb extends Backend_Controller {
 
     public function add($id = null)
     {
-        $id = decrypt_url($id, $this->id_key);
+        $id = decrypt_url($id, $this->id_key); //guru_id
         if ($id == FALSE) {
 			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('operator/kgb_guru/add')));
         }
@@ -129,46 +129,39 @@ class Permohonan_kgb extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id == FALSE) {
-            $date_month = decrypt_url($this->input->post('filter_bulan'), $this->id_key);
+            // $date_month = decrypt_url($this->input->post('filter_bulan'), $this->id_key);
+            $date_month = date('m');
             $date_year = date('Y');
 
-            $this->m_riwayat_kgb->push_select('status');
+            $this->m_guru->push_select('status');
 
             $ajukan = 'operator/permohonan_kgb/add/'; 
-            $response = $this->m_riwayat_kgb->get_riwayat_kgb()->datatables();
+            $response = $this->m_guru->get_riwayat_kgb()->datatables();
             $response->where('sekolah_id', $this->logged_sekolah_id);
 
-            if ($this->input->post('filter_bulan') == FALSE) {
-                $response->where('riwayat_kgb.id', 0);
-            } else {
-                if ($this->input->post('filter_bulan') !== 'ALL') {
-                    $response->where([
-                        "extract(month from tmt_awal) = '$date_month'" => NULL, 
-                        "extract(year from tmt_awal) + 2 = '$date_year'" => NULL, 
-                        'sekolah_id' => $this->logged_sekolah_id, 
-                        'riwayat_kgb.status' => '1']);
-                }
-            }
+            $response->where([
+                "extract(month from kgb_terakhir) = '$date_month'" => NULL, 
+                "extract(year from kgb_terakhir) + 2 = '$date_year'" => NULL, 
+                'sekolah_id' => $this->logged_sekolah_id]);
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
             $response->edit_column('nama', '$1', "two_row(nama_guru,'fe-user text-danger mr-1', nip,' fe-clipboard text-success mr-1')");
-            $response->edit_column('status', '$1', "str_status(status)");   
+            $response->edit_column('status', '$1', "status_kgb(status_kgb,alasan)");   
             $response->edit_column('jk', '$1', "jeniskelamin(jenis_kelamin)");   
-            $response->edit_column('tanggal', '$1', "indo_date(tmt_awal)"); 
-            $response->add_column('aksi', '$1', "tabel_icon(id,' ','ajukan','$ajukan', $this->id_key)");
-            // $response->add_column('aksi', '$1 $2', "tabel_icon_cuti(id,' ','edit','$edit_link', $this->id_key,' ',' ',status,$this->logged_level),
-            //                                         tabel_icon_cuti(id,' ','batal',' ', $this->id_key,' ',' ',status,$this->logged_level)");
+            $response->edit_column('tanggal', '$1', "indo_date(kgb_terakhir)"); 
+            $response->edit_column('berkas', '$1', "str_file_datatables(berkas, kgb/)"); 
+            $response->add_column('aksi', '$1', "tabel_icon_kgb(id,' ','ajukan','$ajukan', $this->id_key,' ',' ',status_kgb)");
             
-            $response = $this->m_riwayat_kgb->datatables(true);
+            $response = $this->m_guru->datatables(true);
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_riwayat_kgb->get_riwayat_kgb()->find($id); 
+            $this->return = $this->m_guru->get_riwayat_kgb()->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
-                $this->return->guru_id = ($this->return->guru_id) ? encrypt_url($this->return->guru_id, $this->id_key) : '';
                 $this->return->nama_guru = ($this->return->nama_guru) ? name_degree($this->return->gelar_depan,$this->return->nama_guru,$this->return->gelar_belakang) : '';
+                $this->return->tmt_awal = ($this->return->kgb_terakhir) ? $this->return->kgb_terakhir : '';
 
                 $response = array(
                     'status' => TRUE,
@@ -204,6 +197,8 @@ class Permohonan_kgb extends Backend_Controller {
             $id = decrypt_url($id, $this->id_key);
 
             $this->form_validation->set_rules('guru_id', 'Guru', 'required');
+            $this->form_validation->set_rules('nama_guru', 'Guru', 'required');
+            $this->form_validation->set_rules('tmt_awal', 'KGB Terakhir', 'required');
 
             $guru_id = decrypt_url($this->input->post('guru_id'), $this->id_key);
 
@@ -215,14 +210,8 @@ class Permohonan_kgb extends Backend_Controller {
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
             if ($this->form_validation->run() == TRUE) {    
-                if ($id == FALSE) {
-                    $id = null;
-                    $behavior = 'add';
-
-                    $this->m_riwayat_kgb->push_to_data('status', '0');
-                } else {
-                    $behavior = 'edit';
-                }
+                $behavior = 'add';
+                $this->m_riwayat_kgb->push_to_data('status', '0');
 
                 if (!empty($_FILES['berkas']['name'])) {
                     $data_upload = $this->upload_files_sample($id, $behavior);
@@ -239,6 +228,7 @@ class Permohonan_kgb extends Backend_Controller {
                 }
 
                 $this->m_riwayat_kgb->push_to_data('guru_id', $guru_id );
+                $this->m_riwayat_kgb->push_to_data('tmt_awal', $this->input->post('tmt_awal') );
 
                 if ($this->result['status'] !== FALSE) {
                     $this->return = $this->m_riwayat_kgb->save($id);
