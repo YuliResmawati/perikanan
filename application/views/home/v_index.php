@@ -4,9 +4,9 @@
         <div class="row justify-content-center align-items-center">
             <div class="col-md-6">
                 <div class="slider-content">
-                    <h2 class="title">A learning platform that helps you to learning faster</h2>
-                    <p>World-class training and development programs developed by top teachers</p>
-                    <a href="#" class="btn btn-primary btn-hover-heading-color">Explore All Courses</a>
+                    <h2 class="title">Sistem Informasi Layanan Terintegrasi Pendidikan Kota Bukittinggi</h2>
+                    <h5 style="max-width: 400px; line-height: 1.6; margin-top: 25px;">Membentuk Karakter, Mewujudkan Impian.</h5>
+                    <a href="<?= base_url('isi-survei') ?>" class="btn btn-primary btn-hover-heading-color">Berikan Penilaian untuk Bentuk Perubahan!</a>
                 </div>
             </div>
             <div class="col-md-6 col-sm-8">
@@ -14,7 +14,7 @@
                     <img class="image-shape-01 parallaxed animate-01" src="<?= $theme_path ?>/images/shape/shape-17.png" alt="Shape">
 
                     <div class="image">
-                        <img src="<?= $theme_path ?>/images/hero-3.png" alt="Hero">
+                        <img src="<?= $theme_path ?>/images/wali.png" alt="Walikota Bukittinggi">
                     </div>
                 </div>
             </div>

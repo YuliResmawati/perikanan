@@ -100,7 +100,7 @@
             <div class="container">
                 <div class="header-wrapper">
                     <div class="header-logo">
-                        <a href="<?= base_url('home') ?>"><img src="<?= $theme_path ?>/images/logo.png" alt="logo silat pendidikan"></a>
+                        <a href="<?= base_url('home') ?>"><img src="<?= $theme_path ?>/images/silatpendidikan.png" alt="logo silat pendidikan"></a>
                     </div>
                     <div class="header-menu d-none d-lg-block">
                         <ul class="main-menu">
@@ -154,7 +154,7 @@
         <div class="offcanvas offcanvas-start" id="offcanvasMenu">
             <div class="offcanvas-header">
                 <div class="offcanvas-logo">
-                    <a href="<?= base_url('home') ?>"><img src="<?= $theme_path ?>/images/logo.png" alt="logo silat pendidikan"></a>
+                    <a href="<?= base_url('home') ?>"><img src="<?= $theme_path ?>/images/silatpendidikan.png" alt="logo silat pendidikan"></a>
                 </div>
                 <button class="btn-close" data-bs-dismiss="offcanvas"></button>
             </div>
