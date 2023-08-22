@@ -23,7 +23,7 @@
     <?php endforeach;?>
     <?php endif;?>
 
-    <?php if(empty($page_image)) $page_image = base_url('assets/backend/images/favicon.ico'); ?>
+    <?php if(empty($page_image)) $page_image = base_url('assets/backend/images/favicon.png'); ?>
 
     <!-- Meta Facebook -->
     <meta property="og:title" content="<?= $title ?>"/>
@@ -46,7 +46,7 @@
     <meta name="twitter:url" content="<?= current_url() ?>"/>
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?= $theme_path ?>/images/favicon.ico">
+    <link rel="shortcut icon" href="<?= $theme_path ?>/images/favicon.png">
 
     <!-- Plugins -->
     <link href="<?= $theme_path ?>/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
