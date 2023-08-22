@@ -65,6 +65,8 @@ $route['logout'] = 'auth/do_logout';
 
 ## frontend routes ##
 $route['kontak'] = 'frontend/contact';
+$route['visi-misi'] = 'frontend/visi_misi';
+$route['profil-silat-pendidikan'] = 'frontend/profile_silatpen';
 $route['artikel'] = 'frontend/article';
 $route['artikel/page'] = 'frontend/article';
 $route['artikel/page/(:any)'] = 'frontend/article/index/$1';

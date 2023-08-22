@@ -11,7 +11,7 @@ class M_website extends MY_Model {
     protected $_order = 'DESC';
     protected $_fields_toshow = [
         'id', 'name_site', 'email', 'address', 'phone_number', 'whatsapp_number', 'about',
-        'link_facebook', 'link_twitter', 'link_instagram', 'link_youtube'
+        'link_facebook', 'link_twitter', 'link_instagram', 'link_youtube', 'visi', 'misi', 'profile'
     ];
     protected $_fields = [
        'name_site' => 'name_site',

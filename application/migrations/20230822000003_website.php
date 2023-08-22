@@ -39,6 +39,18 @@ class Migration_Website extends CI_Migration {
                 'type' => 'TEXT',
                 'default' => null,
             ),
+            'visi' => array(
+                'type' => 'TEXT',
+                'default' => null,
+            ),
+            'misi' => array(
+                'type' => 'TEXT',
+                'default' => null,
+            ),
+            'profile' => array(
+                'type' => 'TEXT',
+                'default' => null,
+            ),
             'link_facebook' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '100',

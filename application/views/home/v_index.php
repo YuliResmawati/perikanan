@@ -95,3 +95,14 @@
         </div>
     </div>
 </div>
+<div class="section">
+    <div class="container">
+        <div class="section-padding text-center">
+            <h3 class="brand-title">Telah Didukung Oleh </h3>
+            <div style="padding-top: 60px;">
+                <img src="<?= $theme_path ?>/images/brand/bukittinggi.png" alt="bukittinggi logo">
+                <img src="<?= $theme_path ?>/images/brand/kemendikbud.png" alt="kemendikbud logo">
+            </div>
+        </div>
+    </div>
+</div>
