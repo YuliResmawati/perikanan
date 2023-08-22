@@ -834,6 +834,61 @@ if (!function_exists('jenisKelamin'))
     }
 }
 
+if (!function_exists('jenisKelamin_angka')) 
+{
+    function jenisKelamin_angka($id)
+    {
+        switch ($id) {
+            case '1':
+                $return = 'Laki-Laki';
+                break;
+            case '2':
+                $return = 'Perempuan';
+                break;
+            default:
+                $return = '-';
+                break;
+        }
+
+        return $return;
+    }
+}
+
+if (!function_exists('pendidikan')) 
+{
+    function pendidikan($id)
+    {
+        switch ($id) {
+            case '1':
+                $return = 'SD';
+                break;
+            case '2':
+                $return = 'SMP';
+                break;
+            case '3':
+                $return = 'SMA';
+                break;
+            case '4':
+                $return = 'D-III';
+                break;
+            case '5':
+                $return = 'D-IV/S1';
+                break;
+            case '6':
+                $return = 'S2';
+                break;
+            case '7':
+                $return = 'S3';
+                break;
+            default:
+                $return = '-';
+                break;
+        }
+
+        return $return;
+    }
+}
+
 if (!function_exists('status_anak')) 
 {
     function status_anak($id)
@@ -1843,6 +1898,17 @@ if (!function_exists('tabel_icon_kgb')) {
         }
 
         return $a;
+    }
+}
+
+if (!function_exists('age')) {
+    function age($age)
+    {
+        if (!empty($age)) {
+            return $age ." Tahun ";
+        } else {
+            return '<strong>-</strong>';
+        }
     }
 }
 

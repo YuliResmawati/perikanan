@@ -68,6 +68,7 @@
     <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/jquery.powertip.min.css">
     <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/glightbox.min.css">
     <link rel="stylesheet" href="<?= $theme_path ?>/css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= $global_custom_path ?>/css/custom.css?v=<?= filemtime('./assets/global/custom/css/custom.css') ?>">
 
     <!-- JQuery -->
     <script src="<?= $theme_path ?>/js/vendor/jquery-3.6.0.min.js"></script>
@@ -119,6 +120,7 @@
                                 <ul class="sub-menu">
                                     <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
                                     <li><a href="<?= base_url('pengumuman') ?>">Pengumuman</a></li>
+                                    <li><a href="https://drive.google.com/drive/folders/1BI_BxW-aZ6tdAEZo_a_lZXVozPR9dIev" target="_blank">SOP Pelayanan</a></li>
                                     <li><a href="<?= base_url('daftar-sekolah') ?>">Daftar Sekolah</a></li>
                                 </ul>
                             </li>
@@ -131,12 +133,12 @@
                         </ul>
                     </div>
                     <div class="header-meta">
-                        <div class="header-search d-none d-lg-block">
+                        <!-- <div class="header-search d-none d-lg-block">
                             <form action="#">
                                 <input type="text" placeholder="Pencarian">
                                 <button><i class="flaticon-loupe"></i></button>
                             </form>
-                        </div>
+                        </div> -->
                         <div class="header-login d-none d-lg-flex">
                             <a class="link" href="<?= base_url('auth') ?>"><i class="fa fa-user-o"></i> LOGIN</a>
                         </div>
@@ -176,6 +178,7 @@
                             <ul class="sub-menu">
                                 <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
                                 <li><a href="<?= base_url('pengumuman') ?>">Pengumuman</a></li>
+                                <li><a href="https://drive.google.com/drive/folders/1BI_BxW-aZ6tdAEZo_a_lZXVozPR9dIev" target="_blank">SOP Pelayanan</a></li>
                                 <li><a href="<?= base_url('daftar-sekolah') ?>">Daftar Sekolah</a></li>
                             </ul>
                         </li>

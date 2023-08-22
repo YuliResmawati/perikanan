@@ -31,12 +31,11 @@
         </div>
     </div>
 </div>
-
 <div class="section section-padding">
     <div class="container">
         <div class="course-list-wrapper">
             <div class="row flex-row-reverse">
-                <div class="col-lg-12">
+                <div class="col-lg-9">
                     <div class="course-top-bar">
                         <div class="course-top-text">
                             <p>Terdapat <span><?= $total ?></span> Pengumuman</p>
@@ -78,6 +77,13 @@
                             <?= $this->pagination->create_links() ?>
                         </div>
                     <?php endif; ?>
+                </div>
+                <div class="col-lg-3">
+                    <div class="sidebar-widget">
+                        <div class="widget-banner">
+                            <a href="#"><img src="<?= $theme_path ?>/images/maklumat.png" alt="maklumat pelayanan"></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

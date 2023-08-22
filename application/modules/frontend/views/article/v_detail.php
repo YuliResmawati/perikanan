@@ -81,7 +81,7 @@
                         <?php endif ?>
                         <div class="sidebar-widget">
                             <div class="widget-banner">
-                                <a href="#"><img src="<?= $theme_path ?>/images/banner-03.png" alt="Banner"></a>
+                                <a href="#"><img src="<?= $theme_path ?>/images/maklumat.png" alt="maklumat pelayanan"></a>
                             </div>
                         </div>
                     </div>

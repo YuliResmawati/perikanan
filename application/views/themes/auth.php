@@ -119,6 +119,7 @@
                                 <ul class="sub-menu">
                                     <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
                                     <li><a href="<?= base_url('pengumuman') ?>">Pengumuman</a></li>
+                                    <li><a href="https://drive.google.com/drive/folders/1BI_BxW-aZ6tdAEZo_a_lZXVozPR9dIev" target="_blank">SOP Pelayanan</a></li>
                                     <li><a href="<?= base_url('daftar-sekolah') ?>">Daftar Sekolah</a></li>
                                 </ul>
                             </li>
@@ -170,6 +171,7 @@
                             <ul class="sub-menu">
                                 <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
                                 <li><a href="<?= base_url('pengumuman') ?>">Pengumuman</a></li>
+                                <li><a href="https://drive.google.com/drive/folders/1BI_BxW-aZ6tdAEZo_a_lZXVozPR9dIev" target="_blank">SOP Pelayanan</a></li>
                                 <li><a href="<?= base_url('daftar-sekolah') ?>">Daftar Sekolah</a></li>
                             </ul>
                         </li>
