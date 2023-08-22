@@ -10,9 +10,9 @@ class MY_Controller extends CI_Controller
         
         $this->data['errors'] 			    = array();
         $this->data['messages'] 		    = array();
-        $this->data['site_name'] 		    = "Sistem Informasi Layanan Terintegrasi Kota Bukittinggi";
+        $this->data['site_name'] 		    = "Sistem Informasi Layanan Terintegrasi Pendidikan Kota Bukittinggi";
         $this->data['keywords'] 		    = "silat pendidikan, silatpendidikan, pendidikan, kota bukittinggi, pendidikan bukittinggi";
-        $this->data['description'] 		    = "Selamat Datang di Website Sistem Informasi Layanan Terintegrasi Kota Bukittinggi";
+        $this->data['description'] 		    = "Selamat Datang di Website Sistem Informasi Layanan Terintegrasi Pendidikan Kota Bukittinggi";
         $this->data['regency']		 	    = "Kota Bukittinggi";
         $this->data['author'] 			    = "Dwipantara Beta Studio";
         $this->data['powered_by'] 		    = "Dwipantara Beta Studio";
@@ -54,6 +54,7 @@ class MY_Controller extends CI_Controller
         $this->db = $this->load->database($this->data['default_db'], TRUE);
 
         $this->data['file_image_path'] = 'files/images/';
+        $this->data['public_file_path'] = 'files/berkas/';
         $this->data['image_authorization'] = 'files/images_authorization/';
         $this->data['my_images'] = 'files/my_images/';
         $this->data['my_files'] = 'files/my_files/';

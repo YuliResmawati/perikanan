@@ -704,6 +704,20 @@ if (!function_exists('str_file_datatables'))
     }
 }
 
+if (!function_exists('str_file_dt')) 
+{
+    function str_file_dt($file_url, $directory)
+    {
+        if (!empty($file_url)) {
+            $result = "<a class='btn btn-blue btn-xs' href=" . str_btn_public_files($directory, $file_url) . " target='_blank'>Lihat Berkas</a>";
+        } else {
+            $result = '<h6><span class="badge bg-soft-secondary text-secondary"> Tidak memiliki berkas</span></h6>';
+        }
+
+        return $result;
+    }
+}
+
 if (!function_exists('str_btn_files')) 
 {
     function str_btn_files($path, $filename)
@@ -713,6 +727,23 @@ if (!function_exists('str_btn_files'))
         if (!empty($filename)) {
             $ci = &get_instance();
             $a = base_url($ci->data['files_path'] . $path . $filename);
+        } else {
+            $a = "";
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('str_btn_public_files')) 
+{
+    function str_btn_public_files($path, $filename)
+    {
+        $a = '';
+
+        if (!empty($filename)) {
+            $ci = &get_instance();
+            $a = base_url($ci->data['public_file_path'] . $path . $filename);
         } else {
             $a = "";
         }

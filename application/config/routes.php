@@ -69,3 +69,6 @@ $route['artikel'] = 'frontend/article';
 $route['artikel/page'] = 'frontend/article';
 $route['artikel/page/(:any)'] = 'frontend/article/index/$1';
 $route['artikel/(:any)'] = 'frontend/article/detail/$1';
+$route['pengumuman'] = 'frontend/announcement';
+$route['pengumuman/page'] = 'frontend/announcement';
+$route['pengumuman/page/(:any)'] = 'frontend/announcement/index/$1';

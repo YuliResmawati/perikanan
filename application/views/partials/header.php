@@ -43,7 +43,7 @@
 					<img src="<?= base_url('assets/backend') ?>/images/small-logo.png" alt="Logo" height="22">
 				</span>
 				<span class="logo-lg">
-					<img src="<?= base_url('assets/backend') ?>/images/large-logo.png" alt="Logo" height="35">
+					<img src="<?= base_url('assets/backend') ?>/images/silatpen-logo-backend.png" alt="Logo" height="35">
 				</span>
 			</a>
 		</div>

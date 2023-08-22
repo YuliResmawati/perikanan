@@ -187,16 +187,6 @@
 
         <div class="rightbar-overlay"></div>
 
-        <div class="help-action">
-            <input type="checkbox" name="help-toogle" class="help-toogle" />
-            <a class="help-button" href="#!"><i class="fas fa-info"></i></a>
-            <div class="help-buttons">
-                <a href="https://t.me/+U-SkDKHGlSgTw4TN" target="_blank" data-toggle="tooltip" data-original-title="Gabung ke group telegram [Informasi Kepegawaian Kabupaten Agam] untuk mendapatkan informasi terbaru"><i class="fab fa-telegram-plane"></i></a>
-                <a href="https://forms.gle/GXwKJqJ2w5JiEfoC6" target="_blank" data-toggle="tooltip" data-original-title="Laporkan kendala atau permasalahan anda dalam penggunaan aplikasi SIMPEG disini"><i class="fas fa-flag"></i></a>
-              
-            </div>
-        </div>
-
         <!-- Plugins js-->
         <script src="<?= $theme_path ?>/libs/flatpickr/flatpickr.min.js"></script>
         <script src="<?= $theme_path ?>/libs/selectize/js/standalone/selectize.min.js"></script>
