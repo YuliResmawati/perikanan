@@ -220,7 +220,50 @@ class M_app extends MY_Model {
 
     }
 
+    public function get_count_sekolah() 
+    {
+        parent::clear_join();
 
+        $this->_table = 'sekolah';
+        $this->_timestamps = FALSE;
+        $this->_log_user = FALSE;
+        $this->_primary_key = 'id';
+        $this->_fields_toshow = ['nama_sekolah'];
+
+        $this->db->where('status', '1');
+
+        return count(parent::findAll());
+    }
+
+    public function get_count_student() 
+    {
+        parent::clear_join();
+
+        $this->_table = 'siswa';
+        $this->_timestamps = FALSE;
+        $this->_log_user = FALSE;
+        $this->_primary_key = 'id';
+        $this->_fields_toshow = ['nama_siswa'];
+
+        $this->db->where('status', '1');
+
+        return count(parent::findAll());
+    }
+
+    public function get_count_teacher() 
+    {
+        parent::clear_join();
+
+        $this->_table = 'guru';
+        $this->_timestamps = FALSE;
+        $this->_log_user = FALSE;
+        $this->_primary_key = 'id';
+        $this->_fields_toshow = ['nama_guru'];
+
+        $this->db->where('status', '1');
+
+        return count(parent::findAll());
+    }
 }
 
 /* End of file M_app.php */
