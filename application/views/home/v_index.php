@@ -63,3 +63,35 @@
         <hr class="mt-5">
     </div>
 </div>
+<div class="section">
+    <div class="container">
+        <div class="testimonial-wrapper">
+            <div class="testimonial-author">
+                <div class="testimonial-author-wrapper">
+                    <div class="testimonial-quote">
+                        <i class="flaticon-left-quotes-sign"></i>
+                    </div>
+                    <div class="author-images-wrapper author-images-active">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide author-image">
+                                    <img src="<?= $theme_path ?>/images/walikota-1.png" alt="Author">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-content testimonial-content-active">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="single-testimonial-content">
+                            <p>Murid yang dipersenjatai dengan informasi akan senantiasa memenangkan pertempuran.</p>
+                            <h5 class="name">Meladee McCarty</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
