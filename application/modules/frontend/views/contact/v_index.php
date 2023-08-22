@@ -20,7 +20,7 @@
             <div class="col-lg-8">
                 <div class="contact-info-wrapper">
                     <div class="row gx-0">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="single-contact-info">
                                 <div class="info-icon">
                                     <i class="flaticon-phone-call"></i>
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="single-contact-info">
                                 <div class="info-icon">
                                     <i class="flaticon-mail"></i>
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="single-contact-info">
                                 <div class="info-icon">
                                     <i class="flaticon-placeholder"></i>
@@ -52,6 +52,18 @@
                                 <div class="info-content">
                                     <h5 class="title">Lokasi</h5>
                                     <p><?= (!empty($website_data[0]->address)) ? xss_escape($website_data[0]->address) : '-' ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single-contact-info">
+                                <div class="info-icon">
+                                    <i class="flaticon-open-mail"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5 class="title">Pengaduan</h5>
+                                    <p>Instagram : @disdikbudbukittinggi</p>
+                                    <p>Facebook : @dikbudbkt</p>
                                 </div>
                             </div>
                         </div>

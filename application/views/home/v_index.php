@@ -14,7 +14,7 @@
                     <img class="image-shape-01 parallaxed animate-01" src="<?= $theme_path ?>/images/shape/shape-17.png" alt="Shape">
 
                     <div class="image">
-                        <img src="<?= $theme_path ?>/images/wali.png" alt="Walikota Bukittinggi">
+                        <img src="<?= $theme_path ?>/images/walikota.png" alt="Walikota Bukittinggi">
                     </div>
                 </div>
             </div>
