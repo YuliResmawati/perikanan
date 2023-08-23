@@ -76,3 +76,7 @@ $route['artikel/(:any)'] = 'frontend/article/detail/$1';
 $route['pengumuman'] = 'frontend/announcement';
 $route['pengumuman/page'] = 'frontend/announcement';
 $route['pengumuman/page/(:any)'] = 'frontend/announcement/index/$1';
+$route['daftar-sekolah'] = 'frontend/school';
+$route['daftar-sekolah/(:any)'] = 'frontend/school/detail/$1';
+$route['daftar-sekolah/(:any)/page'] = 'frontend/school/detail/$1';
+$route['daftar-sekolah/(:any)/page/(:any)'] = 'frontend/school/detail/$1';

@@ -45,10 +45,34 @@ class M_sekolah extends MY_Model {
         return $this;
     }
 
+    public function get_school_by_type($type, $limit = '', $order = '', $offset = '')
+    {
+        parent::clear_join();
+        if ($limit) {
+            $this->db->limit($limit, $offset);
+        }
+
+        if ($order) {
+            $this->_order_by = $order;
+            $this->_order = 'DESC';
+        } else {
+            $this->_order_by = 'nama_sekolah';
+            $this->_order = 'ASC';
+        }
+
+        $this->_fields_toshow = [
+            'id', 'npsn', 'nama_sekolah', 'tipe_sekolah', 'link_g_site', 'akreditasi', 'status_sekolah'
+        ];
+
+        $this->db->where(['tipe_sekolah' => strtoupper($type), 'status' => '1']);
+
+        return parent::findAll();
+    }
+
     public function get_sekolah_by_tipe($tipe_sekolah){
         $this->_order_by= false;
         $this->_order = false;
-        $this->_fields_toshow = [ 'id','npsn','nama_sekolah','tipe_sekolah'];
+        $this->_fields_toshow = [ 'id','npsn','nama_sekolah','tipe_sekolah','link_g_site'];
         $this->db->where(['tipe_sekolah' =>$tipe_sekolah, 'status' => '1']);
 
         return $this;
@@ -90,7 +114,6 @@ class M_sekolah extends MY_Model {
 
         return $this;
     }
-
 }
 
 /* End of file M_sample_upload.php */

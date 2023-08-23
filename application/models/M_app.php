@@ -264,6 +264,19 @@ class M_app extends MY_Model {
 
         return count(parent::findAll());
     }
+
+    public function get_tipe_sekolah() 
+    {
+        parent::clear_join();
+
+        $this->_table = 'sekolah';
+        $this->_primary_key = 'id';
+        $this->_fields_toshow = ['DISTINCT(tipe_sekolah)'];
+
+        $this->db->where('status', '1');
+        $this->db->order_by('tipe_sekolah', 'asc');
+        return parent::findAll();
+    }
 }
 
 /* End of file M_app.php */
