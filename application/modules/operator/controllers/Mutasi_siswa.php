@@ -92,7 +92,7 @@ class Mutasi_siswa extends Backend_Controller {
             $response->edit_column('awal', '$1', "two_row(sekolah_awal,'fe-home text-info mr-1', rombel_awal,' fe-book text-warning mr-1')");
             $response->edit_column('tujuan', '$1', "two_row(sekolah_tujuan,'fe-home text-info mr-1', rombel_tujuan,' fe-book text-warning mr-1')");
             $response->edit_column('link', '$1', "btn_link(link)");
-            $response->edit_column('status', '$1', "str_status_mutasi(status)");  
+            $response->edit_column('status', '$1', "str_status_mutasi(status,alasan)");  
             $response->add_column('aksi', '$1', "tabel_icon_mutasi(id,' ','delete',' ', $this->id_key,' ',' ',status)");
             
             $response = $this->m_mutasi_siswa->datatables(true);

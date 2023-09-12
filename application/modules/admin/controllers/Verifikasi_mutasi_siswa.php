@@ -42,7 +42,62 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
         
 		$this->load->view('verifikasi_mutasi_siswa/v_index', $this->data);
     }
-    
+
+    public function verif($id = null)
+    {        
+        $id = decrypt_url($id, $this->id_key);
+		
+		if ($id == FALSE) {
+			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('admin/verifikasi_mutasi_siswa')));
+        }
+
+        $this->breadcrumbs->push('Edit', 'admin/verifikasi_mutasi_siswa/verif');
+        $this->data['page_title'] = "Edit Data Mutasi Siswa";
+        $this->data['page_description'] = "Halaman Edit Data Mutasi Siswa.";
+        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
+        $this->data['card'] = "true";
+        $this->data['id_key'] = $this->id_key;
+        $this->data['id'] = $id;
+
+        $this->load->view('verifikasi_mutasi_siswa/v_verif', $this->data);
+    }
+
+
+    private function upload_files_sample($id, $type = '')
+    {
+        $this->result = array('status' => TRUE, 'message' => NULL);
+        $file_name = 'silatpendidikan_verif_mutasi'.'_'.date('ymdhis');
+
+        if ($this->result['status'] == TRUE) {
+            $config['upload_path'] = $this->data['file_path'].'verif_mutasi/';
+            $config['allowed_types'] = 'pdf';
+            $config['file_name'] = $file_name;
+            $config['max_size'] = "1024";
+
+            $this->load->library('upload', $config);
+        
+            if (!$this->upload->do_upload('berkas')) {
+                $this->result = array(
+                    'status' => false,
+                    'message' => $this->upload->display_errors()
+                );
+            } else {
+                $data_upload = array('upload_data' => $this->upload->data());
+                $file_berkas = $data_upload['upload_data']['file_name'];
+                $file_size = $data_upload['upload_data']['file_size'];
+
+                $this->result = array(
+                    'status' => true,
+                    'message' => 'Upload file mutasi berhasil',
+                    'file_berkas' => $file_berkas,
+                    'file_size' => $file_size
+                );
+            }
+        }
+
+        return $this->result;
+    }
+
 
     public function AjaxGet($id = NULL)
     {
@@ -53,7 +108,7 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
         if ($id == FALSE) {
             $this->m_mutasi_siswa->push_select('status');
 
-            $edit_link = 'admin/mutasi_siswa/edit/'; 
+            $verif_link = 'admin/verifikasi_mutasi_siswa/verif/'; 
             $response = $this->m_mutasi_siswa->get_detail_mutasi_siswa()->datatables();
 
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
@@ -61,14 +116,15 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
             $response->edit_column('link', '$1', "btn_link(link)");
             $response->edit_column('awal', '$1', "two_row(sekolah_awal,'fe-home text-info mr-1', rombel_awal,' fe-book text-warning mr-1')");
             $response->edit_column('tujuan', '$1', "two_row(sekolah_tujuan,'fe-home text-info mr-1', rombel_tujuan,' fe-book text-warning mr-1')");
-            $response->edit_column('status', '$1', "str_status_mutasi(status)");  
-            $response->add_column('aksi', '$1', "btn_verifikasi_mutasi(id,' ',status,$this->id_key,' ',$this->modal_name)");
+            $response->edit_column('status', '$1', "str_status_mutasi(status,alasan)");  
+            $response->add_column('aksi', '$1 $2', "btn_verif_tolak(id,' ','verif','$verif_link', $this->id_key,' ',' ',status,output_balikan,verif_mutasi/),
+                                                btn_verif_tolak(id,' ','tolak',' ',$this->id_key,' ',$this->modal_name,status)");
             
             $response = $this->m_mutasi_siswa->datatables(true);
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_sekolah->find($id); 
+            $this->return = $this->m_mutasi_siswa->get_detail_mutasi_siswa()->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
@@ -98,41 +154,72 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
 
         $id = decrypt_url($id, $this->id_key);
 
-        if ($id !== FALSE) {
-            $this->m_mutasi_siswa->push_select('status');
+        $this->form_validation->set_rules('nama_siswa', 'Siswa', 'required');
 
-            $check = $this->m_mutasi_siswa->find($id);
-            $siswa_id = $check->siswa_id;
-            $rombel_id = $check->detail_rombel_tujuan_id;
+        if (empty($_FILES["berkas"]["name"]) && $id == FALSE) {
+            $_POST["berkas"] = null;
+            $this->form_validation->set_rules('berkas', 'File', 'required');
+        } 
 
-            if ($check !== FALSE) {
-                if ($check->status == 0) {
+        $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
-                    $this->m_mutasi_siswa->push_to_data('status', '1');
-                    
-                    $data = array(
-                        'detail_rombel_id' => $rombel_id
-                    );
+        if ($this->form_validation->run() == TRUE) {    
+            if ($id !== FALSE) {
+                $this->m_mutasi_siswa->push_select('status');
 
-                } else {
-                    $this->m_mutasi_siswa->push_to_data('status', '0');
-                }
+                $check = $this->m_mutasi_siswa->find($id);
+                $siswa_id = $check->siswa_id;
+                $rombel_id = $check->detail_rombel_tujuan_id;
 
-                $this->return = $this->m_mutasi_siswa->save($id);
+                if ($check !== FALSE) {
+                    if ($check->status == 0) {
+                        $behavior = 'add';
+                        if (!empty($_FILES['berkas']['name'])) {
+                            $data_upload = $this->upload_files_sample($id, $behavior);
+            
+                            if ($data_upload['status'] == TRUE) {
+                                $berkas = $data_upload['file_berkas'];
+            
+                                if (!empty($berkas)) {
+                                    $this->m_mutasi_siswa->push_to_data('output_balikan', $berkas);
+                                }
+                            } else {
+                                $this->result = $data_upload;
+                            }
 
-                if ($this->return) {
+                            $this->m_mutasi_siswa->push_to_data('status', '1');
+                        
+                            $data = array(
+                                'detail_rombel_id' => $rombel_id
+                            );
+    
+                        }
 
-                    $this->db->where('siswa_id', $siswa_id);
-                    $this->db->update('detail_siswa', $data);
+                    } else {
+                        $this->m_mutasi_siswa->push_to_data('status', '0');
+                    }
 
-                    $this->result = array(
-                        'status'   => TRUE,
-                        'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Mutasi berhasil diterima.</span>'
-                    );
+                    $this->return = $this->m_mutasi_siswa->save($id);
+
+                    if ($this->return) {
+
+                        $this->db->where('siswa_id', $siswa_id);
+                        $this->db->update('detail_siswa', $data);
+
+                        $this->result = array(
+                            'status'   => TRUE,
+                            'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Mutasi berhasil diterima.</span>'
+                        );
+                    } else {
+                        $this->result = array(
+                            'status'   => FALSE,
+                            'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Mutasi gagal diterima.</span>'
+                        );
+                    }
                 } else {
                     $this->result = array(
                         'status'   => FALSE,
-                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Mutasi gagal diterima.</span>'
+                        'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
                     );
                 }
             } else {
@@ -141,11 +228,6 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
                     'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
                 );
             }
-        } else {
-            $this->result = array(
-                'status'   => FALSE,
-                'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> ID tidak valid.</span>'
-            );
         }
 
         $this->output->set_output(json_encode($this->result));

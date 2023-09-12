@@ -481,7 +481,7 @@ if (!function_exists('str_status_cuti')) {
 
 
 if (!function_exists('str_status_mutasi')) {
-    function str_status_mutasi($status)
+    function str_status_mutasi($status,$alasan= '')
     {
         $a = '';
 
@@ -490,7 +490,9 @@ if (!function_exists('str_status_mutasi')) {
         } else  if ($status == '0') {
             $a = '<h6><span class="badge bg-soft-dark text-dark"><i class="mdi mdi-timer-sand"></i> Dalam Proses</span></h6>';
         } else {
-            $a = '<h6><span class="badge bg-soft-dark text-danger"><i class="mdi mdi-close-circle"></i> Ditolak</span></h6>';
+            $a = '<h6><span class="badge bg-soft-danger text-danger"><i class="mdi mdi-bookmark-remove"></i> Ditolak</span></h6>
+                <h6><span class="badge bg-soft-dark text-dark">Alasan : '.$alasan.'</span></h6><br>';
+
         }
 
         return $a;
@@ -1519,6 +1521,59 @@ if (!function_exists('btn_verifikasi_mutasi'))
                 $a = '<strong>-</strong>';
             }  
         }
+        return $a;
+    }
+}
+
+if (!function_exists('btn_verif_tolak')) 
+{
+    function btn_verif_tolak($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status_field = '', $berkas = '', $directory = '')
+    {
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = encrypt_url($id, $keyid);
+            }
+
+            if ($link_url !== '') {
+                $a_tag = 'a';
+                $link_url = 'href="' . base_url($link_url . $id) . '"';
+                $modal_attr = '';
+            } else {
+                $a_tag = 'span';
+                $link_url = "";
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            if ($status_field == '0'){
+                if ($action == "tolak") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' data-status="1" class="button-ditolak btn btn-icons btn-rounded btn-outline-danger" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Tolak Verifikasi"  data-id="' . $id . '">
+                    <i class="mdi mdi-close-outline"></i> </' . $a_tag . '>';
+
+                } elseif ($action == "verif") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-icons btn-rounded btn-outline-success" title="Verifikasi" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                    <i class="mdi mdi-check-all"></i>
+                            </' . $a_tag . '>';
+                }
+            } else if ($status_field == '1'){
+                if ($action == "verif") {
+                    if (!empty($berkas)) {
+                        $a = "<a class='btn btn-success btn-xs' href=" . str_files_not_owner_must_login($directory, $berkas) . " target='_blank'>Lihat file</a>";
+                    } else {
+                        $a = '<h6><span class="badge bg-soft-secondary text-secondary"> Tidak memiliki file</span></h6>';
+                    }
+                }
+            }else {
+                $a = '<strong>-</strong>';
+            }
+
+        }
+
         return $a;
     }
 }

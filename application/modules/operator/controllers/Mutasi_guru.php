@@ -110,7 +110,7 @@ class Mutasi_guru extends Backend_Controller {
             $response->edit_column('tipe', '$1', "tipe_mutasi(tipe_mutasi)");
             $response->edit_column('tujuan', '$1 $2', "sekolah_tujuan, sekolah_luar");
             $response->edit_column('link', '$1', "btn_link(link)");
-            $response->edit_column('status', '$1', "str_status_mutasi(status)");  
+            $response->edit_column('status', '$1', "str_status_mutasi(status,alasan)");  
             $response->add_column('aksi', '$1', "tabel_icon_mutasi(id,' ','delete',' ', $this->id_key,' ',' ',status)");
             
             $response = $this->m_mutasi_guru->datatables(true);

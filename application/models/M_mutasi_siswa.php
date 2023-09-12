@@ -9,7 +9,7 @@ class M_mutasi_siswa extends MY_Model {
     protected $_softdelete = TRUE;
     protected $_order_by = 'id';
     protected $_order = 'ASC';
-    protected $_fields_toshow = ['id','siswa_id','detail_rombel_awal_id','detail_rombel_tujuan_id'];
+    protected $_fields_toshow = ['id','siswa_id','detail_rombel_awal_id','detail_rombel_tujuan_id','link','alasan','output_balikan'];
     protected $_fields = [
        'id' => 'id'
     ];
@@ -25,7 +25,7 @@ class M_mutasi_siswa extends MY_Model {
         parent::clear_join();
         $this->_fields_toshow = [
             "mutasi_siswa.id","s_awal.nama_sekolah as sekolah_awal","s_tujuan.nama_sekolah as sekolah_tujuan",
-            "nama_siswa", "nisn", "mutasi_siswa.status", 
+            "nama_siswa", "nisn", "mutasi_siswa.status","link","mutasi_siswa.alasan","output_balikan",
             "concat(d.tingkatan, ' ',d.nama_rombel)  as rombel_awal", "concat(dd.tingkatan, ' ',dd.nama_rombel) as rombel_tujuan"
         ];
 
