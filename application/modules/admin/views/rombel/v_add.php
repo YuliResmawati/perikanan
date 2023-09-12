@@ -8,6 +8,7 @@
             <div class="col-md-10">
                 <select class="form-control select2" name="tingkatan" id="tingkatan">
                     <option selected disabled>Pilih Tingkatan Rombel</option>
+                    <option value="TK">TK</option>
                     <option value="I">I</option>
                     <option value="II">II</option>
                     <option value="III">III</option>

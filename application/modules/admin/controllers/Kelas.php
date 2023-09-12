@@ -48,6 +48,7 @@ class Kelas extends Backend_Controller {
         $this->data['page_title'] = "Tambah Data Kelas";
         $this->data['page_description'] = "Halaman Tambah Data Kelas.";
         $this->data['card'] = "true";
+        $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
 
@@ -67,6 +68,7 @@ class Kelas extends Backend_Controller {
         $this->data['page_description'] = "Halaman Edit Data Sekolah.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
+        $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
 

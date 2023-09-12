@@ -118,7 +118,15 @@
                                     <?= str_level($this->logged_level) ?>
                                 </p>
                                 <p class="mt-2 mb-2 font-13">
-                                    lorem ipsum
+                                    <?php
+                                    if($this->logged_level == '3'){
+                                        $this->load->model(array('m_sekolah'));  
+                                        $sekolah = $this->m_sekolah->find($this->logged_sekolah_id);
+                                        echo xss_echo($sekolah->nama_sekolah);
+                                    }else{
+                                        echo "Dinas Pendidikan dan Kebudayaan";
+                                    }
+                                    ?>
                                 </p>
                             </div>
                         </div>

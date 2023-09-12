@@ -1,5 +1,5 @@
 <div class="row mt-4">
-    <div class="col-12">
+    <div class="col-12"> 
         <?= form_open($uri_mod.'/AjaxSave/'.encrypt_url($id, $id_key), 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="sklh-token-response" name="sklh-token-response">
         <div class="form-group row">
@@ -7,9 +7,9 @@
                 <div class="col-md-10">
                     <select class="form-control select2" name="tipe_sekolah" id="tipe_sekolah">
                         <option selected disabled>Pilih Tingkatan Sekolah</option>
-                        <option value="TK">Taman Kanak-Kanak</option>
-                        <option value="SD">Sekolah Dasar</option>
-                        <option value="SMP">Sekolah Menengah Pertama</option>
+                        <?php foreach($tipe_sekolah as $row): ?>
+                        <option value="<?= $row->tipe_sekolah ?>"><?= $row->tipe_sekolah ?></option>
+                        <?php $no++; endforeach; ?>
                     </select>
                 </div>
             </div>

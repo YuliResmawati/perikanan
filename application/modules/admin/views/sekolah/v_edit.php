@@ -17,13 +17,13 @@
                     <div class="col-8">
                         <select class="form-control select2" name="tipe_sekolah" id="tipe_sekolah">
                             <option selected disabled>Pilih Tingkatan Sekolah</option>
-                            <option value="TK">Taman Kanak-Kanak</option>
-                            <option value="SD">Sekolah Dasar</option>
-                            <option value="SMP">Sekolah Menengah Pertama</option>
+                            <?php foreach($tipe_sekolah as $row): ?>
+                                <option value="<?= $row->tipe_sekolah ?>"><?= $row->tipe_sekolah ?></option>
+                            <?php $no++; endforeach; ?>
                         </select>
                     </div>
                 </div>
-            </div>
+            </div>  
             <div class="col-md-6">
                 <div class="form-group row mb-3">
                     <label for="npsn" class="col-4 col-form-label">NPSN <?= label_required() ?></label>

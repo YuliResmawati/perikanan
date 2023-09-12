@@ -37,7 +37,7 @@ class M_mutasi_siswa extends MY_Model {
         parent::join('detail_siswa cc','cc.detail_rombel_id=b.id');
         parent::join('sekolah s_tujuan','s_tujuan.id=bb.sekolah_id');
         parent::join('rombel dd','dd.id=bb.rombel_id');
-        $this->db->group_by('mutasi_siswa.id, s_awal.nama_sekolah, s_tujuan.nama_sekolah, nama_siswa, nisn, d.nama_rombel, dd.nama_rombel');
+        $this->db->group_by('mutasi_siswa.id,mutasi_siswa.status, s_awal.nama_sekolah, s_tujuan.nama_sekolah, nama_siswa, nisn, d.nama_rombel, dd.nama_rombel');
 
         return $this;
     }

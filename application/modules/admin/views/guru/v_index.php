@@ -1,6 +1,6 @@
 <?php
 $form_name = "form-guru";
-$modal_name = "modal-guru";
+$modal_name = "modal-guru"; 
     if($this->logged_level !== "3"){ ?>
         <div class="form-group row mt-10">
             <label for="filter_tipe_sekolah" class="col-md-2 col-form-label">Tingkatan Sekolah</label>

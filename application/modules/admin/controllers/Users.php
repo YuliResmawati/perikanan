@@ -48,6 +48,7 @@ class Users extends Backend_Controller {
         $this->data['page_description'] = "Halaman Tambah Data Pengguna.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
+        $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
         $this->data['id_key'] = $this->id_key;
 
         $this->load->view('users/v_add', $this->data);
@@ -67,6 +68,7 @@ class Users extends Backend_Controller {
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
+        $this->data['tipe_sekolah'] = $this->m_sekolah->get_distinct_tipe()->findAll();
         $this->data['id'] = $id;
 
         $this->load->view('sekolah/v_edit', $this->data);

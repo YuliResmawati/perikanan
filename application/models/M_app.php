@@ -277,6 +277,65 @@ class M_app extends MY_Model {
         $this->db->order_by('tipe_sekolah', 'asc');
         return parent::findAll();
     }
+
+    public function get_count_student_dash() 
+    {
+        parent::clear_join();
+
+        $this->_table = 'siswa';
+        $this->_timestamps = FALSE;
+        $this->_log_user = FALSE;
+        $this->_primary_key = 'id';
+        $this->_fields_toshow = ['nama_siswa'];
+        $this->db->join('detail_siswa','siswa.id = detail_siswa.siswa_id');
+        $this->db->join('detail_rombel','detail_siswa.detail_rombel_id = detail_rombel.id');
+        if($this->logged_level == "3"){
+            $this->db->where(['detail_rombel.sekolah_id' =>$this->logged_sekolah_id, 'siswa.status' => '1']);
+        }else{
+            $this->db->where('siswa.status', '1');
+        }
+
+        return count(parent::findAll());
+    }
+
+    public function get_count_teacher_dash() 
+    {
+        parent::clear_join();
+
+        $this->_table = 'guru';
+        $this->_timestamps = FALSE;
+        $this->_log_user = FALSE;
+        $this->_primary_key = 'id';
+        $this->_fields_toshow = ['nama_guru'];
+        
+        if($this->logged_level == "3"){
+            $this->db->where(['sekolah_id' =>$this->logged_sekolah_id, 'status' => '1']);
+        }else{
+            $this->db->where('status', '1');
+        }
+
+        return count(parent::findAll());
+    }
+
+    public function get_count_rombel_dash() 
+    {
+        parent::clear_join();
+
+        $this->_table = 'detail_rombel';
+        $this->_timestamps = FALSE;
+        $this->_log_user = FALSE;
+        $this->_primary_key = 'id';
+        $this->_fields_toshow = ['sekolah_id'];
+        
+        if($this->logged_level == "3"){
+            $this->db->where(['sekolah_id' =>$this->logged_sekolah_id, 'status' => '1']);
+        }else{
+            $this->db->where('status', '1');
+        }
+
+        return count(parent::findAll());
+    }
+
 }
 
 /* End of file M_app.php */
