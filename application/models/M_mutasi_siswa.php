@@ -24,8 +24,9 @@ class M_mutasi_siswa extends MY_Model {
     {   
         parent::clear_join();
         $this->_fields_toshow = [
-            ' mutasi_siswa.id','s_awal.nama_sekolah as sekolah_awal','s_tujuan.nama_sekolah as sekolah_tujuan',
-            'nama_siswa', 'nisn', 'mutasi_siswa.status', 'd.nama_rombel as rombel_awal', 'dd.nama_rombel as rombel_tujuan'
+            "mutasi_siswa.id","s_awal.nama_sekolah as sekolah_awal","s_tujuan.nama_sekolah as sekolah_tujuan",
+            "nama_siswa", "nisn", "mutasi_siswa.status", 
+            "concat(d.tingkatan, ' ',d.nama_rombel)  as rombel_awal", "concat(dd.tingkatan, ' ',dd.nama_rombel) as rombel_tujuan"
         ];
 
         parent::join('siswa a','a.id=mutasi_siswa.siswa_id');
@@ -37,7 +38,23 @@ class M_mutasi_siswa extends MY_Model {
         parent::join('detail_siswa cc','cc.detail_rombel_id=b.id');
         parent::join('sekolah s_tujuan','s_tujuan.id=bb.sekolah_id');
         parent::join('rombel dd','dd.id=bb.rombel_id');
-        $this->db->group_by('mutasi_siswa.id,mutasi_siswa.status, s_awal.nama_sekolah, s_tujuan.nama_sekolah, nama_siswa, nisn, d.nama_rombel, dd.nama_rombel');
+
+        if($this->logged_level == "3"){
+            $this->db->where(['s_awal.id' =>$this->logged_sekolah_id]);
+        }
+
+        $this->db->group_by([
+            'mutasi_siswa.id',
+            'mutasi_siswa.status',
+            's_awal.nama_sekolah',
+            's_tujuan.nama_sekolah',
+            'nama_siswa',
+            'nisn',
+            'd.nama_rombel',
+            'dd.nama_rombel',
+            'd.tingkatan',
+            'dd.tingkatan'
+        ]);
 
         return $this;
     }

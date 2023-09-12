@@ -56,7 +56,6 @@ class Verifikasi_mutasi_siswa extends Backend_Controller {
             $edit_link = 'admin/mutasi_siswa/edit/'; 
             $response = $this->m_mutasi_siswa->get_detail_mutasi_siswa()->datatables();
 
-
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
             $response->edit_column('nama', '$1', "two_row(nama_siswa,'fe-user text-danger mr-1', nisn,' fe-clipboard text-success mr-1')");
             $response->edit_column('link', '$1', "btn_link(link)");

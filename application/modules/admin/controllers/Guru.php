@@ -31,7 +31,11 @@ class Guru extends Backend_Controller {
 
     public function index()
 	{
-        $this->data['add_button_link'] = base_url('admin/guru/add');
+        if($this->logged_level == "3"){
+            $this->data['add_button_link'] = false;
+        }else{
+            $this->data['add_button_link'] = base_url('admin/guru/add');
+        }
         $this->data['page_title'] = "Data Guru";
         $this->data['page_description'] = "Halaman Daftar Data Guru.";
         $this->data['card'] = "true";

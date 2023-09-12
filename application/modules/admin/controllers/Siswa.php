@@ -31,7 +31,12 @@ class Siswa extends Backend_Controller {
 
     public function index()
 	{
-        $this->data['add_button_link'] = base_url('admin/siswa/add');
+        if($this->logged_level == "3"){
+            $this->data['add_button_link'] = false;
+        }else{
+            $this->data['add_button_link'] = base_url('admin/siswa/add');
+        }
+
         $this->data['page_title'] = "Data Siswa";
         $this->data['page_description'] = "Halaman Daftar Data Siswa.";
         $this->data['card'] = "true";

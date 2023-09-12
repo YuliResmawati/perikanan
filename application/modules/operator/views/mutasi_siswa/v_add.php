@@ -136,7 +136,7 @@
                         var no  = 1;
 
                         for (index = 0; index < data.data.length; index++) {
-                            html += '<option value='+data.data[index].id+'>'+no+' - '+data.data[index].nama_rombel+'</option>';
+                            html += '<option value='+data.data[index].id+'>'+data.data[index].tingkatan+' '+data.data[index].nama_rombel+'</option>';
                             no++;
                         }
 

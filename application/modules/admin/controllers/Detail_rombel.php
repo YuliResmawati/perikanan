@@ -89,29 +89,7 @@ class Detail_rombel extends Backend_Controller {
         $this->load->view('detail_rombel/v_edit', $this->data);
     }
 
-    public function index_detail($id = null)
-	{
-        $id = decrypt_url($id, $this->id_key);
-		
-		if ($id == FALSE) {
-			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('supadmin/sample_upload')));
-        }
-
-        $rombel = $this->m_detail_rombel->get_detail_rombel_by_rombel($id)->findAll()['0']; // detail_rombel_id
-
-        $this->data['add_button_link'] = base_url('admin/detail_rombel/add_detail/').encrypt_url($id, $this->id_key);
-        $this->data['page_title'] = "Daftar Siswa Rombel ".$rombel->tingkatan." ".$rombel->nama_rombel;
-        $this->data['page_description'] = $rombel->nama_sekolah." - ".$rombel->tahun_ajaran;
-        $this->data['card'] = "true";
-        $this->data['id_key'] = $this->id_key;
-        $this->data['id'] = $id;
-        $this->data['rombel'] = $rombel;
-        $this->data['siswa'] = $this->m_siswa->get_all_siswa()->findAll();
-        $this->db->where(['rombel_id' => $id, 'siswa.status' => '1']);
-        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
-        
-		$this->load->view('detail_rombel/v_index_detail', $this->data);
-    }
+    
 
     public function add_detail($id = NULL)
     {
@@ -130,6 +108,29 @@ class Detail_rombel extends Backend_Controller {
         
 
         $this->load->view('detail_rombel/v_add_detail', $this->data);
+    }
+
+    public function index_detail($id = null)
+	{
+        $id = decrypt_url($id, $this->id_key);
+		
+		if ($id == FALSE) {
+			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('supadmin/sample_upload')));
+        }
+
+        $rombel = $this->m_detail_rombel->get_detail_rombel_by_rombel($id)->findAll()['0']; // detail_rombel_id
+
+        $this->data['add_button_link'] = base_url('admin/detail_rombel/add_detail/').encrypt_url($id, $this->id_key);
+        $this->data['page_title'] = "Daftar Siswa Rombel ".$rombel->tingkatan." ".$rombel->nama_rombel;
+        $this->data['page_description'] = $rombel->nama_sekolah." - ".$rombel->tahun_ajaran;
+        $this->data['card'] = "true";
+        $this->data['id_key'] = $this->id_key;
+        $this->data['id'] = $id;
+        $this->data['rombel'] = $rombel;
+        $this->data['siswa'] = $this->m_siswa->get_all_siswa_rombel($id)->findAll();
+        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
+        
+		$this->load->view('detail_rombel/v_index_detail', $this->data);
     }
 
     public function index_jadwal($id = null)

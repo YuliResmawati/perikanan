@@ -87,7 +87,6 @@ class Mutasi_siswa extends Backend_Controller {
             $edit_link = 'operator/mutasi_siswa/edit/'; 
             $response = $this->m_mutasi_siswa->get_detail_mutasi_siswa()->datatables();
 
-
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");  
             $response->edit_column('nama', '$1', "two_row(nama_siswa,'fe-user text-danger mr-1', nisn,' fe-clipboard text-success mr-1')");
             $response->edit_column('awal', '$1', "two_row(sekolah_awal,'fe-home text-info mr-1', rombel_awal,' fe-book text-warning mr-1')");
@@ -130,10 +129,11 @@ class Mutasi_siswa extends Backend_Controller {
         $siswa_id = decrypt_url($this->input->post('id'), 'silat_pendidikan');
 
             if ($siswa_id != FALSE) { 
-                $this->return = $this->m_siswa->get_All_Detail_siswa($siswa_id)->findAll()[0];
+                $this->return = $this->m_siswa->get_all_detail_siswa($siswa_id)->findAll()[0];
                 $this->return->id = encrypt_url($this->return->id, 'silat_pendidikan');
                 $this->return->detail_rombel_awal_id = encrypt_url($this->return->detail_rombel_awal_id, 'silat_pendidikan');
                 $this->return->jenis_kelamin=jenisKelamin($this->return->jenis_kelamin);
+                $this->return->nama_rombel=$this->return->tingkatan." ".$this->return->nama_rombel;
 
                 if ($this->return) {
                     $this->result = array (
