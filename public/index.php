@@ -54,7 +54,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  */
 if (PHP_SAPI != 'cli') {
-	if($_SERVER['SERVER_NAME']=='jualplakat.id'){
+	if($_SERVER['SERVER_NAME']=='simpeg.agamkab.go.id'){
 		$_SERVER['CI_ENV'] = 'production';
 	}
 }
