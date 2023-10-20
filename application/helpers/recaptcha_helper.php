@@ -1,6 +1,6 @@
 <?php if (! defined('BASEPATH')) exit('No direct script access allowed');
-defined('RECAPTCHA_SITE_KEY')                 OR define('RECAPTCHA_SITE_KEY', '6Ld66YkmAAAAAG1Epo-VfwPUdysdktpyo3Ec86-s');
-defined('RECAPTCHA_SITE_SECRET')              OR define('RECAPTCHA_SITE_SECRET', '6Ld66YkmAAAAAKbfL6DHQNj_j9PS7pVb12aEbvew');
+defined('RECAPTCHA_SITE_KEY')                 OR define('RECAPTCHA_SITE_KEY', '6LcD97UoAAAAAJwb0pE-2ZHb52dLKi2LIL2Jknju');
+defined('RECAPTCHA_SITE_SECRET')              OR define('RECAPTCHA_SITE_SECRET', '6LcD97UoAAAAALqsjqONgRBxBzKHgVXTzCpuXo3Y');
 defined('RECAPTCHA_ACCEPTABLE_SPAM_SCORE')    OR define('RECAPTCHA_ACCEPTABLE_SPAM_SCORE', 0.5);
 
 if(!function_exists('get_recapture_score')) {

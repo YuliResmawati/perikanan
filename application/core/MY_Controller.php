@@ -10,23 +10,23 @@ class MY_Controller extends CI_Controller
         
         $this->data['errors'] 			    = array();
         $this->data['messages'] 		    = array();
-        $this->data['site_name'] 		    = "Sistem Informasi Layanan Terintegrasi Pendidikan Kota Bukittinggi";
-        $this->data['keywords'] 		    = "silat pendidikan, silatpendidikan, pendidikan, kota bukittinggi, pendidikan bukittinggi";
-        $this->data['description'] 		    = "Selamat Datang di Website Sistem Informasi Layanan Terintegrasi Pendidikan Kota Bukittinggi";
+        $this->data['site_name'] 		    = "Sistem Informasi ...";
+        $this->data['keywords'] 		    = "perikanani";
+        $this->data['description'] 		    = "Selamat Datang di Website Sistem Informasi";
         $this->data['regency']		 	    = "Kota Bukittinggi";
-        $this->data['author'] 			    = "Dwipantara Beta Studio";
-        $this->data['powered_by'] 		    = "Dwipantara Beta Studio";
-        $this->data['programmers'] 		    = "Dwipantara Beta Studio Tech Team";
+        $this->data['author'] 			    = "Web Programmer Dinas Komunikasi dan Informatika Kabupaten Agam";
+        $this->data['powered_by'] 		    = "Dinas Komunikasi dan Informatika Kabupaten Agam";
+        $this->data['programmers'] 		    = " Yuli Resmawati";
         $this->data['company']              = "Dwipantara Beta Studio";
-        $this->data['web_domain']           = 'https://silatpendidikan.com/';
+        $this->data['web_domain']           = 'https://perikanan.agamakab.go.id/';
         $this->data['global_images_path']   = base_url('assets/global/images');
         $this->data['global_plugin_path']   = base_url('assets/global/plugin');
         $this->data['global_custom_path']   = base_url('assets/global/custom');
         $this->data['uri_mod']              = '';
         $this->data['version']              = '1.0';
         $this->timestamp                    = date('Y-m-d H:i:s');
-        $this->loggedin                     = $this->session->userdata('silatpendidikan_loggedin');
-        $this->logged_level                 = $this->session->userdata('silatpendidikan_level');  
+        $this->loggedin                     = $this->session->userdata('iluy_loggedin');
+        $this->logged_level                 = $this->session->userdata('iluy_level');  
         $this->private_key                  = "?~MgOWmkZ#9Gvasd@@&&^%$%JBvnUV9R6I0^DryEP+#" . $this->router->fetch_class() . '.DWIPANTARA';
 
         $this->output->set_common_meta(
@@ -41,7 +41,7 @@ class MY_Controller extends CI_Controller
         $this->output->set_meta("powered_by", $this->data['powered_by'] );
         $this->output->set_meta("regency", $this->data['regency']);
 
-        if (base_url() == "https://silatpendidikan.com/" || base_url() == "http://silatpendidikan.com/") {
+        if (base_url() == "https://perikanan.agamakab.go.id/" || base_url() == "http://perikanan.agamakab.go.id/") {
             $this->data['default_db'] = 'default';
             $this->data['file_path'] = MY_STORAGE_PATH.'/uploads/berkas/';
             $this->data['image_path'] = MY_STORAGE_PATH.'/uploads/images/';

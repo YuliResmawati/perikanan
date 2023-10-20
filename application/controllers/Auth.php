@@ -45,6 +45,7 @@ class Auth extends Frontend_Controller {
         $this->output->unset_template();
 
         $captcha_score = get_recapture_score($this->input->post('g-recaptcha-response'));  
+        var_dump($captcha_score);
         $cookie = get_cookie('silatpendidikan_users_cookie');
 
         if ($this->loggedin != FALSE && $this->logged_level != FALSE) {

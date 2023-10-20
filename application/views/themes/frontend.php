@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="en">
+  <head>
 
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-91315LTXRG"></script>
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-91315LTXRG"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -26,30 +26,18 @@
 
     <?php if(empty($page_image)) $page_image = base_url('assets/global/images/new_simpeg.png'); ?>
 
-    <!-- Meta Facebook -->
-    <meta property="og:title" content="<?= $title ?>"/>
-    <meta property="og:description" content="<?= (!empty($meta['description']))? $meta['description'] : "" ?>"/>
-    <meta property="og:site_name" content="<?= $site_name ?>"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:image" content="<?= $page_image ?>"/>
-    <meta property="og:image:alt" content="<?= $title ?>"/>
-    <meta property="og:url" content="<?= current_url() ?>"/>
-    <meta property='og:locale' content='id_ID'/>
-    <meta property='og:locale:alternate' content='en_US'/>
-    <meta property='og:locale:alternate' content='en_GB'/>
 
-    <!-- Meta Twitter -->
-    <meta name='twitter:card'content='summary'/>
-    <meta name="twitter:title" content="<?= $title ?>"/>
-    <meta name="twitter:image:alt" content="<?= $title ?>"/>
-    <meta name="twitter:description" content="<?= (!empty($meta['description']))? $meta['description'] : "" ?>"/>
-    <meta name="twitter:image" content="<?= $page_image ?>"/>
-    <meta name="twitter:url" content="<?= current_url() ?>"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="<?= $theme_path ?>/images/favicon.png">
+    <title>DigiMedia - Creative SEO HTML5 Template</title>
 
-    <!-- Outside -->
+     <!-- Outside -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 
@@ -58,21 +46,15 @@
         <link rel="stylesheet" href="<?php echo $file; ?>" type="text/css" />
     <?php } ?>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/font-awesome.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/flaticon.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/animate.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/swiper-bundle.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/nice-select2.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/jquery.powertip.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/glightbox.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/style.min.css">
-    <link rel="stylesheet" type="text/css" href="<?= $global_custom_path ?>/css/custom.css?v=<?= filemtime('./assets/global/custom/css/custom.css') ?>">
+    <!-- Bootstrap core CSS -->
+    <link href="<?= $theme_path ?>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- JQuery -->
-    <script src="<?= $theme_path ?>/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="<?= $theme_path ?>/js/vendor/modernizr-3.11.7.min.js"></script>
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/templatemo-digimedia-v2.css">
+    <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/animated.css">
+    <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/owl.css">
 
     <script type="text/javascript">
         var uri_dasar = '<?= base_url() ?>';
@@ -89,133 +71,269 @@
     <script src="https://www.google.com/recaptcha/api.js?render=<?php echo RECAPTCHA_SITE_KEY; ?>"></script>
     <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=64e233a0ad58d0001240b933&product=inline-share-buttons' async='async'></script>
 
-</head>
+  </head>
 
 <body>
-    <div id="loading-process"></div>
-    <div class="main-wrapper">
-        <div class="preloader">
-            <div class="loader"></div>
-        </div>
-        <div id="header" class="header section">
-            <div class="container">
-                <div class="header-wrapper">
-                    <div class="header-logo">
-                        <a href="<?= base_url('home') ?>"><img src="<?= $theme_path ?>/images/silatpendidikan.png" alt="logo silat pendidikan"></a>
-                    </div>
-                    <div class="header-menu d-none d-lg-block">
-                        <ul class="main-menu">
-                            <li>
-                                <a href="<?= base_url('home') ?>">Home</a>
-                            </li>
-                            <li>
-                                <a href="#">Tentang</a>
-                                <ul class="sub-menu">
-                                    <li><a href="<?= base_url('visi-misi') ?>">Visi & Misi</a></li>
-                                    <li><a href="<?= base_url('profil-silat-pendidikan') ?>">Profil Silat Pendidikan</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">Informasi</a>
-                                <ul class="sub-menu">
-                                    <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
-                                    <li><a href="<?= base_url('pengumuman') ?>">Pengumuman</a></li>
-                                    <li><a href="https://drive.google.com/drive/folders/1BI_BxW-aZ6tdAEZo_a_lZXVozPR9dIev" target="_blank">SOP Pelayanan</a></li>
-                                    <li><a href="<?= base_url('daftar-sekolah') ?>">Daftar Sekolah</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('isi-survei') ?>">Isi Survei</a>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('kontak') ?>">Kontak</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="header-meta">
-                        <!-- <div class="header-search d-none d-lg-block">
-                            <form action="#">
-                                <input type="text" placeholder="Pencarian">
-                                <button><i class="flaticon-loupe"></i></button>
-                            </form>
-                        </div> -->
-                        <div class="header-login d-none d-lg-flex">
-                            <a class="link" href="<?= base_url('auth') ?>"><i class="fa fa-user-o"></i> LOGIN</a>
-                        </div>
-                        <div class="header-toggle d-lg-none">
-                            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="offcanvas offcanvas-start" id="offcanvasMenu">
-            <div class="offcanvas-header">
-                <div class="offcanvas-logo">
-                    <a href="<?= base_url('home') ?>"><img src="<?= $theme_path ?>/images/silatpendidikan.png" alt="logo silat pendidikan"></a>
-                </div>
-                <button class="btn-close" data-bs-dismiss="offcanvas"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div class="offcanvas-menu">
-                    <ul class="main-menu">
-                        <li>
-                            <a href="<?= base_url('home') ?>">Home</a>
-                        </li>
-                        <li>
-                            <a href="#">Tentang</a>
-                            <ul class="sub-menu">
-                                <li><a href="<?= base_url('visi-misi') ?>">Visi & Misi</a></li>
-                                <li><a href="<?= base_url('profil-silat-pendidikan') ?>">Profil Silat Pendidikan</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Informasi</a>
-                            <ul class="sub-menu">
-                                <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
-                                <li><a href="<?= base_url('pengumuman') ?>">Pengumuman</a></li>
-                                <li><a href="https://drive.google.com/drive/folders/1BI_BxW-aZ6tdAEZo_a_lZXVozPR9dIev" target="_blank">SOP Pelayanan</a></li>
-                                <li><a href="<?= base_url('daftar-sekolah') ?>">Daftar Sekolah</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="<?= base_url('isi-survei') ?>">Isi Survei</a>
-                        </li>
-                        <li>
-                            <a href="<?= base_url('kontak') ?>">Kontak</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <?= $output ?>
-        <div class="footer-section section">
-            <div class="container">
-                <div class="footer-copyright text-center">
-                    <p>&copy; Copyrights <?= date('Y') ?> <a href="https://dikbud.bukittinggikota.go.id" target="_blank"><strong>Dinas Pendidikan dan Kebudayaan Kota Bukittinggi</strong></a> All rights reserved. </p>
-                </div>
-            </div>
-        </div>
-        <button class="back-btn" id="backBtn"><i class="fa fa-angle-up"></i></button>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
+  </div>
 
-    <!-- Load JS in Controller -->
-    <?php foreach ($js as $file) { ?>
-        <script src="<?php echo $file; ?>"> </script>
-    <?php } ?>
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <img src="<?= $theme_path ?>/assets/images/logo-v2.png" alt="">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+              <li class="scroll-to-section"><a href="#about">About</a></li>
+              <li class="scroll-to-section"><a href="#contact">Contact</a></li> 
+              <li class="scroll-to-section"><div class="border-first-button"><a href="<?= base_url('auth') ?>">Login</a></div></li> 
+            </ul>        
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
 
-    <!-- Javascript -->
-    <script src="<?= $theme_path ?>/js/plugins/popper.min.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/bootstrap.min.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/swiper-bundle.min.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/nice-select2.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/jquery.powertip.min.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/glightbox.min.js"></script>
-    <script src="<?= $theme_path ?>/js/main.js"></script>
+  <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-6 align-self-center">
+              <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h6>Digital Media Agency</h6>
+                    <h2>We Boost Your Website Traffic</h2>
+                    <p>This template is brought to you by TemplateMo website. Feel free to use this for a commercial purpose. You are not allowed to redistribute the template ZIP file on any other template website. Thank you.</p>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="border-first-button scroll-to-section">
+                      <a href="#contact">Login</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                <img src="<?= $theme_path ?>/assets/images/slider-dec-v2.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="about" class="about section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="about-left-image  wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
+                <img src="<?= $theme_path ?>/assets/images/about-dec-v2.png" alt="">
+              </div>
+            </div>
+            <div class="col-lg-6 align-self-center  wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+              <div class="about-right-content">
+                <div class="section-heading">
+                  <h6>About Us</h6>
+                  <h4>Who is DigiMedia <em>Agency</em></h4>
+                  <div class="line-dec"></div>
+                </div>
+                <p>We hope this DigiMedia template is useful for your work. You can use this template for any purpose. You may <a rel="nofollow" href="http://paypal.me/templatemo" target="_blank">contribute a little amount</a> via PayPal to <a href="https://templatemo.com/contact" target="_blank">support TemplateMo</a> in creating new templates regularly.</p>
+                <div class="row">
+                  <div class="col-lg-4 col-sm-4">
+                    <div class="skill-item first-skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
+                      <div class="progress" data-percentage="90">
+                        <span class="progress-left">
+                          <span class="progress-bar"></span>
+                        </span>
+                        <span class="progress-right">
+                          <span class="progress-bar"></span>
+                        </span>
+                        <div class="progress-value">
+                          <div>
+                            90%<br>
+                            <span>Coding</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-sm-4">
+                    <div class="skill-item second-skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
+                      <div class="progress" data-percentage="80">
+                        <span class="progress-left">
+                          <span class="progress-bar"></span>
+                        </span>
+                        <span class="progress-right">
+                          <span class="progress-bar"></span>
+                        </span>
+                        <div class="progress-value">
+                          <div>
+                            80%<br>
+                            <span>Photoshop</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-sm-4">
+                    <div class="skill-item third-skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
+                      <div class="progress" data-percentage="80">
+                        <span class="progress-left">
+                          <span class="progress-bar"></span>
+                        </span>
+                        <span class="progress-right">
+                          <span class="progress-bar"></span>
+                        </span>
+                        <div class="progress-value">
+                          <div>
+                            80%<br>
+                            <span>Animation</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="contact" class="contact-us section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+            <h6>Contact Us</h6>
+            <h4>Get In Touch With Us <em>Now</em></h4>
+            <div class="line-dec"></div>
+          </div>
+        </div>
+        <div class="col-lg-12 wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.25s">
+          <form id="contact" action="" method="post">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="contact-dec">
+                  <img src="assets/images/contact-dec-v2.png" alt="">
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <div id="map">
+                  <iframe src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="636px" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="fill-form">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="info-post">
+                        <div class="icon">
+                          <img src="assets/images/phone-icon.png" alt="">
+                          <a href="#">010-020-0340</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="info-post">
+                        <div class="icon">
+                          <img src="assets/images/email-icon.png" alt="">
+                          <a href="#">our@email.com</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="info-post">
+                        <div class="icon">
+                          <img src="assets/images/location-icon.png" alt="">
+                          <a href="#">123 Rio de Janeiro</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <fieldset>
+                        <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
+                      </fieldset>
+                      <fieldset>
+                        <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
+                      </fieldset>
+                      <fieldset>
+                        <input type="subject" name="subject" id="subject" placeholder="Subject" autocomplete="on">
+                      </fieldset>
+                    </div>
+                    <div class="col-lg-6">
+                      <fieldset>
+                        <textarea name="message" type="text" class="form-control" id="message" placeholder="Message" required=""></textarea>  
+                      </fieldset>
+                    </div>
+                    <div class="col-lg-12">
+                      <fieldset>
+                        <button type="submit" id="form-submit" class="main-button ">Send Message Now</button>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright © 2023 Dinas Komunikasi dan Informatika Kabupaten Agam. 
+          <br>By: Tenaga Ahli Programmer</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Load JS in Controller -->
+  <?php foreach ($js as $file) { ?>
+      <script src="<?php echo $file; ?>"> </script>
+  <?php } ?>
+
+  <!-- Scripts -->
+  <script src="<?= $theme_path ?>/vendor/jquery/jquery.min.js"></script>
+  <script src="<?= $theme_path ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="<?= $theme_path ?>/assets/js/owl-carousel.js"></script>
+  <script src="<?= $theme_path ?>/assets/js/animation.js"></script>
+  <script src="<?= $theme_path ?>/assets/js/imagesloaded.js"></script>
+  <script src="<?= $theme_path ?>/assets/js/custom.js"></script>
+
 </body>
-
 </html>

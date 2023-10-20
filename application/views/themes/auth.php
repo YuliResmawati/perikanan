@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html class="no-js">
-
-<head>
+<html lang="en">
+  <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-91315LTXRG"></script>
     <script>
@@ -11,9 +10,12 @@
 
     gtag('config', 'G-91315LTXRG');
     </script>
-    <meta charset="utf-8" />    
+
+    <meta charset="UTF-8">
+
     <?php if(strlen($page_title) > 0) {$title = $page_title." | ".$site_name;}else{$title = $site_name;} ?>
     <title><?= $title ?></title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -26,28 +28,18 @@
 
     <?php if(empty($page_image)) $page_image = base_url('assets/global/images/new_simpeg.png'); ?>
 
-    <!-- Meta Facebook -->
-    <meta property="og:title" content="<?= $title ?>"/>
-    <meta property="og:description" content="<?= (!empty($meta['description']))? $meta['description'] : "" ?>"/>
-    <meta property="og:site_name" content="<?= $site_name ?>"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:image" content="<?= $page_image ?>"/>
-    <meta property="og:image:alt" content="<?= $title ?>"/>
-    <meta property="og:url" content="<?= current_url() ?>"/>
-    <meta property='og:locale' content='id_ID'/>
-    <meta property='og:locale:alternate' content='en_US'/>
-    <meta property='og:locale:alternate' content='en_GB'/>
 
-    <!-- Meta Twitter -->
-    <meta name='twitter:card'content='summary'/>
-    <meta name="twitter:title" content="<?= $title ?>"/>
-    <meta name="twitter:image:alt" content="<?= $title ?>"/>
-    <meta name="twitter:description" content="<?= (!empty($meta['description']))? $meta['description'] : "" ?>"/>
-    <meta name="twitter:image" content="<?= $page_image ?>"/>
-    <meta name="twitter:url" content="<?= current_url() ?>"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="<?= $theme_path ?>/images/favicon.png">
+    <title>DigiMedia - Creative SEO HTML5 Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="<?= $theme_path ?>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Outside -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -58,21 +50,12 @@
         <link rel="stylesheet" href="<?php echo $file; ?>" type="text/css" />
     <?php } ?>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/font-awesome.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/flaticon.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/animate.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/swiper-bundle.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/nice-select2.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/jquery.powertip.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/plugins/glightbox.min.css">
-    <link rel="stylesheet" href="<?= $theme_path ?>/css/style.min.css">
-    <link rel="stylesheet" type="text/css" href="<?= $global_custom_path ?>/css/custom.css?v=<?= filemtime('./assets/global/custom/css/custom.css') ?>">
-
-    <!-- JQuery -->
-    <script src="<?= $theme_path ?>/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="<?= $theme_path ?>/js/vendor/modernizr-3.11.7.min.js"></script>
+    <!-- Additional CSS Files -->
+    <!-- <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/login.css"> -->
+    <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/templatemo-digimedia-v2.css">
+    <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/animated.css">
+    <link rel="stylesheet" href="<?= $theme_path ?>/assets/css/owl.css">
 
     <script type="text/javascript">
         var uri_dasar = '<?= base_url() ?>';
@@ -88,128 +71,77 @@
 
     <script src="https://www.google.com/recaptcha/api.js?render=<?php echo RECAPTCHA_SITE_KEY; ?>"></script>
 
-</head>
+  </head>
 
-<body>
-    <div id="loading-process"></div>
-    <div class="main-wrapper">
-        <div class="preloader">
-            <div class="loader"></div>
+  <body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div id="header" class="header section">
-            <div class="container">
-                <div class="header-wrapper">
-                    <div class="header-logo">
-                        <a href="<?= base_url('home') ?>"><img src="<?= $theme_path ?>/images/silatpendidikan.png" alt="logo silat pendidikan"></a>
-                    </div>
-                    <div class="header-menu d-none d-lg-block">
-                        <ul class="main-menu">
-                            <li>
-                                <a href="<?= base_url('home') ?>">Home</a>
-                            </li>
-                            <li>
-                                <a href="#">Tentang</a>
-                                <ul class="sub-menu">
-                                    <li><a href="<?= base_url('visi-misi') ?>">Visi & Misi</a></li>
-                                    <li><a href="<?= base_url('profil-silat-pendidikan') ?>">Profil Silat Pendidikan</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">Informasi</a>
-                                <ul class="sub-menu">
-                                    <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
-                                    <li><a href="<?= base_url('pengumuman') ?>">Pengumuman</a></li>
-                                    <li><a href="https://drive.google.com/drive/folders/1BI_BxW-aZ6tdAEZo_a_lZXVozPR9dIev" target="_blank">SOP Pelayanan</a></li>
-                                    <li><a href="<?= base_url('daftar-sekolah') ?>">Daftar Sekolah</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('isi-survei') ?>">Isi Survei</a>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('kontak') ?>">Kontak</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="header-meta">
-                        <div class="header-login d-none d-lg-flex">
-                            <a class="link" href="<?= base_url('auth') ?>"><i class="fa fa-user-o"></i> LOGIN</a>
-                        </div>
-                        <div class="header-toggle d-lg-none">
-                            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="offcanvas offcanvas-start" id="offcanvasMenu">
-            <div class="offcanvas-header">
-                <div class="offcanvas-logo">
-                    <a href="<?= base_url('home') ?>"><img src="<?= $theme_path ?>/images/silatpendidikan.png" alt="logo silat pendidikan"></a>
-                </div>
-                <button class="btn-close" data-bs-dismiss="offcanvas"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div class="offcanvas-menu">
-                    <ul class="main-menu">
-                        <li>
-                            <a href="<?= base_url('home') ?>">Home</a>
-                        </li>
-                        <li>
-                            <a href="#">Tentang</a>
-                            <ul class="sub-menu">
-                                <li><a href="<?= base_url('visi-misi') ?>">Visi & Misi</a></li>
-                                <li><a href="<?= base_url('profil-silat-pendidikan') ?>">Profil Silat Pendidikan</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Informasi</a>
-                            <ul class="sub-menu">
-                                <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
-                                <li><a href="<?= base_url('pengumuman') ?>">Pengumuman</a></li>
-                                <li><a href="https://drive.google.com/drive/folders/1BI_BxW-aZ6tdAEZo_a_lZXVozPR9dIev" target="_blank">SOP Pelayanan</a></li>
-                                <li><a href="<?= base_url('daftar-sekolah') ?>">Daftar Sekolah</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="<?= base_url('isi-survei') ?>">Isi Survei</a>
-                        </li>
-                        <li>
-                            <a href="<?= base_url('kontak') ?>">Kontak</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <?= $output ?>
-        <div class="footer-section section">
-            <div class="container">
-                <div class="footer-copyright text-center">
-                    <p>&copy; Copyrights <?= date('Y') ?> <a href="https://dikbud.bukittinggikota.go.id" target="_blank"><strong>Dinas Pendidikan dan Kebudayaan Kota Bukittinggi</strong></a> All rights reserved. </p>
-                </div>
-            </div>
-        </div>
-        <button class="back-btn" id="backBtn"><i class="fa fa-angle-up"></i></button>
+      </div>
     </div>
+    <!-- ***** Preloader End ***** -->
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <a href="index.html" class="logo">
+                <img src="<?= $theme_path ?>/assets/images/logo-v2.png" alt="">
+              </a>
+              <!-- ***** Logo End ***** -->
+              <!-- ***** Menu Start ***** -->
+              <ul class="nav">
+                <li class="scroll-to-section"><a href="<?= base_url('home') ?>" class="active">Home</a></li>
+                <li class="scroll-to-section"><a href="<?= base_url('home') ?>">About</a></li>
+                <li class="scroll-to-section"><a href="<?= base_url('home') ?>">Contact</a></li> 
+                <li class="scroll-to-section"><div class="border-first-button"><a href="<?= base_url('auth') ?>">Login</a></div></li> 
+              </ul>        
+              <a class='menu-trigger'>
+                  <span>Menu</span>
+              </a>
+              <!-- ***** Menu End ***** -->
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- Login -->
+    <!-- <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s"> -->
+    <?= $output ?>
+    <!-- </div> -->
+    
+    <footer style="margin-top: auto;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Copyright © 2023 Dinas Komunikasi dan Informatika Kabupaten Agam. 
+            <br>By: Tenaga Ahli Programmer</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <!-- Load JS in Controller -->
     <?php foreach ($js as $file) { ?>
         <script src="<?php echo $file; ?>"> </script>
     <?php } ?>
 
-    <!-- Javascript -->
-    <script src="<?= $theme_path ?>/js/plugins/popper.min.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/bootstrap.min.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/swiper-bundle.min.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/nice-select2.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/jquery.powertip.min.js"></script>
-    <script src="<?= $theme_path ?>/js/plugins/glightbox.min.js"></script>
-    <script src="<?= $theme_path ?>/js/main.js"></script>
-    <script src="<?= $global_custom_path ?>/js/auto-csrf.min.js"></script>
-</body>
+    <!-- Scripts -->
+    <script src="<?= $theme_path ?>/vendor/jquery/jquery.min.js"></script>
+    <script src="<?= $theme_path ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= $theme_path ?>/assets/js/owl-carousel.js"></script>
+    <script src="<?= $theme_path ?>/assets/js/animation.js"></script>
+    <script src="<?= $theme_path ?>/assets/js/imagesloaded.js"></script>
+    <script src="<?= $theme_path ?>/assets/js/custom.js"></script>
 
+  </body>
 </html>
