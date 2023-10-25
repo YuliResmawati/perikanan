@@ -118,9 +118,9 @@ class Profile extends Backend_Controller {
     
             $this->output->set_output(json_encode($this->result));
         } else if ($this->input->post('page') == "ajax_change_password") {
-            if (!empty($this->input->post('silatpendidikan_username'))) {
-                if ($this->input->post('silatpendidikan_username') !== $this->input->post('old_username')) {
-                    $this->form_validation->set_rules('silatpendidikan_username', 'Nama Pengguna', "required|is_unique[users.username]");
+            if (!empty($this->input->post('dkpp_username'))) {
+                if ($this->input->post('dkpp_username') !== $this->input->post('old_username')) {
+                    $this->form_validation->set_rules('dkpp_username', 'Nama Pengguna', "required|is_unique[users.username]");
                 }
             }
 
@@ -135,15 +135,15 @@ class Profile extends Backend_Controller {
             if ($this->form_validation->run() == TRUE) {
                 $new_password = $this->m_users->ghash($this->input->post('new_password'));
 
-                if ($this->input->post('silatpendidikan_username') !== $this->input->post('old_username')) {
-                    $this->session->set_userdata(array('silatpendidikan_username' => $this->input->post('silatpendidikan_username')));
+                if ($this->input->post('dkpp_username') !== $this->input->post('old_username')) {
+                    $this->session->set_userdata(array('dkpp_username' => $this->input->post('dkpp_username')));
                 }
 
                 if (!empty($this->input->post('new_password'))) {
                     if ($this->m_users->default_password == $this->input->post('new_password')) {
-                        $this->session->set_userdata(array('silatpendidikan_is_default_password' => true));
+                        $this->session->set_userdata(array('dkpp_is_default_password' => true));
                     } else {
-                        $this->session->set_userdata(array('silatpendidikan_is_default_password' => false));
+                        $this->session->set_userdata(array('dkpp_is_default_password' => false));
                     }
 
                     $this->m_users->push_to_data('password', $new_password);

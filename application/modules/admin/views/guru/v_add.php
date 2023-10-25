@@ -396,7 +396,7 @@
             type: 'post',
             url: "<?= base_url('app/AjaxGetRegion') ?>",
             data: {
-                silatpendidikan_c_token: csrf_value
+                dkpp_c_token: csrf_value
             },
             placeholder: 'Ketik Nama Kecamatan atau Kelurahan',
         }

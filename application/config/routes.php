@@ -61,12 +61,13 @@ $route['manifest/site\.webmanifest'] = 'manifest/site';
 /************* End Manifest Routing *************/
 
 #== Core Routes ==#
+$route['masuk'] = 'auth';
 $route['logout'] = 'auth/do_logout';
 
 ## frontend routes ##
 $route['kontak'] = 'frontend/contact';
 $route['visi-misi'] = 'frontend/visi_misi';
-$route['profil-silat-pendidikan'] = 'frontend/profile_silatpen';
+$route['profil-dpkp'] = 'frontend/profile_dpkp';
 $route['isi-survei'] = 'frontend/skm';
 $route['isi-survei/process'] = 'frontend/skm/process';
 $route['artikel'] = 'frontend/article';

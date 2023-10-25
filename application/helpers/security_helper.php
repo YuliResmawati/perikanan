@@ -10,13 +10,13 @@ if (!function_exists('encrypt_url'))
         $level = '';
 
         if ($is_login == true) {
-            $user_id = $CI->session->userdata('silatpendidikan_user_id');
-            $level = $CI->session->userdata('silatpendidikan_level');
+            $user_id = $CI->session->userdata('dkpp_user_id');
+            $level = $CI->session->userdata('dkpp_level');
         }
         
         $string = $string;    
         
-        $secret_key = 'SILATPENDIDIKAN'.$key.$user_id.$level;
+        $secret_key = 'DKPP'.$key.$user_id.$level;
         $secret_iv = 2456358494765231;
         $encrypt_method = "aes-256-cbc";
         $key = hash("sha256", $secret_key);
@@ -37,11 +37,11 @@ if (!function_exists('decrypt_url'))
         $level = '';
 
         if ($is_login == true) {
-            $user_id = $CI->session->userdata('silatpendidikan_user_id');
-            $level = $CI->session->userdata('silatpendidikan_level');
+            $user_id = $CI->session->userdata('dkpp_user_id');
+            $level = $CI->session->userdata('dkpp_level');
         }
         
-        $secret_key = 'SILATPENDIDIKAN'.$key.$user_id.$level;
+        $secret_key = 'DKPP'.$key.$user_id.$level;
         $secret_iv = 2456358494765231;
         $encrypt_method = "aes-256-cbc";
         $key = hash("sha256", $secret_key);

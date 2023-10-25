@@ -28,7 +28,7 @@
 
 $config['db_model'] = 'm_acl';
 $config['db_function'] = '_acl_menu';
-$config['session_level_name'] = 'silatpendidikan_level';
+$config['session_level_name'] = 'dkpp_level';
 
 $config['cidm_default']['db_menu_type'] = 'sidebar_menu';
 $config['cidm_default']['menu_icon_class'] = '';

@@ -159,8 +159,8 @@ class Users extends Backend_Controller {
                 }
     
                 $this->return = $this->m_users->push_to_data('level', '3')
-                                ->push_to_data('sekolah_id', decrypt_url($this->input->post('sekolah_id'), $this->id_key))
-                                ->push_to_data('password', $this->m_users->ghash('silatpendidikan_pass'))
+                                ->push_to_data('pegawai_id', decrypt_url($this->input->post('pegawai_id'), $this->id_key))
+                                ->push_to_data('password', $this->m_users->ghash('dkpp_pass'))
                                 ->push_to_data('deleted', '0')
                                 ->save($id);
     
@@ -360,7 +360,7 @@ class Users extends Backend_Controller {
             $check = $this->m_users->find($id);
 
             if ($check !== FALSE) {
-                $this->m_users->push_to_data('password', $this->m_users->ghash('silatpendidikan_pass'));
+                $this->m_users->push_to_data('password', $this->m_users->ghash('dkpp_pass'));
                 $this->return = $this->m_users->save($id);
 
                 if ($this->return) {

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends Frontend_Controller {
+class Auth extends Auth_Controller {
 
     public function __construct()
     {
@@ -16,26 +16,28 @@ class Auth extends Frontend_Controller {
     
     public function _init()
     {
-        $this->output->set_template('auth');
+        $this->output->set_template('frontend');
     }
 
     public function index()
     {
-        $cookie = get_cookie('silatpendidikan_users_cookie');
+        $cookie = get_cookie('dkpp_users_cookie');
 
-        if ($this->loggedin != FALSE && $this->logged_level != FALSE) {
-            redirect('dashboard');
+        if ($this->uri->segment(1) != 'masuk') {
+            show_404();
+        } else if ($this->loggedin != FALSE && $this->logged_level != FALSE) {
+            redirect('dashboard', 'refresh');
         } else if ($cookie <> '') {
             $data = $this->m_users->get_by_cookie($cookie)->row();
 
             if ($data) {
-                $this->m_users->silatpendidikan_session_register($data);
-                redirect('dashboard');
+                $this->m_users->dkpp_session_register($data);
+                redirect('dashboard', 'refresh');
             }
         }
         
-        $this->data['page_title'] = "Login";
-        $this->data['page_description'] = "Sistem Informasi Layanan Terintegrasi Kota Bukittinggi";
+        $this->data['page_title'] = "Masuk";
+        $this->data['page_description'] = "Halaman Masuk Aplikasi DPKK Kabupaten Agam.";
 
         $this->load->view('auth/v_login', $this->data);  
     }
@@ -45,17 +47,16 @@ class Auth extends Frontend_Controller {
         $this->output->unset_template();
 
         $captcha_score = get_recapture_score($this->input->post('g-recaptcha-response'));  
-        var_dump($captcha_score);
-        $cookie = get_cookie('silatpendidikan_users_cookie');
+        $cookie = get_cookie('dkpp_users_cookie');
 
         if ($this->loggedin != FALSE && $this->logged_level != FALSE) {
-            redirect('dashboard');
+            redirect('dashboard', 'refresh');
         } else if ($cookie <> '') {
             $data = $this->m_users->get_by_cookie($cookie)->row();
 
             if ($data) {
-                $this->m_users->silatpendidikan_session_register($data);
-                redirect('dashboard');
+                $this->m_users->dkpp_session_register($data);
+                redirect('dashboard', 'refresh');
             }
         }
 
@@ -65,8 +66,8 @@ class Auth extends Frontend_Controller {
                 'message' => '<span class="text-danger"> Request yang anda jalankan dianggap SPAM oleh sistem.</span>'
             );
         } else {
-            $this->form_validation->set_rules('silatpendidikan_username', 'Nama Pengguna', 'trim|required|min_length[3]|max_length[50]');
-            $this->form_validation->set_rules('silatpendidikan_password', 'Kata Sandi', 'required|min_length[8]|max_length[35]');
+            $this->form_validation->set_rules('dkpp_username', 'nama pengguna', 'trim|required|min_length[3]|max_length[50]');
+            $this->form_validation->set_rules('dkpp_password', 'kata sandi', 'required|min_length[8]|max_length[35]');
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
             if ($this->form_validation->run() == TRUE) {
@@ -76,15 +77,15 @@ class Auth extends Frontend_Controller {
                     $key = random_string('alnum', 64);
     
                     if ($this->input->post('rememberMe') == "checked") {
-                        set_cookie('silatpendidikan_users_cookie', $key, 3600*24*30); // expired 30 days 
+                        set_cookie('dkpp_users_cookie', $key, 3600*24*30); // expired 30 days 
                     
                         $this->m_users->save_cookie($key, $auth->id, 3600*24*30);
-                        $this->m_users->silatpendidikan_session_register($auth);
+                        $this->m_users->dkpp_session_register($auth);
                     } else {
-                        set_cookie('silatpendidikan_users_cookie', $key, 3600*24*1); // expired 1 days 
+                        set_cookie('dkpp_users_cookie', $key, 3600*24*1); // expired 1 days 
                     
                         $this->m_users->save_cookie($key, $auth->id, 3600*24*1);
-                        $this->m_users->silatpendidikan_session_register($auth);
+                        $this->m_users->dkpp_session_register($auth);
                     }
     
                     $data = array(
@@ -94,7 +95,7 @@ class Auth extends Frontend_Controller {
                 } else {
                     $data = array(
                         'status' => FALSE,
-                        'message' => '<span class="text-danger"> Nama Pengguna atau Kata Sandi salah.</span>'
+                        'message' => '<span class="text-danger"> <strong>nama pengguna</strong> atau <strong>kata sandi salah</strong>.</span>'
                     );
                 }
             } else {
@@ -115,20 +116,20 @@ class Auth extends Frontend_Controller {
     public function do_logout()
     {
         if ($this->loggedin == TRUE) {
-            $cookie = get_cookie('silatpendidikan_users_cookie');
+            $cookie = get_cookie('dkpp_users_cookie');
 
             $this->db->update('cookie', ['deleted' => 1] , ['cookie' => $cookie ]);
-            delete_cookie('silatpendidikan_users_cookie');
-            $this->m_users->silatpendidikan_session_destroy();
+            delete_cookie('dkpp_users_cookie');
+            $this->m_users->dkpp_session_destroy();
             $this->data['page_title'] = "Logout";
             $this->data['page_description'] = "Halaman Logout.";
 
-            redirect('auth', 'refresh');
+            redirect('', 'refresh');
         } else {
-            redirect('auth', 'refresh');
+            redirect('', 'refresh');
         } 
     }
 
 }
 
-/* End of file Auth.php */
+/* End of file Auth.php */

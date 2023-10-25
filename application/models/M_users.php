@@ -9,17 +9,17 @@ class M_users extends MY_Model {
     protected $_softdelete = TRUE;
     protected $_timestamps = TRUE;
     protected $_log_user = TRUE;
-    protected $_fields_toshow = ['username','password', 'email', 'display_name', 'level','sekolah_id'];
+    protected $_fields_toshow = ['username','password', 'email', 'display_name', 'level','pegawai_id'];
     protected $_fields = [
         'username' => 'username',
         'password' => 'password',
         'display_name' => 'display_name',
         'email' => 'email',
         'level' => 'level',
-        'sekolah_id' => 'sekolah_id'
+        'pegawai_id' => 'pegawai_id',
     ];
 
-    public $default_password = "silatpendidikan_pass";
+    public $default_password = "dkpp_pass";
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ class M_users extends MY_Model {
 
     public function _select($id)
     {
-        $this->db->select('a.id, a.display_name, a.sekolah.id, a.username, a.password, a.email, a.level, a.last_login, a.last_ip_login, a.status, a.reason_disabled')
+        $this->db->select('a.id, a.display_name, a.pegawai.id, a.username, a.password, a.email, a.level, a.last_login, a.last_ip_login, a.status, a.reason_disabled')
             ->from('users a')
             ->where('a.deleted', '0')
             ->where('a.id', $id)
@@ -58,7 +58,7 @@ class M_users extends MY_Model {
 
     public function loggedin ()
     {
-	    return (bool) $this->session->userdata('silatpendidikan_loggedin');
+	    return (bool) $this->session->userdata('dkpp_loggedin');
 	}
     
     public function is_email_active($user_id)
@@ -79,10 +79,10 @@ class M_users extends MY_Model {
 
     public function authentication_check()
     {
-        $username = $this->input->post('silatpendidikan_username');
-        $password = $this->input->post('silatpendidikan_password');
+        $username = $this->input->post('dkpp_username');
+        $password = $this->input->post('dkpp_password');
 
-        $this->db->select('a.id, a.display_name, a.sekolah_id, a.username, a.password, a.email, a.level, a.last_login, a.last_ip_login, a.status, a.reason_disabled')
+        $this->db->select('a.id, a.display_name, a.pegawai_id, a.username, a.password, a.email, a.level, a.last_login, a.last_ip_login, a.status, a.reason_disabled')
             ->from('users a')
             ->where('a.username', $username)
             ->or_where('a.email', $username)
@@ -118,14 +118,14 @@ class M_users extends MY_Model {
             $this->db->update('cookie', ['last_login' => date('Y-m-d H:i:s')], ['cookie' => $cookie]);
 
             $data = array(
-                'silatpendidikan_level'   => $data->level
+                'dkpp_level'   => $data->level
             );
 
             $this->session->set_userdata($data);	
         } else {
             $this->db->update('cookie', ['deleted' => 1] , ['cookie' => $cookie ]);
 
-			delete_cookie('silatpendidikan_users_cookie');
+			delete_cookie('dkpp_users_cookie');
 		 	$this->session->sess_destroy();
 
 		 	redirect('auth', 'refresh');
@@ -152,7 +152,7 @@ class M_users extends MY_Model {
 
     public function get_by_cookie($cookie)
     {
-        return $this->db->select('b.id, b.sekolah_id, b.display_name, b.username, b.password, b.email, b.level, b.last_login, b.last_ip_login, b.status, b.reason_disabled')
+        return $this->db->select('b.id, b.pegawai_id, b.display_name, b.username, b.password, b.email, b.level, b.last_login, b.last_ip_login, b.status, b.reason_disabled')
                 ->where(['a.cookie' => $cookie, 'a.deleted' => 0])
                 ->join('users b','a.users_id = b.id')
                 ->get('cookie a');
@@ -163,7 +163,7 @@ class M_users extends MY_Model {
         $config = array(
             'upload_path' => $this->data['image_path'],
             'allowed_types' => 'gif|jpg|png',
-            'file_name' => 'silatpendidikan_profile_picture'.$this->session->userdata('silatpendidikan_pegawai_id').'_'.md5($_FILES['file']['name']).'-'.date('ymdhis'),
+            'file_name' => 'dkpp_profile_picture'.$this->session->userdata('dkpp_pegawai_id').'_'.md5($_FILES['file']['name']).'-'.date('ymdhis'),
             'max_size' => 2048
         );
 
@@ -174,9 +174,9 @@ class M_users extends MY_Model {
         } else {
             $img = $this->upload->data();
             $img_result = $img['file_name'];
-            $last_profile_picture =  $this->db->select('photo')->get_where('pegawai', ['id' => $this->session->userdata('silatpendidikan_pegawai_id')])->row()->photo;
+            $last_profile_picture =  $this->db->select('photo')->get_where('pegawai', ['id' => $this->session->userdata('dkpp_pegawai_id')])->row()->photo;
             $img_data = array('photo' => $img_result);
-            $result = $this->db->update('pegawai', $img_data, ['id' => $this->session->userdata('silatpendidikan_pegawai_id')]);
+            $result = $this->db->update('pegawai', $img_data, ['id' => $this->session->userdata('dkpp_pegawai_id')]);
 
             if ($result) {
                 if (!empty($last_profile_picture)) {
@@ -184,7 +184,7 @@ class M_users extends MY_Model {
                     unlink($unlink_data);
                 }
 
-                $this->session->set_userdata(array('silatpendidikan_photo' => $img_result));
+                $this->session->set_userdata(array('dkpp_photo' => $img_result));
 
                 $data_res = json_encode([
                     'status' => true, 
@@ -202,27 +202,27 @@ class M_users extends MY_Model {
         return $data_res;
     }
 
-    public function silatpendidikan_session_register($row)
+    public function dkpp_session_register($row)
     {
         $data = ([
-            'silatpendidikan_user_id' => $row->id,
-            'silatpendidikan_sekolah_id' => $row->sekolah_id,
-            'silatpendidikan_username' => xss_escape($row->username),
-            'silatpendidikan_level' => $row->level,
-            'silatpendidikan_display_name' => xss_escape($row->display_name),
-            'silatpendidikan_email' => $row->email,
-            'silatpendidikan_last_login' => $row->last_login,
-            'silatpendidikan_last_ip_login' => $row->last_ip_login,
-            'silatpendidikan_user_active' => $row->status,
-            'silatpendidikan_deactive_reason' => $row->reason_disabled,
-            'silatpendidikan_is_default_password' => $this->_is_default_password($row->password),
-            'silatpendidikan_loggedin' => TRUE,
+            'dkpp_user_id' => $row->id,
+            'dkpp_pegawai_id' => $row->pegawai_id,
+            'dkpp_username' => xss_escape($row->username),
+            'dkpp_level' => $row->level,
+            'dkpp_display_name' => xss_escape($row->display_name),
+            'dkpp_email' => $row->email,
+            'dkpp_last_login' => $row->last_login,
+            'dkpp_last_ip_login' => $row->last_ip_login,
+            'dkpp_user_active' => $row->status,
+            'dkpp_deactive_reason' => $row->reason_disabled,
+            'dkpp_is_default_password' => $this->_is_default_password($row->password),
+            'dkpp_loggedin' => TRUE,
         ]);
 
         $this->session->set_userdata($data);
     }
 
-    public function silatpendidikan_session_destroy()
+    public function dkpp_session_destroy()
     {
         $this->session->sess_destroy();
     }

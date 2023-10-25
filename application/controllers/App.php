@@ -122,7 +122,7 @@ class App extends Backend_Controller {
 
         foreach ($results as $row) {
             $this->return[] = array(
-                'id' => encrypt_url($row['id'], 'silat_pendidikan'),
+                'id' => encrypt_url($row['id'], 'dkpp'),
                 'text' => $row['npsn'] . " - " . $row['nama_sekolah']
             );
         }
@@ -171,7 +171,7 @@ class App extends Backend_Controller {
 
         foreach ($results as $row) {
             $this->return[] = array(
-                'id' => encrypt_url($row['id'], 'silat_pendidikan'),
+                'id' => encrypt_url($row['id'], 'dkpp'),
                 'text' => $row['nisn'] . " - " . $row['nama_siswa']
             );
         }
@@ -220,7 +220,7 @@ class App extends Backend_Controller {
 
         foreach ($results as $row) {
             $this->return[] = array(
-                'id' => encrypt_url($row['id'], 'silat_pendidikan'),
+                'id' => encrypt_url($row['id'], 'dkpp'),
                 'text' => $row['nip'] . " - " . $row['nama_guru']
             );
         }

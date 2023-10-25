@@ -124,7 +124,7 @@
                                         $sekolah = $this->m_sekolah->find($this->logged_sekolah_id);
                                         echo xss_echo($sekolah->nama_sekolah);
                                     }else{
-                                        echo "Dinas Pendidikan dan Kebudayaan";
+                                        echo "Dinas Perikanan dan Ketahanan Pangan";
                                     }
                                     ?>
                                 </p>

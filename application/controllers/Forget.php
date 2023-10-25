@@ -22,7 +22,7 @@ class Forget extends Frontend_Controller
 
     public function index()
     {
-        $cookie = get_cookie('simpeg_users_cookie');
+        $cookie = get_cookie('dkpp_users_cookie');
 
         if ($this->loggedin != FALSE && $this->logged_level != FALSE) {
             redirect('dashboard');

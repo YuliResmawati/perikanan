@@ -337,7 +337,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '@silatpendidikan_4646#';
+$config['encryption_key'] = '@dkppkabagam_4646#';
 
 /*
 |--------------------------------------------------------------------------
@@ -391,7 +391,7 @@ $config['encryption_key'] = '@silatpendidikan_4646#';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'appsess_silatpendidikan';
+$config['sess_cookie_name'] = 'appsess_dkpp';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
@@ -462,8 +462,8 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
 $config['csrf_protection'] = TRUE;
-$config['csrf_token_name'] = 'silatpendidikan_c_token';
-$config['csrf_cookie_name'] = 'silatpendidikan_c_token';
+$config['csrf_token_name'] = 'dkpp_c_token';
+$config['csrf_cookie_name'] = 'dkpp_c_token';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = TRUE;
 $config['csrf_exclude_uris'] = array('telegramsocket');

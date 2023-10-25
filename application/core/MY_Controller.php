@@ -10,24 +10,24 @@ class MY_Controller extends CI_Controller
         
         $this->data['errors'] 			    = array();
         $this->data['messages'] 		    = array();
-        $this->data['site_name'] 		    = "Sistem Informasi ...";
-        $this->data['keywords'] 		    = "perikanani";
+        $this->data['site_name'] 		    = "Sistem Informasi Ketahanan Pangan dan Perikanan";
+        $this->data['keywords'] 		    = "dkpp agam, dpkp agam, ketahanan pangan, perikanan";
         $this->data['description'] 		    = "Selamat Datang di Website Sistem Informasi";
-        $this->data['regency']		 	    = "Kota Bukittinggi";
+        $this->data['regency']		 	    = "Kabupaten Agam";
         $this->data['author'] 			    = "Web Programmer Dinas Komunikasi dan Informatika Kabupaten Agam";
         $this->data['powered_by'] 		    = "Dinas Komunikasi dan Informatika Kabupaten Agam";
-        $this->data['programmers'] 		    = " Yuli Resmawati";
-        $this->data['company']              = "Dwipantara Beta Studio";
-        $this->data['web_domain']           = 'https://perikanan.agamakab.go.id/';
+        $this->data['programmers'] 		    = "Yuli Resmawati";
+        $this->data['company']              = "Dinas Komunikasi dan Informatika Kabupaten Agam";
+        $this->data['web_domain']           = 'https://dkpp.agamakab.go.id/';
         $this->data['global_images_path']   = base_url('assets/global/images');
         $this->data['global_plugin_path']   = base_url('assets/global/plugin');
         $this->data['global_custom_path']   = base_url('assets/global/custom');
         $this->data['uri_mod']              = '';
         $this->data['version']              = '1.0';
         $this->timestamp                    = date('Y-m-d H:i:s');
-        $this->loggedin                     = $this->session->userdata('iluy_loggedin');
-        $this->logged_level                 = $this->session->userdata('iluy_level');  
-        $this->private_key                  = "?~MgOWmkZ#9Gvasd@@&&^%$%JBvnUV9R6I0^DryEP+#" . $this->router->fetch_class() . '.DWIPANTARA';
+        $this->loggedin                     = $this->session->userdata('dkpp_loggedin');
+        $this->logged_level                 = $this->session->userdata('dkpp_level');  
+        $this->private_key                  = "?~MgOWmkZ#9Gvasd@@&&^%$%JBvnUV9R6I9^DryEP+#" . $this->router->fetch_class() . '.DKPP';
 
         $this->output->set_common_meta(
             $this->data['site_name'],
@@ -41,7 +41,7 @@ class MY_Controller extends CI_Controller
         $this->output->set_meta("powered_by", $this->data['powered_by'] );
         $this->output->set_meta("regency", $this->data['regency']);
 
-        if (base_url() == "https://perikanan.agamakab.go.id/" || base_url() == "http://perikanan.agamakab.go.id/") {
+        if (base_url() == "https://dkpp.agamakab.go.id/" || base_url() == "http://dkpp.agamakab.go.id/") {
             $this->data['default_db'] = 'default';
             $this->data['file_path'] = MY_STORAGE_PATH.'/uploads/berkas/';
             $this->data['image_path'] = MY_STORAGE_PATH.'/uploads/images/';
@@ -70,7 +70,9 @@ class Frontend_Controller extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        // $this->data['theme_path_back']       = base_url('assets/backend');
         $this->data['theme_path']       = base_url('assets/frontend');
+        $this->data['theme_path_backend']       = base_url('assets/backend');
         $this->data['page_title']       = '';
         $this->data['page_description'] = '';
         $this->paging                   = array(
@@ -102,6 +104,16 @@ class Frontend_Controller extends MY_Controller
     }
 }
 
+class Auth_Controller extends MY_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->data['theme_path_backend']       = base_url('assets/backend');
+        $this->data['theme_path']  = base_url('assets/frontend');
+    }
+}
+
 class Backend_Controller extends MY_Controller
 {
     public function __construct()
@@ -109,14 +121,14 @@ class Backend_Controller extends MY_Controller
         parent::__construct();
         $this->load->model('m_users');
 
-        $cookie = get_cookie('silatpendidikan_users_cookie');
+        $cookie = get_cookie('dkpp_users_cookie');
 
         if ($this->loggedin == FALSE) {
 			if ($cookie) {
 				$row = $this->m_users->get_by_cookie($cookie)->row();
 
 				if ($row) {
-					$this->m_users->silatpendidikan_session_register($row);
+					$this->m_users->dkpp_session_register($row);
 				}
 			}
 		}
@@ -124,7 +136,7 @@ class Backend_Controller extends MY_Controller
         if ($cookie) {
 			$this->m_users->user_check($cookie);
 		} else {
-			if ($this->session->userdata('silatpendidikan_loggedin')) {
+			if ($this->session->userdata('dkpp_loggedin')) {
 				$this->session->sess_destroy();
 
 				redirect('auth','refresh');
@@ -143,12 +155,12 @@ class Backend_Controller extends MY_Controller
         $this->del 				                = '';
         $this->where			                = array();
         $this->data['navtoggle']                = false;
-        $this->logged_sekolah_id                = $this->session->userdata('silatpendidikan_sekolah_id');
-        $this->logged_user_id                   = $this->session->userdata('silatpendidikan_user_id');
-        $this->logged_level                     = $this->session->userdata('silatpendidikan_level');  
-        $this->logged_display_name              = $this->session->userdata('silatpendidikan_display_name');  
-        $this->logged_username                  = $this->session->userdata('silatpendidikan_username');  
-        $this->logged_avatar                    = $this->session->userdata('silatpendidikan_avatar');  
+        $this->logged_pegawai_id               = $this->session->userdata('dkpp_sekolah_id');
+        $this->logged_user_id                   = $this->session->userdata('dkpp_user_id');
+        $this->logged_level                     = $this->session->userdata('dkpp_level');  
+        $this->logged_display_name              = $this->session->userdata('dkpp_display_name');  
+        $this->logged_username                  = $this->session->userdata('dkpp_username');  
+        $this->logged_avatar                    = $this->session->userdata('dkpp_avatar');  
         $this->sidebar_report                   = array();
 
         $this->load->section('header', 'partials/header');
@@ -165,6 +177,6 @@ class Backend_Controller extends MY_Controller
             $last_login_info['last_ip_login'] = $_SERVER['REMOTE_ADDR'];
         }
 
-        $this->db->update('users', $last_login_info, ['id' => $this->session->userdata('silatpendidikan_user_id')]);
+        $this->db->update('users', $last_login_info, ['id' => $this->session->userdata('dkpp_user_id')]);
     }
 }

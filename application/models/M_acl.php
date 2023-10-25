@@ -15,11 +15,11 @@ class M_acl extends CI_Model {
 
 		$class_name = $this->router->fetch_class();
         $function = $this->router->fetch_method();
-        $login = $this->session->userdata('silatpendidikan_loggedin');
-        $loged_level = $this->session->userdata('silatpendidikan_level');
-        $is_default_password = $this->session->userdata('silatpendidikan_is_default_password');
-        $is_acc_active = $this->session->userdata('silatpendidikan_user_active');
-        $acc_deactive_reason = $this->session->userdata('silatpendidikan_deactive_reason');
+        $login = $this->session->userdata('dkpp_loggedin');
+        $loged_level = $this->session->userdata('dkpp_level');
+        $is_default_password = $this->session->userdata('dkpp_is_default_password');
+        $is_acc_active = $this->session->userdata('dkpp_user_active');
+        $acc_deactive_reason = $this->session->userdata('dkpp_deactive_reason');
 
         $this->db->select('id, level, type, isjson')
                 ->where('controller', $class_name)
@@ -62,7 +62,7 @@ class M_acl extends CI_Model {
                         }
                     }
 
-                    if (base_url() == "https://silatpendidikan.agamkab.go.id/" || base_url() == "http://silatpendidikan.agamkab.go.id/") {
+                    if (base_url() == "https://dkpp.agamkab.go.id/" || base_url() == "http://dkpp.agamkab.go.id/") {
                         if ($class_name !== 'auth' && $class_name !== 'introduction') {
                             if ($return['status'] == TRUE) {
                                 if ($class_name !== 'profile') {
@@ -105,9 +105,9 @@ class M_acl extends CI_Model {
     public function _acl_menu($level, $menu_type = 'sidebar_menu')
 	{
 		$this->db->where("$level", "any(level)",false)
-				 ->where('status', 1)
-				 ->where('type', $menu_type)
-				 ->order_by('position');
+                ->where('status', 1)
+                ->where('type', $menu_type)
+                ->order_by('position');
 		return $this->db->get('_acl')->result();
 	}
 

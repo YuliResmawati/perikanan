@@ -11,7 +11,7 @@ class MY_Model extends CI_Model{
     protected $_timestamps 		        = FALSE;
     protected $_log_user                = FALSE;
     protected $_softdelete 		        = FALSE;
-    protected $_user_session            = 'silatpendidikan_user_id';
+    protected $_user_session            = 'dkpp_user_id';
 	protected $return 			        = FALSE;
 	protected $result			        = FALSE;
 	protected $_fields 			        = array();

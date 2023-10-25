@@ -390,7 +390,7 @@ class Files extends MY_Controller {
 
     public function uploads_not_owner_must_login($filename = null)
     {
-        if ($this->session->userdata('silatpendidikan_loggedin') == TRUE) {
+        if ($this->session->userdata('dkpp_loggedin') == TRUE) {
             $status = true;
         } else {
             $status = false;

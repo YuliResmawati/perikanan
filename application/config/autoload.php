@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('form', 'url', 'cookie', 'string', 'file', 'xss', 'silat_pendidikan', 'security', 'indonesian_date', 'recaptcha');
+$autoload['helper'] = array('form', 'url', 'cookie', 'string', 'file', 'xss', 'dkpp', 'security', 'indonesian_date', 'recaptcha');
 
 /*
 | -------------------------------------------------------------------
