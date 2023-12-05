@@ -23,7 +23,7 @@
     <?php endforeach;?>
     <?php endif;?>
 
-    <?php if(empty($page_image)) $page_image = base_url('assets/backend/images/favicon.png'); ?>
+    <?php if(empty($page_image)) $page_image = base_url('assets/frontend/images/onlylogo.png'); ?>
 
     <!-- Meta Facebook -->
     <meta property="og:title" content="<?= $title ?>"/>
@@ -46,7 +46,7 @@
     <meta name="twitter:url" content="<?= current_url() ?>"/>
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?= $theme_path ?>/images/favicon.png">
+    <link rel="shortcut icon" href="<?=  base_url('assets/frontend/images/onlylogo.png')?>">
 
     <!-- Plugins -->
     <link href="<?= $theme_path ?>/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
@@ -124,7 +124,7 @@
                                         $sekolah = $this->m_sekolah->find($this->logged_sekolah_id);
                                         echo xss_echo($sekolah->nama_sekolah);
                                     }else{
-                                        echo "Dinas Perikanan dan Ketahanan Pangan";
+                                        echo "Dinas Ketahanan Pangan dan Perikanan";
                                     }
                                     ?>
                                 </p>
@@ -221,7 +221,7 @@
         <script src="<?= $global_plugin_path ?>/loaders/blockui.min.js"></script>
         <script src="<?= $global_plugin_path ?>/initial/initial.js"></script>
         <script src="<?= $global_custom_path ?>/js/mycustom.js?v=<?= filemtime('./assets/global/custom/js/mycustom.js') ?>"></script>
-        <script src="<?= $global_custom_path ?>/js/silatpendidikan.js?v=<?= filemtime('./assets/global/custom/js/silatpendidikan.js') ?>"></script>
+        <script src="<?= $global_custom_path ?>/js/perikanan.js?v=<?= filemtime('./assets/global/custom/js/perikanan.js') ?>"></script>
         <script src="<?= $global_custom_path ?>/js/myapp.back.js"></script>
         <script src="<?= $global_custom_path ?>/js/form-ajax-custom.js?v=<?= filemtime('./assets/global/custom/js/form-ajax-custom.js') ?>"></script>
         <script src="<?= $global_custom_path ?>/js/auto-csrf.min.js?v=2.0.4"></script>

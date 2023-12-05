@@ -1,182 +1,93 @@
-<div class="section page-banner-section bg-color-1">
-    <img class="shape-1" src="<?= $theme_path ?>/images/shape/shape-5.png" alt="shape">
-    <img class="shape-2" src="<?= $theme_path ?>/images/shape/shape-6.png" alt="shape">
-    <img class="shape-3" src="<?= $theme_path ?>/images/shape/shape-7.png" alt="shape">
-    <img class="shape-4" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
-    <img class="shape-5" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
-    <div class="container">
-        <div class="page-banner-content">
-            <h2 class="title">Survei Kepuasan</h2>
-            <ul class="breadcrumb justify-content-center">
-                <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
-                <li class="breadcrumb-item active">Isi Survei</li>
-            </ul>
+<section class="inner-banner-wrap">
+    <div class="inner-baner-container" style="background-image: url(<?= $theme_path ?>/images/perikanan.jpg);">
+        <div class="container">
+        <div class="inner-banner-content">
+            <h1 class="inner-title">Survey Kepuasan Masyarakat</h1>
+            </div>
         </div>
     </div>
-</div>
-<div class="section section-padding">
+</section>
+<div class="checkout-section">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="section-title text-center">
-                    <h2 class="title">Berikan Penilaian Untuk <span> Bentuk Perubahan</span></h2>
-                </div>
-                <div class="contact-form-wrapper mt-5">
-                    <?= form_open('isi-survei/process', 'id="formSurvei"'); ?>
-                        <input type="hidden" class="is-recaptcha-response" name="is-recaptcha-response">
-                        <input type="hidden" class="form-control" name="score" id="score" readonly>
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <div class="my-rating-2 text-center" data-rating="0"></div>
-                            </div>    
-                            <div class="col-md-6">
-                                <div class="single-form">
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nama Lengkap">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="single-form">
-                                    <select name="gender" id="gender" class="form-control">
-                                        <option selected disabled>Pilih Jenis Kelamin </option>  
-                                        <option value="<?= encrypt_url('1', 'skm') ?>">Laki-Laki</option>
-                                        <option value="<?= encrypt_url('2', 'skm') ?>">Perempuan</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="single-form">
-                                    <select name="education" id="education" class="form-control">
-                                        <option selected disabled>Pilih Pendidikan </option>  
-                                        <option value="<?= encrypt_url('1', 'skm') ?>">SD</option>
-                                        <option value="<?= encrypt_url('2', 'skm') ?>">SMP</option>
-                                        <option value="<?= encrypt_url('3', 'skm') ?>">SMA</option>
-                                        <option value="<?= encrypt_url('4', 'skm') ?>">D-III</option>
-                                        <option value="<?= encrypt_url('5', 'skm') ?>">D-IV/S1</option>
-                                        <option value="<?= encrypt_url('6', 'skm') ?>">S2</option>
-                                        <option value="<?= encrypt_url('7', 'skm') ?>">S3</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="single-form">
-                                    <input type="number" class="form-control" name="age" id="age" placeholder="Usia">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="single-form">
-                                    <input type="number" class="form-control" name="phone_number" id="phone_number" placeholder="Nomor Handphone">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="single-form">
-                                    <textarea class="form-control" name="suggestion" id="suggestion" placeholder="Sampaikan Kritik dan Saran"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="single-form text-center">
-                                    <button class="btn btn-primary btn-hover-heading-color" id="submit-survei">
-                                        <span class="spinner-border spinner-border-sm mr-1" id="spinner-status" role="status" aria-hidden="true" style="display:none"></span>
-                                        <i class="bi bi-unlock me-2" id="login-icon"></i> <span id="text-button">Kirim Survei</span> 
-                                    </button>
-                                </div>
+        <div class="row">
+            <div class="col-md-7 right-sidebar">
+            <div class="checkout-field-wrap">
+                <h3>Pendapat Responden Tentang Pelayanan Publik</h3><br>
+                <?php if (!empty($ikm)): ?>
+                    <?php $no = 1; foreach ($ikm as $row): ?>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label><?= $no. ' - ' .$row['pertanyaan']?></label>
+                                <select class="form-control select2" name="agama" id="agama">
+                                    <option value="4">Sangat Baik</option>
+                                    <option value="3">Baik</option>
+                                    <option value="2">Kurang Baik</option>
+                                    <option value="1">Tidak Baik</option>
+                                </select>
                             </div>
                         </div>
-                    <?= form_close() ?>
+                    <?php $no++; endforeach ?>
+                <?php else: ?>
+                    <h3 class="brand-title">Belum ada Kusioner. </h3>
+                <?php endif ?>
+            </div>
+            </div>
+            <div class="col-md-5">
+                <div class="qsn-form-container">
+                    <h4>Biodata Responden</h4>
+                    <p>silahkan isikan biodata diri anda</p>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                            <input type="text" name="name" placeholder="Nama Lengkap">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <select>
+                                    <option>Pilih Jenis Kelamin</option>
+                                    <option value="0">Laki-Laki</option>
+                                    <option value="0">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                            <input type="text" name="name" placeholder="Usia Anda">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <select>
+                                    <option>Pilih Pendidikan</option>
+                                    <option value="0">SD</option>
+                                    <option value="0">SMP</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <select>
+                                    <option>Pilih Pekerjaan</option>
+                                    <option value="0">PNS</option>
+                                    <option value="0">Lainya</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-area col-lg-12 col-12">
+                        <button type="submit" class="button-round-primary">Kirim</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".my-rating-2").starRating({
-            totalStars: 5,
-            starSize: 80,
-            emptyColor: 'lightgray',
-            hoverColor: 'crimson',
-            activeColor: 'crimson',
-            strokeWidth: 0,
-            useGradient: false,
-            callback: function (currentRating) {
-                $('#score').val(currentRating);
-            }
-        });
-    });
-
-    $('#submit-survei').click(function(e) {
-        e.preventDefault();
-        $('#spinner-status').show();
-        $('#login-icon').hide();
-        $('#text-button').html('Loading...');
-        $('#text-button').addClass('ml-2');
-        grecaptcha.ready(function() {
-            grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'submit'}).then(function(token) {
-                document.querySelector('.is-recaptcha-response').value = token;
-                $('#formSurvei').submit()
-            });
-        });
-    });
-
-    $('#formSurvei').submit(function(e) {
-        e.preventDefault();
-        $.ajax({
-            url: "<?= site_url('isi-survei/process') ?>",
-            type  : 'POST',
-            async : true,
-            data: $(this).serialize(),
-            dataType : 'json',
-            beforeSend : function() {
-                $('#loading-process').show();
-                $('#spinner-status').show();
-                $('#login-icon').hide();
-                $('#text-button').html('Loading...');
-                $('#text-button').addClass('ml-2');
-            },
-            success : function(data){
-                $('#spinner-status').hide();
-                $('#login-icon').show();
-                $('#text-button').html('Kirim Survei');
-                $('#text-button').removeClass('ml-2');
-
-                if (data.status == true) {
-                    Swal.fire({
-                        title: 'Informasi!',
-                        html: data.message,
-                        icon: 'success',
-                        confirmButtonColor: '#3bbca7',
-                        confirmButtonText: 'OK'
-                    }).then(function() {
-                        window.location = '<?= base_url('home') ?>';
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Informasi!',
-                        html: data.message,
-                        icon: 'error',
-                        confirmButtonColor: '#3bbca7',
-                        confirmButtonText: 'OK'
-                    })
-                }
-
-                $('#loading-process').hide();
-            },
-            error : function() {
-                $('#spinner-status').hide();
-                $('#login-icon').show();
-                $('#text-button').html('Kirim Survei');
-                $('#text-button').removeClass('ml-2');
-
-                Swal.fire({
-                    title: 'Informasi!',
-                    text: 'Oops, terjadi kesalahan saat menghubungkan ke server. Silahkan periksa koneksi internet anda atau refresh ulang halaman ini.',
-                    icon: 'error',
-                    confirmButtonColor: '#3bbca7',
-                    confirmButtonText: 'OK'
-                });
-
-                $('#loading-process').hide();
-            }
-        });
-    });
-</script>

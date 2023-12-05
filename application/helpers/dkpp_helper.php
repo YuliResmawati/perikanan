@@ -428,7 +428,7 @@ if (!function_exists('generate_avatar')) {
         if (empty($avatar_url)): 
             $return = '<img alt="User Avatar" class="avatar-initial '.$avatar_class.'" data-name="'.$avatar_username.'" '.$custom.'/>';
         else : 
-            $avatar_path = str_files_images('profile_picture/', $avatar_url); 
+            $avatar_path = str_files_images('profil_pegawai/', $avatar_url); 
             $return = '<img alt="User Avatar" class="'.$avatar_class.'" src="'.$avatar_path.'" '.$custom.'/>';
         endif;
         return $return;
@@ -508,10 +508,12 @@ if (!function_exists('str_level'))
         if ($status == '1') {
             $a = 'Super Administrator';
         } else if ($status == '2') {
-            $a = 'Admin SKPG';
+            $a = 'Administrator';
         } else if ($status == '3') {
-            $a = 'Admin Perikanan';
+            $a = 'Admin SKPG';
         } else if ($status == '4') {
+            $a = 'Admin Perikanan';
+        } else if ($status == '5') {
             $a = 'Admin Harga Pasar';
         } else {
             $a = 'Tidak Diketahui';
@@ -661,67 +663,6 @@ if (!function_exists('str_images_authorization'))
     }
 }
 
-if (!function_exists('btn_article_view')) 
-{
-    function btn_article_view($link)
-    {
-        $a = '';
-        $_link = base_url('artikel/'). $link;
-
-        if (!empty($link)) {
-            $a = "<a class='btn btn-blue btn-xs' href=".$_link." target='_blank'>Lihat Artikel</a>";
-        } else {
-            $a = '<label class="btn btn-danger btn-xs">-</label>';
-        }
-
-        return $a;
-    }
-}
-
-if (!function_exists('btn_view_images')) 
-{
-    function btn_view_images($path, $filename)
-    {
-        $a = '';
-
-        if (!empty($filename)) {
-            $a = "<a class='btn btn-info btn-sm' data-fancybox href=" . str_files_images($path, $filename) . ">Lihat File</a>";
-        } else {
-            $a = '<label class="btn btn-danger btn-sm">Tidak ada file</label>';
-        }
-
-        return $a;
-    }
-}
-
-if (!function_exists('str_file_datatables')) 
-{
-    function str_file_datatables($file_url, $directory)
-    {
-        if (!empty($file_url)) {
-            $result = "<a class='btn btn-success btn-xs' href=" . str_files_not_owner_must_login($directory, $file_url) . " target='_blank'>Lihat file</a>";
-        } else {
-            $result = '<h6><span class="badge bg-soft-secondary text-secondary"> Tidak memiliki file</span></h6>';
-        }
-
-        return $result;
-    }
-}
-
-if (!function_exists('str_file_dt')) 
-{
-    function str_file_dt($file_url, $directory)
-    {
-        if (!empty($file_url)) {
-            $result = "<a class='btn btn-blue btn-xs' href=" . str_btn_public_files($directory, $file_url) . " target='_blank'>Lihat Berkas</a>";
-        } else {
-            $result = '<h6><span class="badge bg-soft-secondary text-secondary"> Tidak memiliki berkas</span></h6>';
-        }
-
-        return $result;
-    }
-}
-
 if (!function_exists('str_btn_files')) 
 {
     function str_btn_files($path, $filename)
@@ -771,6 +712,104 @@ if (!function_exists('btn_view_file'))
         }
 
         return $a;
+    }
+}
+
+if (!function_exists('dt_btn_file')) {
+    function dt_btn_file($path = '', $file = '', $btn_title_success = '', $btn_title_failed = '')
+    {
+        $_file = str_my_files($path, $file);
+
+        if (!empty($file)) {
+            return '<a class="btn btn-success btn-xs" href="'.$_file.'" target="_blank">'.$btn_title_success.'</a>';
+        } else {
+            return '<a class="btn btn-danger btn-xs" href="javascript:void(0);">'.$btn_title_failed.'</a>';
+        }
+    }
+}
+
+if (!function_exists('btn_content_view')) 
+{
+    function btn_content_view($link, $kategori)
+    {
+        $a = '';
+        if ($kategori == 'Artikel'){
+            $_link = base_url('article/'). $link;
+        }else {
+            $_link = base_url('berita/'). $link;
+        }
+        
+
+        if (!empty($link)) {
+            $a = "<a class='btn btn-blue btn-xs' href=".$_link." target='_blank'>Lihat $kategori</a>";
+        } else {
+            $a = '<label class="btn btn-danger btn-xs">-</label>';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('btn_view_gallery')) 
+{
+    function btn_view_gallery($path, $filename, $link)
+    {
+        $a = '';
+
+        $_link_image =  str_files_images('gallery/', $filename);
+
+        if (!empty($filename)) {
+            $a = "<a class='btn btn-blue btn-sm' data-fancybox href=" . $_link_image . " target='_blank'>Lihat</a>";
+        } else {
+            $a = "<a class='btn btn-blue btn-sm' data-fancybox href=".$link." target='_blank'>Lihat</a>";
+        } 
+
+        return $a;
+    }
+}
+
+
+if (!function_exists('btn_view_images')) 
+{
+    function btn_view_images($path, $filename)
+    {
+        $a = '';
+
+        if (!empty($filename)) {
+            $a = "<a class='btn btn-info btn-sm' data-fancybox href=" . str_files_images($path, $filename) . " target='_blank'>Lihat File</a>";
+        } else {
+            $a = '<label class="btn btn-danger btn-sm">Tidak ada file</label>';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('str_file_datatables')) 
+{
+    function str_file_datatables($file_url, $directory)
+    {
+        if (!empty($file_url)) {
+            $result = "<a class='btn btn-success btn-xs' href=" . str_files_not_owner_must_login($directory, $file_url) . " target='_blank'>Lihat file</a>";
+        } else {
+            $result = '<h6><span class="badge bg-soft-secondary text-secondary"> Tidak memiliki file</span></h6>';
+        }
+
+        return $result;
+    }
+}
+
+if (!function_exists('str_file_dt')) 
+{
+    function str_file_dt($file_url, $directory)
+    {
+        if (!empty($file_url)) {
+            $result = "<a class='btn btn-blue btn-xs' href=" . str_btn_public_files($directory, $file_url) . " target='_blank'>Lihat Berkas</a>";
+        } else {
+            $result = '<h6><span class="badge bg-soft-secondary text-secondary"> Tidak memiliki berkas</span></h6>';
+        }
+
+        return $result;
     }
 }
 
@@ -1681,32 +1720,6 @@ if (!function_exists('format_alamat')) {
     }
 }
 
-if (!function_exists('jenis_ptk')) 
-{
-    function jenis_ptk($jenis_ptk)
-    {
-        if (!empty($jenis_ptk)) {
-            if($jenis_ptk == 'Tenaga Administrasi Sekolah' || $jenis_ptk == 'Tenaga Perpustakaan'){
-                $result = "<span class='badge bg-soft-success text-success'>$jenis_ptk</span>";
-            } else if($jenis_ptk == 'Petugas Keamanan' || $jenis_ptk == 'Penjaga Sekolah' || $jenis_ptk == 'Pesuruh/Office Boy'|| $jenis_ptk == 'Tukang Kebun'){
-                $result = "<span class='badge bg-soft-pink text-pink'>$jenis_ptk</span>";
-            }else if($jenis_ptk == 'Guru BK' || $jenis_ptk == 'Guru Mapel' || $jenis_ptk == 'Guru TIK'|| $jenis_ptk == 'Guru Kelas'){
-                $result = "<span class='badge bg-soft-info text-info'>$jenis_ptk</span>";
-            }else if($jenis_ptk == 'Tutor' || $jenis_ptk == 'Pamong Belajar' || $jenis_ptk == 'Guru Pengganti'|| $jenis_ptk == 'Guru Pendamping Khusus'){
-                $result = "<span class='badge bg-soft-info text-info'>$jenis_ptk</span>";
-            }else if($jenis_ptk == 'Kepala Sekolah'){
-                $result = "<span class='badge bg-soft-danger text-danger'>$jenis_ptk</span>";
-            }else{
-                $result = "<span class='badge bg-soft-blue text-blue'>$jenis_ptk</span>";
-            }
-        } else {
-            $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
-        }
-
-        return $result;
-    }
-}
-
 if (!function_exists('name_degree')) 
 {
     function name_degree($gelar_depan, $nama_guru, $gelar_belakang, $xss_option = FALSE)
@@ -1734,6 +1747,29 @@ if (!function_exists('name_degree'))
         return $gelar_depan.$nama_guru.$gelar_belakang;
     }
 
+}
+
+if (!function_exists('icon_employee')) {
+    function icon_employee($nama_pegawai = '', $gelar_depan = '', $gelar_blkng = '', $nip = '', $status_pegawai = '', $type = '', $profile = '', $marquee = '')
+    {
+        $_profile = generate_avatar($profile, $nama_pegawai, 'mr-2 avatar-sm rounded', 'width="44" alt="profile image"');
+
+        $result = '
+            <div class="media d-inline-flex align-items-center">
+                '.(!empty($_profile) ? $_profile: '').'
+                <div class="media-body">
+                    <div class="'.(!empty($marquee) ? 'marquee-md' : '').' ">
+                        <a href="javascript: void(0);" class="text-default font-weight-semibold letter-icon-title">'.name_degree($gelar_depan, $nama_pegawai, $gelar_blkng).'</a>
+                    </div>
+                    <span class="font-13">
+                        '.$nip.'
+                    </span>
+                </div>
+            </div>
+        ';
+
+        return $result;
+    }
 }
 
 if (!function_exists('jk')) 
@@ -1768,134 +1804,6 @@ if (!function_exists('jumlah'))
     }
 }
 
-if (!function_exists('btn_kgb')) 
-{
-    function btn_kgb($id, $session_id, $keyid = '', $link_status = '', $modal_name = '', $attr = '', $guru = '')
-    {
-        $a = '';
-
-        if ($id !== $session_id) {
-            if ($keyid !== '') {
-                $id = encrypt_url($id, $keyid);
-            }
-
-            if ($link_status !== '' && $link_status !== ' ' ) {
-                $a_tag = 'a';
-                $link_status = 'href="' . base_url($link_status . $id) . '"';
-            } else {
-                $a_tag = 'span';
-                $link_status = "";
-
-                if ($modal_name !== '') {
-                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
-                } else {
-                    $modal_attr = '';
-                }
-            }
-
-            
-            $a = '<' . $a_tag . ' ' . $link_status . ' class="button-ajukan btn btn-icons btn-rounded btn-outline-success" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Ajukan KGB"  data-id="' . $id . '" data-guru="' . $guru . '" ' . $modal_attr . '>
-            <i class="mdi mdi-plus-outline"></i>
-            </' . $a_tag . '>';
-        }
-        return $a;
-    }
-}
-
-if (!function_exists('tabel_icon_cuti')) {
-    function tabel_icon_cuti($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status = '', $logged_level = '')
-    {
-        $a = '';
-
-        if ($id !== $session_id) {
-            if ($keyid !== '') {
-                $id = encrypt_url($id, $keyid);
-            }
-
-            if ($link_url !== '') {
-                $a_tag = 'a';
-                $link_url = 'href="' . base_url($link_url . $id) . '"';
-                $modal_attr = '';
-            } else {
-                $a_tag = 'span';
-                $link_url = "";
-                if ($modal_name !== '') {
-                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
-                } else {
-                    $modal_attr = '';
-                }
-            }
-
-            if($status == '0'){
-                if ($logged_level !== '3') {
-                    if ($action == "terima") {
-                        $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-terima btn btn-success waves-effect waves-light btn-xs" title="Terima Pengajuan" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
-                                        <i class="icon-check"></i>
-                                </' . $a_tag . '>';
-                    } elseif ($action == "tolak") {
-                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-tolak btn btn-danger waves-effect waves-light btn-xs" title="Tolak Pengajuan" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
-                                        <i class="icon-close"></i>
-                                </' . $a_tag . '>';
-                    }
-                }else if($logged_level == '3'){
-                    if ($action == "batal") {
-                        $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-batal btn btn-danger waves-effect waves-light btn-xs" title="Batalkan Pengajuan" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
-                                        <i class="icon-close"></i>
-                                </' . $a_tag . '>';
-                    } elseif ($action == "edit") {
-                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
-                                        <i class="icon-note"></i>
-                                </' . $a_tag . '>';
-                    }
-                }else{
-                    $a = '<strong>-</strong>';
-                }
-                
-            } else {
-                $a = '<strong>-</strong>';
-            }
-
-
-                
-            
-        }
-
-        return $a;
-    }
-}
-
-if (!function_exists('tipe_mutasi')) 
-{
-    function tipe_mutasi($tipe_mutasi)
-    {
-        if ($tipe_mutasi !== NULL) {
-            if($tipe_mutasi == "0"){
-                $result = "<span class='badge bg-soft-success text-success'>Mutasi Luar Kota</span>";
-            }else if($tipe_mutasi == "1"){
-                $result = "<span class='badge bg-soft-warning text-warning'>Mutasi Dalam Kota</span>";
-            }
-        } else {
-            $result = "<a class='btn btn-outline-dark waves-effect waves-light btn-xs'>Kosong</a>";
-        }
-
-        return $result;
-    }
-}
-
-if (!function_exists('tgl')) 
-{
-    function tgl($tgl_awal)
-    {
-        if ($tgl_awal !== NULL) {
-            $tmt = indo_date($tgl_awal);
-            $result = "<span class='badge bg-soft-info text-info'>$tmt</span>";
-        } else {
-            $result = '<h6><span class="badge bg-soft-danger text-danger"><i class="mdi mdi-bookmark-remove"></i>TMT Belum Ada</span></h6>';
-        }
-        return $result;
-    }
-}
-
 if (!function_exists('status_kgb')) {
     function status_kgb($status,$alasan = '')
     {
@@ -1916,14 +1824,87 @@ if (!function_exists('status_kgb')) {
     }
 }
 
-if (!function_exists('tabel_icon_kgb')) {
-    function tabel_icon_kgb($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $status)
+if (!function_exists('age')) {
+    function age($age)
+    {
+        if (!empty($age)) {
+            return $age ." Tahun ";
+        } else {
+            return '<strong>-</strong>';
+        }
+    }
+}
+
+if (!function_exists('str_kedudukan_hukum')) {
+    function str_kedudukan_hukum($status)
+    {
+        $a = '';
+
+        if (strtolower($status) == '44') {
+            $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-account-check-outline"></i> Aktif</span></h6>';
+        } else if (strtolower($status) == '32') {
+            $a = '<h6><span class="badge bg-soft-blue text-blue"><i class="mdi mdi-school-outline"></i> Tugas Belajar</span></h6>';
+        } else if (strtolower($status) == '34') {
+            $a = '<h6><span class="badge bg-soft-dark text-dark"><i class="mdi mdi-window-open-variant"></i> Meninggal</span></h6>';
+        } else if (strtolower($status) == '35') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-human-wheelchair"></i> Pensiun</span></h6>';
+        } else if (strtolower($status) == '150') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-human-wheelchair"></i> Pensiun BUP</span></h6>';
+        } else {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-close-box-multiple-outline"></i> Tidak Diketahui</span></h6>';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('icon_gallery')) {
+    function icon_gallery($judul = '', $type = '')
+    {   
+        
+        if ($type == '1'){
+            $a = 'Foto';
+            $icon = 'fe-camera text-success mr-1';
+        } else {
+            $a = 'Video';
+            $icon = 'fe-youtube text-danger mr-1';
+        }
+
+        if(empty($second_row)){
+            $second_row = "0";
+        }
+
+        $result = '
+            <div class="media d-inline-flex align-items-center">
+                <div class="media-body">
+                    <div class="mb-1">
+                        <i class="fe-star-on text-success mr-1"></i>
+                        <span class="font-13">
+                        '.$judul.'
+                        </span>
+                    </div>
+                    <hr style="margin-bottom: 0.5em;margin-top: 0.5em;">
+
+                    <i class="'.$icon.'"></i>
+                    <span class="font-13">
+                        '.$a.'
+                    </span>
+                </div>
+            </div>
+        ';
+        return $result;
+    }
+}
+
+if (!function_exists('btn_struktur'))
+{
+    function btn_struktur($id, $session_id, $status, $link_url = '', $keyid = '', $modal_name = '', $attr = '')
     {
         $a = '';
 
         if ($id !== $session_id) {
             if ($keyid !== '') {
-                $id = encrypt_url($id, $keyid);
+                $id = (!empty($id)) ? encrypt_url($id, $keyid) : null;
             }
 
             if ($link_url !== '') {
@@ -1940,32 +1921,61 @@ if (!function_exists('tabel_icon_kgb')) {
                 }
             }
 
-            if($status == '0' || $status == '1' || $status == '2'){
-                $a = '<strong>-</strong>';
-            } else {
-                if ($action == "ajukan") {
-                    $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-ajukan btn btn-icons btn-rounded btn-success btn-xs" title="Ajukan KGB" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
-                    <i class="mdi mdi-plus"></i>
+            if ($status == "1") {
+                $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                    <i class="icon-note"></i>
+                    </' . $a_tag . '> <' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-hapus btn btn-danger waves-effect waves-light btn-xs" title="Hapus" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                    <i class="icon-trash"></i>
                     </' . $a_tag . '>';
-                } 
-
+            } else {
+                $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-hapus btn btn-danger waves-effect waves-light btn-xs" title="Hapus" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                                    <i class="icon-trash"></i>
+                            </' . $a_tag . '>';
             }
-                
-            
         }
 
         return $a;
     }
 }
 
-if (!function_exists('age')) {
-    function age($age)
+if (!function_exists('aksi_upload_foto'))
+{
+    function aksi_upload_foto($id, $session_id, $link_url = '', $keyid = '', $modal_name = '', $attr = '', $profil = '', $nip = '', $pegawai_id = '' )
     {
-        if (!empty($age)) {
-            return $age ." Tahun ";
-        } else {
-            return '<strong>-</strong>';
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = (!empty($id)) ? encrypt_url($id, $keyid) : null;
+                $pegawai_id = (!empty($pegawai_id)) ? encrypt_url($pegawai_id, $keyid) : null;
+            }
+
+            if ($link_url !== '') {
+                $a_tag = 'a';
+                $link_url = 'href="' . base_url($link_url . $id) . '"';
+                $modal_attr = '';
+            } else {
+                $a_tag = 'span';
+                $link_url = "";
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            if ($profil != null) {
+                $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-icons btn-rounded btn-primary" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Edit Foto" data-id="' . $id . '" data-nip="' . $nip . '" data-pegawai="' . $pegawai_id . '" ' . $modal_attr . '>
+                    <i class="mdi mdi-pencil"></i>
+                </' . $a_tag . '>';
+            } else {
+                $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-create btn btn-icons btn-rounded btn-success" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Tambah Foto" data-id="' . $id . '" data-nip="' . $nip . '" data-pegawai="' . $pegawai_id . '" ' . $modal_attr . '>
+                    <i class="mdi mdi-plus">
+                </' . $a_tag . '>';
+            }
         }
+
+        return $a;
     }
 }
 

@@ -92,18 +92,6 @@
             <div class="container">
                <div class="row">
                   <div class="col-lg-8 d-none d-lg-block">
-                     <div class="header-contact-info">
-                        <ul>
-                           <li>
-                              <a href="#">
-                                 <i class="fas fa-phone-alt"></i> +01 (977) 2599 12 
-                              </a>
-                           </li>
-                           <li>
-                              <i class="fas fa-map-marker-alt"></i> 3146 Koontz Lane, California
-                           </li>
-                        </ul>
-                     </div>
                   </div>
                   <div class="col-lg-4 d-flex justify-content-lg-end justify-content-between">
                         <div class="header-social social-links">
@@ -155,47 +143,62 @@
                            <li class="current-menu-item">
                               <a href="<?= base_url('home') ?>">Home</a>
                            </li>
-                           <li>
-                              <a href="#">Abouts</a>
-                           </li>
                            <li class="menu-item-has-children">
-                              <a href="#">Pages</a>
+                              <a href="#">Tentang</a>
                               <ul>
                                  <li>
-                                    <a href="single-page.html">Single Page</a>
+                                    <a href="<?= base_url('profil-dkpp') ?>">Profil DKPP</a>
+                                 </li>
+                                 <li>
+                                    <a href="<?= base_url('visi-misi') ?>">Visi Misi</a>
+                                 </li>
+                                 <li>
+                                    <a href="<?= base_url('struktur-dkpp') ?>">Struktur Organisasi</a>
+                                 </li>
+                                 <li>
+                                    <a href="<?= base_url('pegawai') ?>">Pegawai</a>
                                  </li>
                               </ul>
                            </li>
                            <li class="menu-item-has-children">
-                                 <a href="blog-archive.html">Blog</a>
+                                 <a href="#">Informasi</a>
+                                 <ul>
+                                 <li><a href="<?= base_url('berita') ?>">Berita</a></li>                               
+                                    <li class="menu-item-has-children">
+                                       <a href="#">Gallery</a>
+                                       <ul>
+                                          <li><a href="<?= base_url('gallery-dkpp') ?>">Foto</a></li>
+                                          <li><a href="<?= base_url('gallery-video') ?>">Video</a></li>
+                                       </ul>
+                                    </li>                                   
+                                 <li><a href="<?= base_url('article') ?>">Artikel</a></li>                                   
+                                 <li><a href="<?= base_url('announcement') ?>">Pengumuman</a></li>
+                                 </ul>
+                              </li>
+                           <li class="menu-item-has-children">
+                                 <a href="blog-archive.html">Tabel Harga</a>
                                  <ul>
                                     <li>
-                                       <a href="blog-archive.html">Blog List</a>
+                                       <a href="blog-archive.html">Harga Panel</a>
                                     </li>
                                     <li>
-                                       <a href="blog-single.html">Blog Single</a>
+                                       <a href="blog-single.html">Harga Produsen</a>
                                     </li>
                                  </ul>
                            </li>
                            <li class="menu-item-has-children">
-                                 <a href="#">Shop</a>
+                                 <a href="#">Layanan</a>
                                  <ul>
                                     <li>
-                                       <a href="product-right.html">Shop Archive</a>
+                                       <a href="<?= base_url('layanan-pengaduan') ?>">Pengaduan</a>
                                     </li>
                                     <li>
-                                       <a href="product-detail.html">Shop Single</a>
-                                    </li>
-                                    <li>
-                                       <a href="product-cart.html">Shop Cart</a>
-                                    </li>
-                                    <li>
-                                       <a href="product-checkout.html">Shop Checkout</a>
+                                       <a href="<?= base_url('isi-survei') ?>">Survey Kepuasan Masyarakat</a>
                                     </li>
                                  </ul>
                            </li>
                            <li>
-                              <a href="contact.html">Contact</a>
+                              <a href="<?= base_url('kontak') ?>">Kontak</a>
                            </li>
                         </ul>
                      </nav>
@@ -216,76 +219,27 @@
             <div class="container">
                <div class="upper-footer">
                   <div class="row">
-                     <div class="col-lg-3 col-md-6">
+                     <div class="col-lg-4 col-md-6">
                         <aside class="widget widget_text">
                            <div class="footer-logo">
                               <a href="<?= base_url('home') ?>">
                                  <img src="<?= $theme_path ?>/images/logo_dkpp2.png" alt="logo">
                               </a>
                            </div>
-                           <div class="textwidget widget-text"> Vitae, cupiditate repudiandae, erat beatae voluptate vulputate quis tempora deserunt, nobis, montes. Illo eleifend, nihil lorem venenat. </div>
+                           <div class="textwidget widget-text"> Media Website ini dapat digunakan untuk komunikasi atau penyampaian informasi kepada sejumlah pihak yang membutuhkan. </div>
                         </aside>
                      </div>
-                     <div class="col-lg-3 col-md-6">
-                        <aside class="widget widget_text">
-                           <h3 class="widget-title">Contact Information</h3>
-                           <p>Feel free to contact and reach us !</p>
-                           <div class="textwidget widget-text">
-                              <ul>
-                                 <li>
-                                    <i aria-hidden="true" class="icon icon-map-marker1"></i> 3557 Derek Drive, Florida
-                                 </li>
-                                 <li>
-                                    <a href="#">
-                                       <i aria-hidden="true" class="icon icon-phone1"></i> +1(456)657-887, +01 2599 12 </a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </aside>
-                     </div>
-                     <div class="col-lg-3 col-md-6">
+                     <div class="col-lg-4 col-md-6">
                         <aside class="widget widget_map_hotspots">
-                           <h3 class="widget-title">Office Location</h3>
+                           <h3 class="widget-title">Lokasi</h3>
                            <div class="widget-map">
-                              <img src="<?= $theme_path ?>/images/map-img1.png" alt="">
-                              <div class="hotspot">
-                                 <div class="hotspot-one">
-                                    <a href="#">
-                                       <i class="fas fa-map-marker-alt"></i>
-                                    </a>
-                                    <span class="hotspot-content">Petersburg</span>
-                                 </div>
-                                 <div class="hotspot-two">
-                                    <a href="#">
-                                       <i class="fas fa-map-marker-alt"></i>
-                                    </a>
-                                    <span class="hotspot-content">Gerogiya</span>
-                                 </div>
-                                 <div class="hotspot-three">
-                                    <a href="#">
-                                       <i class="fas fa-map-marker-alt"></i>
-                                    </a>
-                                    <span class="hotspot-content">South wales</span>
-                                 </div>
-                                 <div class="hotspot-four">
-                                    <a href="#">
-                                       <i class="fas fa-map-marker-alt"></i>
-                                    </a>
-                                    <span class="hotspot-content">New Jersey</span>
-                                 </div>
-                                 <div class="hotspot-five">
-                                    <a href="#">
-                                       <i class="fas fa-map-marker-alt"></i>
-                                    </a>
-                                    <span class="hotspot-content">Haiti</span>
-                                 </div>
-                              </div>
+                              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15959.028630610008!2d100.0326887!3d-0.3172524!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd50d5273ffb381%3A0xf0382aeacd9a14ca!2sDinas%20Ketahanan%20Pangan%20dan%20Perikanan%20(DKPP)!5e0!3m2!1sid!2sid!4v1698987549443!5m2!1sid!2sid" width="450" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                            </div>
                         </aside>
                      </div>
-                     <div class="col-lg-3 col-md-6">
+                     <div class="col-lg-4 col-md-6">
                         <aside class="widget">
-                           <h3 class="widget-title">Support</h3>
+                           <h3 class="widget-title">Didukung Oleh</h3>
                            <ul>
                               <li>
                                  <a href="contact.html">Help Center</a>
@@ -301,50 +255,6 @@
                               </li>
                            </ul>
                         </aside>
-                     </div>
-                  </div>
-               </div>
-               <div class="lower-footer">
-                  <div class="row align-items-center">
-                    
-                     <div class="col-lg-12 text-center">
-                        <div class="social-links">
-                           <ul>
-                              <li>
-                                 <a href="#" target="_blank">
-                                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="#" target="_blank">
-                                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="#" target="_blank">
-                                    <i class="fab fa-youtube" aria-hidden="true"></i>
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="#" target="_blank">
-                                    <i class="fab fa-instagram" aria-hidden="true"></i>
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                        <div class="footer-menu">
-                           <ul>
-                              <li>
-                                 <a href="<?= base_url('privacy-policy') ?>">Privacy Policy</a>
-                              </li>
-                              <li>
-                                 <a href="<?= base_url('term-condition') ?>">Term & Condition</a>
-                              </li>
-                              <li>
-                                 <a href="<?= base_url('faq') ?>">FAQ</a>
-                              </li>
-                           </ul>
-                        </div>
                      </div>
                   </div>
                </div>

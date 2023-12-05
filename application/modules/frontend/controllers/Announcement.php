@@ -8,8 +8,9 @@ class Announcement extends Frontend_Controller {
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'pengumuman';
-		$this->load->model('m_pengumuman');
+		$this->data['uri_mod'] = 'announcement';
+		$this->load->model('m_content');
+        $this->load->library('img');
 	}
 
 	public function _init()
@@ -19,15 +20,15 @@ class Announcement extends Frontend_Controller {
 
     public function index()
 	{
-        if (current_url() == base_url('pengumuman/page')) {
-			redirect('pengumuman', 'refresh');
+        if (current_url() == base_url('announcement/page')) {
+			redirect('announcement', 'refresh');
 		}
 
         $per_page = 4;
 		$offset = 0;
-		$result_count = count($this->m_pengumuman->where(['status' => '1'])->findAll());
+		$result_count = count($this->m_content->where(['status' => '1', 'kategori_konten_id' => '1'])->findAll());
 		$config = $this->paging;
-		$config['base_url'] 	    = site_url('pengumuman/page');
+		$config['base_url'] 	    = site_url('announcement/page');
 		$config['total_rows'] 	    = $result_count;
 		$config['per_page'] 	    = $per_page;
 		$config['use_page_numbers'] = TRUE;
@@ -44,8 +45,8 @@ class Announcement extends Frontend_Controller {
 		$this->pagination->initialize($config);
 
         $this->data['page_title'] = "Pengumuman";
-        $this->data['page_description'] = "Kumpulan pengumuman silat pendidikan kota bukittinggi.";
-		$this->data['pengumuman'] = $this->m_pengumuman->get_content_pengumuman($per_page, '', $offset);
+        $this->data['page_description'] = "Kumpulan pengumuman dinas ketahanan pangan dan perikanan.";
+		$this->data['pengumuman'] = $this->m_content->get_content_by_type($per_page, '', $offset, '1');
         $this->data['total'] = $result_count;
 
 		if ($result_count > $per_page) {

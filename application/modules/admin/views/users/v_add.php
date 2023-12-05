@@ -2,47 +2,32 @@
     <div class="col-12">
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
         <input type="hidden" class="usr-token-response" name="usr-token-response">
-        <div class="form-group row">
-            <label for="display_name" class="col-md-2 col-form-label">Nama Lengkap <?= label_required() ?></label>
+        <div class="form-group row" >
+            <label for="bidang" class="col-md-2 col-form-label">Bidang <?= label_required() ?></label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="display_name" id="display_name">
+                <select class="form-control select2" name="bidang" id="bidang">
+                    <option selected disabled>Pilih Bidang</option>
+                    <?php $no = 1; $no_id = 3; foreach($bidang as $row): ?>
+                        <option value="<?= encrypt_url($no_id, $id_key) ?>"><?= $no. ' - ' .$row->nama_jabatan ?></option>
+                    <?php $no++; $no_id++; endforeach; ?>
+                </select>      
             </div>
         </div>
-        <div class="form-group row">
-            <label for="email" class="col-md-2 col-form-label">Email <?= label_required() ?></label>
+        <div class="form-group row" >
+            <label for="pegawai_id" class="col-md-2 col-form-label">Pegawai <?= label_required() ?></label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="email" id="email">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="tipe_sekolah" class="col-md-2 col-form-label">Tingkatan Sekolah <?= label_required() ?></label>
-            <div class="col-md-10">
-                <select class="form-control select2" name="tipe_sekolah" id="tipe_sekolah">
-                    <option selected disabled>Pilih Tingkatan Sekolah</option>
-                    <?php foreach($tipe_sekolah as $row): ?>
-                        <option value="<?= $row->tipe_sekolah ?>"><?= $row->tipe_sekolah ?></option>
+                <select class="form-control select2" name="pegawai_id" id="pegawai_id">
+                    <option selected disabled>Pilih Pegawai</option>
+                    <?php $no = 1; foreach($pegawai as $row): ?>
+                        <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $no. ' - ' .$row->nip ?> || <?= $row->nama_pegawai?></option>
                     <?php $no++; endforeach; ?>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row" id="_sekolah">
-            <label for="sekolah_id" class="col-md-2 col-form-label">Sekolah <?= label_required() ?></label>
-            <div class="col-md-10">
-                <select class="form-control select2" name="sekolah_id" id="sekolah_id">
-                <option selected disabled>Pilih Tingkatan Terlebih Dahulu</option>  
-                </select>
+                </select>      
             </div>
         </div>
         <div class="form-group row" id="_username">
             <label for="username" class="col-md-2 col-form-label">Username <?= label_required() ?></label>
             <div class="col-md-10">
-                <input type="text" class="form-control" name="username" id="username" readonly>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="password" class="col-md-2 col-form-label">Password <?= label_required() ?></label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" name="password" id="password" disabled placeholder="silatpendidikan_pass">
+                <input type="text" class="form-control" name="username" id="username" placeholder ="Username tidak boleh ada spasi, Ex: Bidang_perikanan">
             </div>
         </div>
         <div class="row mt-3">
@@ -59,68 +44,6 @@
 </div>
 
 <script type="text/javascript">
-    $('#tipe_sekolah').change(function() {
-        var tipe_sekolah = $(this).val();
-        $('#username'). val('');
-        $.ajax({
-            url: "<?= base_url($uri_mod. '/AjaxGetSekolahByTipe/') ?>",
-            method : "POST",
-            data : {tipe_sekolah: tipe_sekolah},
-            async : true,
-            dataType : 'json',
-            success: function(data) {
-                if (data.status == true) {
-                    $('#_sekolah').show();
-                    csrf_value = data.token;
-                    var html = '<option value="" selected disabled>Pilih Sekolah</option>';
-                    var index;
-                    var no  = 1;
-
-                    for (index = 0; index < data.data.length; index++) {
-                        html += '<option value='+data.data[index].id+'>'+data.data[index].nama_sekolah+'</option>';
-                        no++;
-                    }
-
-                    $('#sekolah_id').html(html);
-                }else{
-                    $('#_sekolah').show();
-                    var html = '<option value="" selected disabled>Sekolah Tidak Tersedia</option>';
-                    $('#sekolah_id').html(html);
-                } 
-            }
-        });
-            return false;
-    });
-
-    $('#sekolah_id').change(function() {
-        var id = $(this).val();
-        var username = document.getElementById('username');
-        display_name = ($(display_name).val().replace(/\s+/g, "")).toLowerCase();
-        $.ajax({
-            url: "<?= base_url($uri_mod. '/AjaxGetSekolahById/') ?>",
-            method : "POST",
-            data : {id: id},
-            async : true,
-            dataType : 'json',
-            success: function(data) {
-                if (data.status == true) {
-                    $('#_username').show();
-                    csrf_value = data.token;
-                    nama_sekolah = (data.data.nama_sekolah.replace(/\s+/g, "")).toLowerCase()+"_";
-                    if(nama_sekolah === '' || display_name === ''){
-                        $('#username').css({'color':'red'});
-                        username.value = "Generate username gagal, silahkan refresh halaman ini !";
-                    }else{
-                        username.value = nama_sekolah.concat(display_name);
-                    }
-                }else{
-                    $('#_username').show();
-                    username.value = "Generate username gagal";
-                } 
-            }
-        });
-            return false;
-    });
 
     $('#submit-btn').click(function(e) {
         e.preventDefault();

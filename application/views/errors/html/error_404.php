@@ -4,7 +4,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Error 404 Page</title>
-        <link rel="icon" href="<?= config_item('base_url') ?>assets/frontend/images/favicon.png">
+        <link rel="icon" href="<?= config_item('base_url') ?>assets/frontend/images/onlylogo.png">
         <link rel="stylesheet" href="./error_page.css" />
         <script src="https://kit.fontawesome.com/66aa7c98b3.js" crossorigin="anonymous"></script>
         <style type="text/css">

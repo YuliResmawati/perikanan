@@ -19,7 +19,7 @@ class Visi_misi extends Frontend_Controller {
     public function index()
 	{
         $this->data['page_title'] = "Visi & Misi";
-        $this->data['page_description'] = "Visi & Misi Sistem Informasi Layanan Terintegrasi Pendidikan Kota Bukittinggi.";
+        $this->data['page_description'] = "Visi & Misi Dinas Ketahanan Pangan dan Perikanan.";
         $this->data['website_data'] = $this->m_website->findAll();
         
 		$this->load->view('visi_misi/v_index', $this->data);

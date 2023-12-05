@@ -1,78 +1,51 @@
-<div class="section page-banner-section bg-color-1">
-    <img class="shape-1" src="<?= $theme_path ?>/images/shape/shape-5.png" alt="shape">
-    <img class="shape-2" src="<?= $theme_path ?>/images/shape/shape-6.png" alt="shape">
-    <img class="shape-3" src="<?= $theme_path ?>/images/shape/shape-7.png" alt="shape">
-    <img class="shape-4" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
-    <img class="shape-5" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
-    <div class="container">
-        <div class="page-banner-content">
-            <h2 class="title">Kontak Kami</h2>
-            <ul class="breadcrumb justify-content-center">
-                <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
-                <li class="breadcrumb-item active">Kontak</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="section section-padding">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="contact-info-wrapper">
-                    <div class="row gx-0">
-                        <div class="col-md-3">
-                            <div class="single-contact-info">
-                                <div class="info-icon">
-                                    <i class="flaticon-phone-call"></i>
-                                </div>
-                                <div class="info-content">
-                                    <h5 class="title">Telepon & WhatsApp</h5>
-                                    <p><a href="tel:<?= (!empty($website_data[0]->phone_number)) ? xss_escape($website_data[0]->phone_number) : '-' ?>"><?= (!empty($website_data[0]->phone_number)) ? xss_escape($website_data[0]->phone_number) : '-' ?></a></p>
-                                    <p class="text-muted">atau</p>
-                                    <p><a href="https://api.whatsapp.com/send/?phone=<?= xss_echo((!empty($website_data))? $website_data[0]->whatsapp_number : '') ?>&text=Halo admin silat pendidikan ...." target="_blank"><?= (!empty($website_data[0]->whatsapp_number)) ? xss_escape($website_data[0]->whatsapp_number) : '-' ?></a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="single-contact-info">
-                                <div class="info-icon">
-                                    <i class="flaticon-mail"></i>
-                                </div>
-                                <div class="info-content">
-                                    <h5 class="title">Email</h5>
-                                    <p><a href="mailto:<?= (!empty($website_data[0]->email)) ? xss_escape($website_data[0]->email) : '-' ?>"><?= (!empty($website_data[0]->email)) ? xss_escape($website_data[0]->email) : '-' ?></a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="single-contact-info">
-                                <div class="info-icon">
-                                    <i class="flaticon-placeholder"></i>
-                                </div>
-                                <div class="info-content">
-                                    <h5 class="title">Lokasi</h5>
-                                    <p><?= (!empty($website_data[0]->address)) ? xss_escape($website_data[0]->address) : '-' ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="single-contact-info">
-                                <div class="info-icon">
-                                    <i class="flaticon-open-mail"></i>
-                                </div>
-                                <div class="info-content">
-                                    <h5 class="title">Pengaduan</h5>
-                                    <p>Instagram : @disdikbudbukittinggi</p>
-                                    <p>Facebook : @dikbudbkt</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<section class="inner-banner-wrap">
+    <div class="inner-baner-container" style="background-image: url(<?= $theme_path ?>/images/perikanan.jpg);">
+        <div class="container">
+        <div class="inner-banner-content">
+            <h1 class="inner-title">Kontak</h1>
             </div>
         </div>
     </div>
-</div>
-<div class="section contact-map-area">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7979.519676808786!2d100.36611358956633!3d-0.310221920028243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd538ea5943d5df%3A0xf6401ef798810023!2sKantor%20Dinas%20Pendidikan%20Dan%20Kebudayaan%20Kota%20Bukittinggi!5e0!3m2!1sid!2sid!4v1692266923337!5m2!1sid!2sid" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
+</section>
+<section class="about-page-section">
+    <div class="container">
+        <div class="iconbox-container-bg">
+        <?php if (!empty($website_data)): ?>
+            <?php foreach ($website_data as $row): ?>
+            <div class="iconbox-item-bg">
+                <div class="iconbox-content-bg">
+                    <i aria-hidden="true" class="fas fa-phone-volume"></i>
+                    <h5><?= $row->phone_number?></h5>
+                </div>
+            </div>
+            <div class="iconbox-item-bg">
+                <div class="iconbox-content-bg">
+                    <i aria-hidden="true" class="fas fa-envelope-open-text"></i>
+                    <h5><?= $row->email?></h5>
+                </div>
+            </div>
+            <div class="iconbox-item-bg">
+                <div class="iconbox-content-bg">
+                    <i aria-hidden="true" class="fas fa-map-marker-alt"></i>
+                    <h5><?= $row->address?></h5>
+                </div>
+            </div>
+            <div class="iconbox-item-bg">
+                <div class="iconbox-content-bg">
+                    <i aria-hidden="true" class="fab fa-instagram"></i>
+                    <h5><?= $row->link_instagram?></h5>
+                </div>
+            </div>
+            <div class="iconbox-item-bg">
+                <div class="iconbox-content-bg">
+                    <i aria-hidden="true" class="fab fa-facebook"></i>
+                    <h5><?= $row->link_facebook?></h5>
+                </div>
+            </div>
+            <?php endforeach ?>
+        <?php else: ?>
+            <h3 class="brand-title">Belum ada Visi Misi. </h3>
+        <?php endif ?>
+        </div>
+    </div>
+</section>

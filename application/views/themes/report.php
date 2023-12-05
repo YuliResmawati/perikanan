@@ -161,7 +161,7 @@ $pdfBase64 = base64_encode($pdfString);
     <script src="<?= $global_plugin_path ?>/loaders/blockui.min.js"></script>
     <script src="<?= $global_plugin_path ?>/initial/initial.js"></script>
     <script src="<?= $global_custom_path ?>/js/mycustom.js?v=<?= filemtime('./assets/global/custom/js/mycustom.js') ?>"></script>
-    <script src="<?= $global_custom_path ?>/js/silatpendidikan.js?v=<?= filemtime('./assets/global/custom/js/silatpendidikan.js') ?>"></script>
+    <script src="<?= $global_custom_path ?>/js/perikanan.js?v=<?= filemtime('./assets/global/custom/js/perikanan.js') ?>"></script>
     <script src="<?= $global_custom_path ?>/js/myapp.back.js"></script>
     <script src="<?= $global_custom_path ?>/js/form-ajax-custom.js?v=<?= filemtime('./assets/global/custom/js/form-ajax-custom.js') ?>"></script>
     <script src="<?= $global_custom_path ?>/js/auto-csrf.min.js?v=2.0.4"></script>

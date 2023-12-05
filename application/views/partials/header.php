@@ -101,9 +101,9 @@
 			
 			<li class="dropdown notification-list topbar-dropdown">
 				<a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-					<?= generate_avatar($this->session->userdata('silatpendidikan_avatar'), $this->session->userdata('silatpendidikan_display_name'),'rounded-circle') ?>
+					<?= generate_avatar($this->session->userdata('dpkk_avatar'), $this->session->userdata('dpkk_display_name'),'rounded-circle') ?>
 					<span class="pro-user-name ml-1">
-						<?= uc_words(xss_escape($this->session->userdata('silatpendidikan_display_name'))) ?> <i class="mdi mdi-chevron-down"></i> 
+						<?= uc_words(xss_escape($this->session->userdata('dpkk_display_name'))) ?> <i class="mdi mdi-chevron-down"></i> 
 					</span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -133,10 +133,10 @@
 			</a>
 			<a href="<?= base_url('dashboard') ?>" class="logo logo-light text-center">
 				<span class="logo-sm">
-					<img src="<?= base_url('assets/backend') ?>/images/small-logo.png" alt="Logo" height="22">
+					<img src="<?= base_url('assets/frontend') ?>/images/onlylogo.png" alt="Logo" height="22">
 				</span>
 				<span class="logo-lg">
-					<img src="<?= base_url('assets/backend') ?>/images/silatpen-logo-backend.png" alt="Logo" height="35">
+					<img src="<?= base_url('assets/frontend') ?>/images/logo_dkpp3.png" alt="Logo" height="45">
 				</span>
 			</a>
 		</div>

@@ -9,12 +9,8 @@ class Skm extends Frontend_Controller {
 
 		$this->_init();
 		$this->data['uri_mod'] = 'isi-survei';
-        $this->load->model('m_skm');
+        $this->load->model(['m_api','m_ikm']);
 
-        $this->load->css($this->data['theme_path'] . '/css/star-rating-svg.css');
-        $this->load->js($this->data['theme_path'] . '/js/jquery.star-rating-svg.js');
-        $this->load->js($this->data['global_custom_path'] . '/js/auto-csrf.min.js');
-        $this->load->js("https://cdn.jsdelivr.net/npm/sweetalert2@11");
 	}
 
 	public function _init()
@@ -26,6 +22,7 @@ class Skm extends Frontend_Controller {
 	{
         $this->data['page_title'] = "Isi Survei Kepuasan";
         $this->data['page_description'] = "Berikan penilaian untuk bentuk perubahan.";
+        $this->data['ikm'] = $this->m_api->get_data_from_api();
         
 		$this->load->view('skm/v_index', $this->data);
     }

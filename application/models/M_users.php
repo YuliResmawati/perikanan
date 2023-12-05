@@ -13,8 +13,6 @@ class M_users extends MY_Model {
     protected $_fields = [
         'username' => 'username',
         'password' => 'password',
-        'display_name' => 'display_name',
-        'email' => 'email',
         'level' => 'level',
         'pegawai_id' => 'pegawai_id',
     ];
@@ -227,15 +225,13 @@ class M_users extends MY_Model {
         $this->session->sess_destroy();
     }
 
-    public function get_detail_sekolah()
+    public function get_detail_pegawai()
     {
         parent::clear_join();
 
-        $this->_fields_toshow = ['tipe_sekolah','nama_sekolah','username','display_name','email','users.status'];
-
-        parent::join('sekolah','sekolah.id=users.sekolah_id');
-
-        $this->db->where('sekolah.status', '1');
+        $this->_fields_toshow = ['pegawai_id','nama_pegawai','nip','username','display_name','email','users.status'];
+        parent::join('v_pegawai_dkpp e','users.pegawai_id=e.id', 'left');
+        $this->db->where(['pegawai_id !=' => 0]);
 
         return $this;
     }

@@ -155,7 +155,7 @@ class Backend_Controller extends MY_Controller
         $this->del 				                = '';
         $this->where			                = array();
         $this->data['navtoggle']                = false;
-        $this->logged_pegawai_id               = $this->session->userdata('dkpp_sekolah_id');
+        $this->logged_pegawai_id               = $this->session->userdata('dkpp_pegawai_id');
         $this->logged_user_id                   = $this->session->userdata('dkpp_user_id');
         $this->logged_level                     = $this->session->userdata('dkpp_level');  
         $this->logged_display_name              = $this->session->userdata('dkpp_display_name');  

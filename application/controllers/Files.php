@@ -204,8 +204,8 @@ class Files extends MY_Controller {
 
     public function my_files($filename = null)
     {
-        $pegawai_id = $this->session->userdata('simpeg_pegawai_id');
-        $level = $this->session->userdata('simpeg_level');
+        $user_id = $this->session->userdata('dkpp_user_id');
+        $level = $this->session->userdata('dkpp_level');
         $status = true;
 
         $total_segments = $this->uri->total_segments();

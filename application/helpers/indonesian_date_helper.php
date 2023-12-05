@@ -46,6 +46,7 @@ if (!function_exists('bulan'))
 	}
 }
 
+
 if (!function_exists('indo_date'))
 {
 	function indo_date($tgl)

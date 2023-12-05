@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_website extends MY_Model {
 
-    protected $_table = 'website';
+    protected $_table = 'profile';
     protected $_timestamps = TRUE;
     protected $_log_user = TRUE;
     protected $_softdelete = TRUE;

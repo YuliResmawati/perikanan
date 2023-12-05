@@ -1,89 +1,112 @@
-<style type="text/css">
-    .max-lines {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-
-    .max-lines-p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
-</style>
-
-<div class="section page-banner-section bg-color-1">
-    <img class="shape-1" src="<?= $theme_path ?>/images/shape/shape-5.png" alt="shape">
-    <img class="shape-2" src="<?= $theme_path ?>/images/shape/shape-6.png" alt="shape">
-    <img class="shape-3" src="<?= $theme_path ?>/images/shape/shape-7.png" alt="shape">
-    <img class="shape-4" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
-    <img class="shape-5" src="<?= $theme_path ?>/images/shape/shape-21.png" alt="shape">
-    <div class="container">
-        <div class="page-banner-content">
-            <h2 class="title">Detail Artikel</h2>
-            <ul class="breadcrumb justify-content-center">
-                <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
-                <li class="breadcrumb-item"><a href="<?= base_url('artikel') ?>">Artikel</a></li>
-                <li class="breadcrumb-item active max-lines"><?= xss_escape($detail_article->title) ?></li>
-            </ul>
+<section class="inner-banner-wrap">
+    <div class="inner-baner-container" style="background-image: url(<?= $theme_path ?>/images/perikanan.jpg);">
+        <div class="container">
+        <div class="inner-banner-content">
+            <h1 class="inner-title">Detail Artikel</h1>
+            </div>
         </div>
     </div>
-</div>
-<div class="section section-padding">
-    <div class="container">
-        <div class="blog-wrapper-02">
-            <div class="row justify-content-between">
-                <div class="col-lg-8">
-                    <div class="blog-details-wrapper">
-                        <div class="blog-details-image">
-                            <a href="<?= base_url('artikel/') .$detail_article->slug ?>">
-                                <img src="<?= str_files_images('article/', $detail_article->image) ?>" alt="<?= xss_escape($detail_article->title) ?> thumbnail">
+</section>
+<div class="charity-page-section">
+    <div class="charity-page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 primary right-sidebar">
+                    <div class="charity-detail-container">
+                        <figure class="charity-image">
+                            <a href="<?= base_url('article/') .$detail_article->slug ?>">
+                                <img src="<?= str_files_images('content/', $detail_article->berkas) ?>" alt="<?= xss_escape($detail_article->judul_konten) ?> thumbnail">
                             </a>
-                        </div>
-                        <div class="blog-details-content">
-                            <div class="meta">
-                                <a href="#"><i class="fa fa-user-o"></i> Admin Silat Pendidikan</a>
-                                <a href="#"><i class="fa fa-calendar"></i> <?= indo_date($detail_article->tanggal) ?></a>
+                        </figure>
+                        <h3 class="title"><?= xss_escape($detail_article->judul_konten) ?></h3>
+                        <div class="d-flex flex-wrap progress-wrap">
+                            <div class="fund-detail">
+                            <div class="fund-item">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                <h5 class="fund-content"> <?= indo_date($detail_article->tanggal) ?></h5>
                             </div>
-                            <h3 class="title"><?= xss_escape($detail_article->title) ?></h3>
-                            <p style="text-align: justify;">
-                                <?= (!empty($detail_article)) ? $detail_article->description : "" ?>
-                            </p>
+                            <div class="fund-item">
+                                <i class="fas fa-chart-line"></i>
+                                <h5 class="fund-content">Admin DKPP</h5>
+                            </div>
+                            </div>
                         </div>
+                        <p style="text-align: justify;" > 
+                            <?= (!empty($detail_article)) ? $detail_article->isi_konten : "" ?>
+                        </p>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4">
-                    <div class="sidebar-wrap">
-                        <?php if (!empty($popular_article)): ?>
-                            <div class="sidebar-widget">
-                                <h3 class="widget-title">Artikel Populer</h3>
-                                <div class="widget-post">
-                                    <?php foreach ($popular_article as $row): ?>
-                                        <div class="single-mini-post">
-                                            <div class="mini-post-image">
-                                                <a href="<?= base_url('artikel/') .$row->slug ?>">
-                                                    <img src="<?= str_files_images('article/', $row->image) ?>" alt="<?= xss_escape($row->title) ?> thumbnail">
-                                                </a>
-                                            </div>
-                                            <div class="mini-post-content">
-                                                <h5 class="title"><a href="<?= base_url('artikel/') .$row->slug ?>" class="max-lines-p text-justify"><?= xss_escape($row->title) ?></a></h5>
-                                                <span class="date"><i class="fa fa-calendar"></i> <?= indo_date($row->tanggal) ?></span>
-                                            </div>
+                <div class="col-lg-4 secondary">
+                    <div class="sidebar">
+                    <?php if (!empty($popular_article)): ?>
+                        <aside class="widget widget_latest_post widget-post-thumb">
+                            <h3 class="widget-title">Artikel Populer</h3>
+                            <?php foreach ($popular_article as $row): ?>
+                            <ul>
+                                <li>
+                                    <figure class="post-thumb">
+                                        <a href="<?= base_url('article/') .$row->slug ?>">
+                                            <img src="<?= str_files_images('content/', $row->berkas) ?>" alt="<?= xss_escape($row->judul_konten) ?> thumbnail">
+                                        </a>
+                                    </figure>
+                                    <div class="post-content">
+                                        <h5 class="title"><a href="<?= base_url('article/') .$row->slug ?>" class="max-lines text-justify"><?= xss_escape($row->judul_konten) ?></a></h5>
+                                        <div class="entry-meta">
+                                            <span class="posted-on">
+                                            <a href="blog-single.html"><?= indo_date($row->tanggal) ?></a>
+                                            </span>
+                                            <span class="comments-link">
+                                            <a href="blog-single.html">Admin DKPP</a>
+                                            </span>
                                         </div>
-                                    <?php endforeach ?>
+                                    </div>
+                                </li>
+                                <li></li>
+                            </ul>
+                            <?php endforeach ?>
+                        </aside>
+                        <aside class="widget widget_social">
+                            <h3 class="widget-title">Share Sosial Media</h3>
+                            <div class="social-icon-wrap">
+                                <div class="social-icon social-facebook">
+                                    <a href="https://www.facebook.com/">
+                                        <i class="fab fa-facebook-f"></i>
+                                        <span>Facebook</span>
+                                    </a>
+                                </div>
+                                <div class="social-icon social-pinterest">
+                                    <a href="https://www.pinterest.com/">
+                                        <i class="fab fa-pinterest"></i>
+                                        <span>Pinterest</span>
+                                    </a>
+                                </div>
+                                <div class="social-icon social-whatsapp">
+                                    <a href="https://wa.me/?text=<?= base_url('berita/') .$detail_article->slug ?>">
+                                        <i class="fab fa-whatsapp"></i>
+                                        <span>WhatsApp</span>
+                                    </a>
+                                </div>
+                                <div class="social-icon social-linkedin">
+                                    <a href="https://www.linkedin.com/">
+                                        <i class="fab fa-linkedin"></i>
+                                        <span>Linkedin</span>
+                                    </a>
+                                </div>
+                                <div class="social-icon social-twitter">
+                                    <a href="https://www.twitter.com/">
+                                        <i class="fab fa-twitter"></i>
+                                        <span>Twitter</span>
+                                    </a>
+                                </div>
+                                <div class="social-icon social-google">
+                                    <a href="https://www.google.com/">
+                                        <i class="fab fa-google-plus-g"></i>
+                                        <span>Google</span>
+                                    </a>
                                 </div>
                             </div>
-                            <hr>
-                        <?php endif ?>
-                        <div class="sidebar-widget">
-                            <div class="widget-banner">
-                                <a href="#"><img src="<?= $theme_path ?>/images/maklumat.png" alt="maklumat pelayanan"></a>
-                            </div>
-                        </div>
+                        </aside>
+                    <?php endif ?>
                     </div>
                 </div>
             </div>

@@ -67,16 +67,36 @@ $route['logout'] = 'auth/do_logout';
 ## frontend routes ##
 $route['kontak'] = 'frontend/contact';
 $route['visi-misi'] = 'frontend/visi_misi';
-$route['profil-dpkp'] = 'frontend/profile_dpkp';
+$route['profil-dkpp'] = 'frontend/profile_dkpp';
+$route['struktur-dkpp'] = 'frontend/struktur_dkpp';
+$route['gallery-dkpp'] = 'frontend/gallery_dkpp';
+$route['gallery-video'] = 'frontend/gallery_dkpp/index_video';
+
+$route['pegawai'] = 'frontend/data_pegawai';
+$route['pegawai/page'] = 'frontend/data_pegawai';
+$route['pegawai/page/(:any)'] = 'frontend/data_pegawai/index/$1';
+$route['pegawai/(:any)'] = 'frontend/data_pegawai/detail/$1';
+
+$route['berita'] = 'frontend/berita';
+$route['berita/page'] = 'frontend/berita';
+$route['berita/page/(:any)'] = 'frontend/berita/index/$1';
+$route['berita/(:any)'] = 'frontend/berita/detail/$1';
+
+$route['announcement'] = 'frontend/announcement';
+$route['announcement/page'] = 'frontend/announcement';
+$route['announcement/page/(:any)'] = 'frontend/announcement/index/$1';
+
+$route['article'] = 'frontend/article';
+$route['article/page'] = 'frontend/article';
+$route['article/page/(:any)'] = 'frontend/article/index/$1';
+$route['article/(:any)'] = 'frontend/article/detail/$1';
+
+$route['layanan-pengaduan'] = 'frontend/layanan_pengaduan';
+$route['layanan-pengaduan/process'] = 'frontend/layanan_pengaduan/process';
+
 $route['isi-survei'] = 'frontend/skm';
 $route['isi-survei/process'] = 'frontend/skm/process';
-$route['artikel'] = 'frontend/article';
-$route['artikel/page'] = 'frontend/article';
-$route['artikel/page/(:any)'] = 'frontend/article/index/$1';
-$route['artikel/(:any)'] = 'frontend/article/detail/$1';
-$route['pengumuman'] = 'frontend/announcement';
-$route['pengumuman/page'] = 'frontend/announcement';
-$route['pengumuman/page/(:any)'] = 'frontend/announcement/index/$1';
+
 $route['daftar-sekolah'] = 'frontend/school';
 $route['daftar-sekolah/(:any)'] = 'frontend/school/detail/$1';
 $route['daftar-sekolah/(:any)/page'] = 'frontend/school/detail/$1';

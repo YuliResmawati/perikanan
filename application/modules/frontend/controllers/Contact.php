@@ -19,7 +19,7 @@ class Contact extends Frontend_Controller {
     public function index()
 	{
         $this->data['page_title'] = "Kontak Kami";
-        $this->data['page_description'] = "Hubungi kami jika ada pertanyaan seputar silat pendidikan.";
+        $this->data['page_description'] = "Hubungi kami jika ada pertanyaan seputar dinas ketahanan pangan dan perikanan.";
         $this->data['website_data'] = $this->m_website->findAll();
         
 		$this->load->view('contact/v_index', $this->data);
