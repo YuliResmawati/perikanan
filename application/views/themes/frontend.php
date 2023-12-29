@@ -38,7 +38,7 @@
    <meta name="twitter:url" content="<?= current_url() ?>"/>
 
    <!-- App favicon -->
-   <link rel="shortcut icon" type="image/x-icon" href="<?= $theme_path ?>/images/onlylogo.png">
+   <link rel="shortcut icon" type="image/x-icon" href="<?= $theme_path ?>/images/logo_agam.png">
 
    <!-- Load CSS in Controller -->
    <?php foreach ($css as $file) { ?>
@@ -173,18 +173,12 @@
                                     </li>                                   
                                  <li><a href="<?= base_url('article') ?>">Artikel</a></li>                                   
                                  <li><a href="<?= base_url('announcement') ?>">Pengumuman</a></li>
+                                 <li><a href="<?= base_url('publication') ?>">Publikasi</a></li>
+                                 <li><a href="#">Laporan SKPG</a></li>
                                  </ul>
                               </li>
-                           <li class="menu-item-has-children">
-                                 <a href="blog-archive.html">Tabel Harga</a>
-                                 <ul>
-                                    <li>
-                                       <a href="blog-archive.html">Harga Panel</a>
-                                    </li>
-                                    <li>
-                                       <a href="blog-single.html">Harga Produsen</a>
-                                    </li>
-                                 </ul>
+                           <li>
+                              <a href="#">Panel Harga</a>
                            </li>
                            <li class="menu-item-has-children">
                                  <a href="#">Layanan</a>

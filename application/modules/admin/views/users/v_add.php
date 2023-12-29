@@ -19,7 +19,7 @@
                 <select class="form-control select2" name="pegawai_id" id="pegawai_id">
                     <option selected disabled>Pilih Pegawai</option>
                     <?php $no = 1; foreach($pegawai as $row): ?>
-                        <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $no. ' - ' .$row->nip ?> || <?= $row->nama_pegawai?></option>
+                        <option value="<?= encrypt_url($row->pegawai_id, $id_key) ?>"><?= $no. ' - ' .$row->nip ?> || <?= $row->nama_pegawai?></option>
                     <?php $no++; endforeach; ?>
                 </select>      
             </div>

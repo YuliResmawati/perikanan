@@ -218,10 +218,10 @@ class Files extends MY_Controller {
             }
         }
 
-        if($level != '1' && $level != '9'){
+        if($level != '1' && $level != '2'){
             $prefix_file = explode("_", $filename);
             $image_owner = (!empty($prefix_file[1]) ? $prefix_file[1] : null);
-            if($image_owner !== $pegawai_id){
+            if($image_owner !== $user_id){
                 $status = false;
             }
         }

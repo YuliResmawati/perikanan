@@ -265,8 +265,8 @@ if (!function_exists('tabel_icon')) {
                     $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Siswa" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                     <i class="icon-people"></i>
                             </' . $a_tag . '>';
-                } elseif ($action == "list_materi") {
-                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-list-materi btn btn-info waves-effect waves-light btn-xs" title="Lihat Materi" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                } elseif ($action == "panel_harga") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-list-materi btn btn-info waves-effect waves-light btn-xs" title="Lihat Panel Harga" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                     <i class="icon-notebook"></i>
                             </' . $a_tag . '>';
                 } elseif ($action == "jadwal") {
@@ -278,6 +278,53 @@ if (!function_exists('tabel_icon')) {
                                     <i class="mdi mdi-plus"></i>
                             </' . $a_tag . '>';
                 }
+            }
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('tabel_icon_komoditas')) {
+    function tabel_icon_komoditas($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $level = '')
+    {
+        $a = '';
+
+        if ($id !== $session_id) {
+            if ($keyid !== '') {
+                $id = encrypt_url($id, $keyid);
+            }
+
+            if ($link_url !== '') {
+                $a_tag = 'a';
+                $link_url = 'href="' . base_url($link_url . $id) . '"';
+                $modal_attr = '';
+            } else {
+                $a_tag = 'span';
+                $link_url = "";
+                if ($modal_name !== '') {
+                    $modal_attr = 'data-toggle="modal" data-target="#' . $modal_name . '"';
+                } else {
+                    $modal_attr = '';
+                }
+            }
+
+            if ($level == '3' || $level == '6'){
+                if ($action == "delete") {
+                    $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-hapus btn btn-danger waves-effect waves-light btn-xs" title="Hapus" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
+                                    <i class="icon-trash"></i>
+                            </' . $a_tag . '>';
+                } elseif ($action == "edit") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-edit btn btn-warning waves-effect waves-light btn-xs" title="Edit" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                    <i class="icon-note"></i>
+                            </' . $a_tag . '>';
+                } elseif ($action == "add") {
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-add btn btn-blue waves-effect waves-light btn-xs" title="Tambah" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                                    <i class="icon-plus"></i>
+                            </' . $a_tag . '>';
+                }
+            } else {
+                $a = '<a href="#" class="btn btn-warning waves-effect waves-light btn-xs" title="Tidak Memiliki Wewenang" data-plugin="tippy" data-tippy-size="small"><i class="icon-lock"></i></a>';
             }
         }
 
@@ -510,11 +557,35 @@ if (!function_exists('str_level'))
         } else if ($status == '2') {
             $a = 'Administrator';
         } else if ($status == '3') {
-            $a = 'Admin SKPG';
+            $a = 'Admin Bidang Ketersediaan dan Stabilitas Pangan ';
         } else if ($status == '4') {
-            $a = 'Admin Perikanan';
+            $a = 'Admin Bidang Kerawanan Pangan dan Gizi ';
         } else if ($status == '5') {
-            $a = 'Admin Harga Pasar';
+            $a = 'Admin Bidang Penganekaragaman Komsumsi dan Keamanan Pangan';
+        } else if ($status == '6') {
+            $a = 'Admin Bidang Perikanan Budi Daya dan Perikanan Tangkap';
+        } else if ($status == '7') {
+            $a = 'Admin Bidang Penguatan Daya Saing Produk Perikanan dan Pengawasan Sumber Daya Perikanan';
+        } else {
+            $a = 'Tidak Diketahui';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('jenis_komoditas')) 
+{
+    function jenis_komoditas($jenis)
+    {
+        $a = '';
+
+        if ($jenis == '1') {
+            $a = 'Ikan Laut';
+        } else if ($jenis == '2') {
+            $a = 'Ikan Air Tawar';
+        } else if ($jenis == '3') {
+            $a = 'Bahan pokok';
         } else {
             $a = 'Tidak Diketahui';
         }
@@ -1722,49 +1793,76 @@ if (!function_exists('format_alamat')) {
 
 if (!function_exists('name_degree')) 
 {
-    function name_degree($gelar_depan, $nama_guru, $gelar_belakang, $xss_option = FALSE)
+    function name_degree($gelar_depan, $nama_pegawai, $gelar_blkng, $xss_option = FALSE)
     {
         if ($xss_option == TRUE) {
             if ($gelar_depan) {
                 $gelar_depan = xss_escape($gelar_depan.'. ');
             }
     
-            if ($gelar_belakang) {
-                $gelar_belakang = xss_escape(', '.$gelar_belakang);
+            if ($gelar_blkng) {
+                $gelar_blkng = xss_escape(', '.$gelar_blkng);
             }
     
-            $nama_guru = xss_escape($nama_guru);
+            $nama_pegawai = xss_escape($nama_pegawai);
         } else {
             if ($gelar_depan) {
                 $gelar_depan = $gelar_depan.'. ';
             }
     
-            if ($gelar_belakang) {
-                $gelar_belakang = ', '.$gelar_belakang;
+            if ($gelar_blkng) {
+                $gelar_blkng = ', '.$gelar_blkng;
             } 
         }
 
-        return $gelar_depan.$nama_guru.$gelar_belakang;
+        return $gelar_depan.$nama_pegawai.$gelar_blkng;
     }
-
 }
 
 if (!function_exists('icon_employee')) {
     function icon_employee($nama_pegawai = '', $gelar_depan = '', $gelar_blkng = '', $nip = '', $status_pegawai = '', $type = '', $profile = '', $marquee = '')
     {
         $_profile = generate_avatar($profile, $nama_pegawai, 'mr-2 avatar-sm rounded', 'width="44" alt="profile image"');
-
-        $result = '
-            <div class="media d-inline-flex align-items-center">
-                '.(!empty($_profile) ? $_profile: '').'
-                <div class="media-body">
-                    <div class="'.(!empty($marquee) ? 'marquee-md' : '').' ">
-                        <a href="javascript: void(0);" class="text-default font-weight-semibold letter-icon-title">'.name_degree($gelar_depan, $nama_pegawai, $gelar_blkng).'</a>
+       
+        if ($type == 'PNS'){
+            $nama = name_degree($gelar_depan, $nama_pegawai, $gelar_blkng);
+        }else {
+            $nama = $nama_pegawai;
+        }
+        
+            $result = '
+                <div class="media d-inline-flex align-items-center">
+                    '.(!empty($_profile) ? $_profile: '').'
+                    <div class="media-body">
+                        <div class="'.(!empty($marquee) ? 'marquee-md' : '').' ">
+                            <a href="javascript: void(0);" class="text-default font-weight-semibold letter-icon-title">'.$nama.'</a>
+                        </div>
+                        <span class="font-13">
+                            '.$nip.'
+                        </span>
                     </div>
-                    <span class="font-13">
-                        '.$nip.'
-                    </span>
                 </div>
+            ';
+        
+        
+
+        return $result;
+    }
+}
+
+if (!function_exists('icon_username')) {
+    function icon_username($username = '', $level = '',$marquee = '')
+    {
+        
+        $result = '
+           
+            <div class="media-body">
+                <div class="'.(!empty($marquee) ? 'marquee-md' : '').' ">
+                    <a href="javascript: void(0);" class="text-default font-weight-semibold letter-icon-title">'.str_level($level).'</a>
+                </div>
+                <span class="font-13">
+                    '.$username.'
+                </span>
             </div>
         ';
 
@@ -1840,7 +1938,7 @@ if (!function_exists('str_kedudukan_hukum')) {
     {
         $a = '';
 
-        if (strtolower($status) == '44') {
+        if (strtolower($status) == '44' || strtolower($status) == '1'){
             $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-account-check-outline"></i> Aktif</span></h6>';
         } else if (strtolower($status) == '32') {
             $a = '<h6><span class="badge bg-soft-blue text-blue"><i class="mdi mdi-school-outline"></i> Tugas Belajar</span></h6>';
@@ -1976,6 +2074,20 @@ if (!function_exists('aksi_upload_foto'))
         }
 
         return $a;
+    }
+}
+
+
+if (!function_exists('rupiah')) {
+    function rupiah($value)
+    {
+        $text = '';
+        if (!empty($value)) {  
+            $text = "Rp. " . number_format($value, 2, ",", ".");
+        } else {
+            $text = "Rp. " . "0";
+        }
+        return $text;
     }
 }
 

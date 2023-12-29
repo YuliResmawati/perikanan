@@ -109,23 +109,38 @@
                 <div class="h-100" data-simplebar>
                     <div class="col-lg-12">
                         <div class="user-box text-center mt-2">
-                            <?= generate_avatar($this->logged_avatar, $this->logged_display_name,'rounded-circle avatar-md img-thumbnail') ?>
+                            <?php 
+                                $this->load->model(array('m_users'));  
+                                $user = $this->m_users->get_detail_pegawai()->find($this->logged_user_id); 
+
+                                if ($this->logged_level == '1' || $this->logged_level == '2'){
+                                    $display = $this->logged_display_name;
+                                } else {
+                                    $display = $user->nama_pegawai;
+                                }
+                            ?>
+                            <?= generate_avatar($this->logged_avatar, $display,'rounded-circle avatar-md img-thumbnail') ?>
                             <div class="media-body mt-2">
                                 <h5 class="font-15 mt-1">
-                                    <a href="<?= base_url('profile') ?>" class="text-reset"><?= xss_escape($this->logged_display_name) ?></a>
+                                    <a href="<?= base_url('profile') ?>" class="text-reset">
+                                    <?php
+                                    if($this->logged_level == '1' || $this->logged_level == '2'){
+                                        echo  xss_escape($this->logged_display_name) ;
+                                    } else {
+                                        echo xss_escape(name_degree($user->gelar_depan, custom_tolower_text($user->nama_pegawai), $user->gelar_blkng));
+                                    }
+                                    ?>
                                 </h5>
                                 <p class="mt-1 mb-0 font-14">
                                     <?= str_level($this->logged_level) ?>
                                 </p>
                                 <p class="mt-2 mb-2 font-13">
                                     <?php
-                                    if($this->logged_level == '3'){
-                                        $this->load->model(array('m_sekolah'));  
-                                        $sekolah = $this->m_sekolah->find($this->logged_sekolah_id);
-                                        echo xss_echo($sekolah->nama_sekolah);
-                                    }else{
+                                    if($this->logged_level == '1'){
+                                        echo "For Me";
+                                    } else {
                                         echo "Dinas Ketahanan Pangan dan Perikanan";
-                                    }
+                                    } 
                                     ?>
                                 </p>
                             </div>

@@ -57,24 +57,21 @@ class M_app extends MY_Model {
         }
     }
 
-    public function getikm_by_API()
+    public function get_komoditas_by_paging($per_page, $page, $search, $type, $params)
     {
-        $url = 'https://rangkiang.agamkab.go.id/api/ikm/ajaxGetSurvei';
-        $header = array(
-                'Accept: application/json',
-                'Authorization: [apikey]', // Ganti [apikey] dengan API KEY Anda
-                );
-        $ch = curl_init();
-        curl_setopt($ch3, CURLOPT_URL, $url);
-        curl_setopt($ch3, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch3, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch3, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($ch3, CURLOPT_POST, 1);
-        $semua_data = curl_exec($ch);
-        
-        if(curl_errno($ch)){
-        return 'Request Error:' . curl_error($ch);
-    }
+        if($page == 0) $page = 1;
+        $page = ($per_page * $page) - $per_page;
+        $this->db->select('id, komoditas, status','jenis');
+        $this->db->from('komoditas');
+        $this->db->like('LOWER(komoditas)', strtolower($search));
+        $this->db->limit($per_page, $page);
+        $this->db->where(array('status' =>'1', 'jenis' => $params));
+
+        if ($type == 'data') {
+            return $this->db->get()->result_array();
+        } else {
+            return $this->db->count_all_results();
+        }
     }
 
 }

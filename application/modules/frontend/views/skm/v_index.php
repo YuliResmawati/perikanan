@@ -18,11 +18,10 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label><?= $no. ' - ' .$row['pertanyaan']?></label>
-                                <select class="form-control select2" name="agama" id="agama">
-                                    <option value="4">Sangat Baik</option>
-                                    <option value="3">Baik</option>
-                                    <option value="2">Kurang Baik</option>
-                                    <option value="1">Tidak Baik</option>
+                                <select class="form-control select2" name="opsi" id="opsi">
+                                    <?php $no = 1; foreach($row['pilihan'] as $row_opsi): ?>
+                                        <option value="<?= $row_opsi['pilihan_nilai']?>"><?= $row_opsi['pilihan'].''. $row_opsi['icon'] ?></option>
+                                    <?php $no++; endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -48,8 +47,8 @@
                             <div class="form-group">
                                 <select>
                                     <option>Pilih Jenis Kelamin</option>
-                                    <option value="0">Laki-Laki</option>
-                                    <option value="0">Perempuan</option>
+                                    <option value="L">Laki-Laki</option>
+                                    <option value="P">Perempuan</option>
                                 </select>
                             </div>
                         </div>
@@ -66,8 +65,16 @@
                             <div class="form-group">
                                 <select>
                                     <option>Pilih Pendidikan</option>
-                                    <option value="0">SD</option>
-                                    <option value="0">SMP</option>
+                                    <option value="SD">SD</option>
+                                    <option value="SMP">SMP</option>
+                                    <option value="SMA">SMA</option>
+                                    <option value="D1">D1</option>
+                                    <option value="D2">D2</option>
+                                    <option value="D3">D3</option>
+                                    <option value="D4">D4</option>
+                                    <option value="S1">S1</option>
+                                    <option value="S2">S2</option>
+                                    <option value="S3">S3</option>
                                 </select>
                             </div>
                         </div>
@@ -77,8 +84,12 @@
                             <div class="form-group">
                                 <select>
                                     <option>Pilih Pekerjaan</option>
-                                    <option value="0">PNS</option>
-                                    <option value="0">Lainya</option>
+                                    <option value="Petani">Petani</option>
+                                    <option value="PNS">PNS</option>
+                                    <option value="POLRI">POLRI</option>
+                                    <option value="Swasta">Swasta</option>
+                                    <option value="Wirausaha">Wirausaha</option>
+                                    <option value="Lainya   ">Lainya</option>
                                 </select>
                             </div>
                         </div>

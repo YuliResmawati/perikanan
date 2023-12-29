@@ -24,7 +24,7 @@
                 </button>
             </div>
             <?= form_open($uri_mod.'/AjaxSave', 'id="'.$form_name.'" data-id="" class="form-tambah"');?>
-            <input class="form-control custom-form" type="text" name="data-id" id="data-id" />
+            <input class="form-control custom-form" type="hidden" name="data-id" id="data-id" />
             <input type="hidden" class="kt-token-response" name="kt-token-response">
                 <div class="modal-body">
                     <div class="form-group row">

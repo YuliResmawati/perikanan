@@ -1,4 +1,23 @@
 
+<div class="form-group row mt-4">
+    <label for="filter_unor" class="col-sm-2 col-form-label">Pilih Pegawai</label>
+    <div class="col-sm-10">
+        <select id="filter_unor" name="filter_unor" class="form-control select2" required>
+                <option value="<?= encrypt_url('PNS', $id_key) ?>" selected>PNS</option>
+                <option value="<?= encrypt_url('Non PNS', $id_key) ?>">Non PNS</option>
+        </select>
+    </div>
+</div>
+<div class="form-group row mb-0">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-10 col-12">
+        <span class="btn btn-blue" id="cari"><i class="icon-magnifier"></i>
+            Cari</span>
+        <div style="display: none" id="spinner" class='spinner-border spinner-border-sm text-info'
+            role='status'><span class='sr-only'></span></div>
+    </div>
+</div>
 <div class="table-responsive mb-4 mt-3">
     <table id="table-pegawai" class="table table-striped w-100">
         <thead>
@@ -25,19 +44,48 @@
 </div>
 
  <!--  Modal upload foto -->
- <div class="modal fade" id="<?= $modal_name ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+ <div class="modal fade" id="modal-pegawai" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myLargeModalLabel"><?= $page_title?></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <?= form_open($uri_mod.'/AjaxSave', 'id="'.$form_name.'" data-id="" class="form-tambah"');?>
+            <?= form_open($uri_mod.'/AjaxSave', 'id="form-pegawai" data-id="" class="form-tambah"');?>
             <input class="form-control custom-form" type="hidden" name="pegawai_id" id="pegawai_id" />
             <input class="form-control custom-form" type="hidden" name="nip" id="nip" />
             <input class="form-control custom-form" type="hidden" name="data_id" id="data_id" />
+            <input class="form-control custom-form" type="hidden" name="jenis" id="jenis" />
             <input type="hidden" class="pr-token-response" name="pr-token-response">
             <div class="modal-body">
+                <div class="form-group row" id ="non_p" style ="display:none">
+                    <div class="col-lg-2">
+                        <label class="col-form-label">Nama Pegawai Non PNS <?= label_required() ?></label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="form-control"  type="text" name="nama_pegawai" id="nama_pegawai">
+                    </div>
+                </div>
+                <div class="form-group row" id ="non_jk" style ="display:none">
+                    <div class="col-lg-2">
+                        <label class="col-form-label">Jenis Kelamin <?= label_required() ?></label>
+                    </div>
+                    <div class="col-lg-10">
+                        <select class="form-control select2" name="jk" id="jk">
+                            <option selected disabled>Pilih Jenis Kelamin</option>
+                            <option value="<?= encrypt_url('L', $id_key) ?>">Laki-Laki</option>
+                            <option value="<?= encrypt_url('P', $id_key) ?>">Perempuan</option>
+                        </select>  
+                    </div>
+                </div>
+                <div class="form-group row" id ="non_jb" style ="display:none">
+                    <div class="col-lg-2">
+                        <label class="col-form-label">Jabatan <?= label_required() ?></label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="form-control"  type="text" name="jabatan" id="jabatan">
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="image" class="col-md-2 col-form-label">Upload Foto Pegawai <?= label_required() ?> </label>
                     <div class="col-md-10">
@@ -62,8 +110,8 @@
 
 $(document).ready(function() {
     table_name = '#table-pegawai';
-    modal_name = "#<?= $modal_name ?>";
-    form_name = "#<?= $form_name ?>";
+    modal_name = "#modal-pegawai";
+    form_name = "#form-struktur";
     url_get_data = "<?= base_url($uri_mod.'/AjaxGet') ?>";
 
     datatables = {
@@ -72,6 +120,7 @@ $(document).ready(function() {
         url: url_get_data,
         data: function (data){
             data.dkpp_c_token = csrf_value;
+            data.filter_unor = $('[name="filter_unor"]').val();
         }, 
         columns: [
             {"data": "id", searchable:false, orderable:false, "sClass": "text-center"},
@@ -90,6 +139,10 @@ $(document).ready(function() {
 
     oTable = intiate_datatables(datatables);
 });
+
+$("#cari").click(function() {
+        oTable.ajax.reload();
+    });
 
 $(document).on("click", ".button-create", function (e) {
     e.preventDefault();
@@ -117,7 +170,23 @@ $(document).on("click", ".button-edit", function (e) {
         $('#data_id').val($(this).attr('data-id'));
         $('#pegawai_id').val($(this).attr('data-pegawai'));
         $('#nip').val($(this).attr('data-nip'));
+        $('#jenis').val(data.data.jenis_pegawai);
+
+        if (data.data.jenis_pegawai=='Non PNS'){
+            $('#nama_pegawai').val(data.data.nama_pegawai);
+            $('#jabatan').val(data.data.jabatan);
+            $('#jk').val(data.data.jenis_kelamin).change();
+            $('#non_p').show();
+            $('#non_jk').show();
+            $('#non_jb').show();
+        } else {
+            $('#non_p').hide();
+            $('#non_jk').hide();
+            $('#non_jb').hide();
+        }
+        
     }
+
 
     if (data.data.image != undefined) {
         $("[name='image']").attr('data-default-file', data.data.image);

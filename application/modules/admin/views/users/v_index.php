@@ -4,7 +4,11 @@
         <thead>
             <tr>
                 <th style="vertical-align: middle;">No. </th>
-                <th style="vertical-align: middle;">Username</th>
+                <th>_username</th>
+                <th>_level</th>
+                <th class="text-nowrap text-center">Bidang
+                    <hr class="m-0">Username</hr>
+                </th>
                 <th class="text-center">Nama Pegawai <hr class="m-0">NIP</th>                
                 <th style="vertical-align: middle;">Status</th>
                 <th style="vertical-align: middle;">Reset Password</th>
@@ -28,7 +32,9 @@
             }, 
             columns: [
                 {"data": "id", searchable:false, orderable:false, "sClass": "text-center"},
-                {"data": "username"},
+                {"data": "username", "visible": false},
+                {"data": "level","visible": false},
+                {"data": "user_row", searchable: false},
                 {"data": "two_row", searchable:false, orderable:false},
                 {"data": "status", searchable:false, orderable:false, "sClass": "text-nowrap"},
                 {"data": "reset_pass", searchable:false, orderable:false, "sClass": "text-nowrap"},

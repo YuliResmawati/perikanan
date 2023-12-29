@@ -8,7 +8,7 @@ class M_bidang_user extends MY_Model {
     protected $_log_user = TRUE;
     protected $_softdelete = TRUE;
     protected $_order_by = 'id';
-    protected $_order = 'DESC';
+    protected $_order = 'ASC';
     protected $_fields_toshow = [
         'id', 'nama_jabatan', 'status'
     ];

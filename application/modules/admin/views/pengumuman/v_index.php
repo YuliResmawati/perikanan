@@ -6,12 +6,12 @@
                 <th style="text-align: center; vertical-align: middle;">#</th>
                 <th>_judul</th>
                 <th>_tgl</th>
-                <th class="text-nowrap text-center">Judul Konten
+                <th class="text-nowrap text-center">Judul Pengumuman
                     <hr class="m-0">Tanggal
                 </th>
                 <th style="text-align: center; vertical-align: middle;">Kategori</th>
                 <th style="text-align: center; vertical-align: middle;">Dilihat</th>
-                <th style="text-align: center; vertical-align: middle;">Lihat Artikel</th>
+                <th style="text-align: center; vertical-align: middle;">Lihat Pengumuman</th>
                 <th style="text-align: center; vertical-align: middle;">Status</th>
                 <th style="text-align: center; vertical-align: middle;">Aksi</th>
             </tr>
@@ -31,7 +31,6 @@
             url: url_get_data,
             data: function (data){
                 data.dpkk_c_token = csrf_value;
-                data.filter_kategori = $('[name="filter_kategori"]').val();
             }, 
             columns: [
                 {"data": "id", searchable:false, orderable:false, "sClass": "text-center align-middle"},

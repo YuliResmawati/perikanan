@@ -12,9 +12,6 @@ class M_users extends MY_Model {
     protected $_fields_toshow = ['username','password', 'email', 'display_name', 'level','pegawai_id'];
     protected $_fields = [
         'username' => 'username',
-        'password' => 'password',
-        'level' => 'level',
-        'pegawai_id' => 'pegawai_id',
     ];
 
     public $default_password = "dkpp_pass";
@@ -123,10 +120,10 @@ class M_users extends MY_Model {
         } else {
             $this->db->update('cookie', ['deleted' => 1] , ['cookie' => $cookie ]);
 
-			delete_cookie('dkpp_users_cookie');
-		 	$this->session->sess_destroy();
+            delete_cookie('dkpp_users_cookie');
+            $this->session->sess_destroy();
 
-		 	redirect('auth', 'refresh');
+            redirect('auth', 'refresh');
         }
     }
 
@@ -229,7 +226,7 @@ class M_users extends MY_Model {
     {
         parent::clear_join();
 
-        $this->_fields_toshow = ['pegawai_id','nama_pegawai','nip','username','display_name','email','users.status'];
+        $this->_fields_toshow = ['pegawai_id','nama_pegawai','gelar_depan','gelar_blkng','nip','username','display_name','email','users.status','level'];
         parent::join('v_pegawai_dkpp e','users.pegawai_id=e.id', 'left');
         $this->db->where(['pegawai_id !=' => 0]);
 

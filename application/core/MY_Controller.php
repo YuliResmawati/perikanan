@@ -70,9 +70,8 @@ class Frontend_Controller extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->data['theme_path_back']       = base_url('assets/backend');
         $this->data['theme_path']       = base_url('assets/frontend');
-        $this->data['theme_path_backend']       = base_url('assets/backend');
+        // $this->data['theme_path_backend']       = base_url('assets/backend');
         $this->data['page_title']       = '';
         $this->data['page_description'] = '';
         $this->paging                   = array(

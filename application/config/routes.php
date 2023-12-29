@@ -86,6 +86,10 @@ $route['announcement'] = 'frontend/announcement';
 $route['announcement/page'] = 'frontend/announcement';
 $route['announcement/page/(:any)'] = 'frontend/announcement/index/$1';
 
+$route['publication'] = 'frontend/publication';
+$route['publication/page'] = 'frontend/publication';
+$route['publication/page/(:any)'] = 'frontend/publication/index/$1';
+
 $route['article'] = 'frontend/article';
 $route['article/page'] = 'frontend/article';
 $route['article/page/(:any)'] = 'frontend/article/index/$1';

@@ -48,7 +48,7 @@ class Users extends Backend_Controller {
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['pegawai'] = $this->m_pegawai->get_pegawai()->findAll();
-        $this->data['bidang'] = $this->m_bidang_user->findAll();
+        $this->data['bidang'] = $this->m_bidang_user->order_by('nama_jabatan', 'ASC')->findAll();
         $this->data['id_key'] = $this->id_key;
 
         $this->load->view('users/v_add', $this->data);
@@ -86,8 +86,10 @@ class Users extends Backend_Controller {
             $this->m_users->push_select('users.status');
             $response = $this->m_users->get_detail_pegawai()->datatables();
 
+            $response->order_by('level','asc');
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
             $response->edit_column('two_row', '$1', "two_row(nama_pegawai,'fe-user text-danger mr-1', nip,'fe-mail text-success mr-1')");
+            $response->edit_column('user_row','$1',"icon_username(username, level, 1)");  
             $response->edit_column('status', '$1', "str_status(status)");
             $response->add_column('reset_pass', '$1', "tabel_icon(id,' ','reset_pass',' ', $this->id_key)");
             $response->add_column('aksi', '$1 $2', "tabel_icon(id,' ','delete',' ', $this->id_key),
@@ -148,9 +150,12 @@ class Users extends Backend_Controller {
 
                 $pegawai_id = decrypt_url($this->input->post('pegawai_id'), $this->id_key);
                 $level = decrypt_url($this->input->post('bidang'), $this->id_key);
+                $result = preg_replace("/[^a-zA-Z]/", " ", $this->input->post('username'));
+                $display = ucwords($result);
 
                 $this->return = $this->m_users->push_to_data('level', $level)
                                 ->push_to_data('pegawai_id', $pegawai_id)
+                                ->push_to_data('display_name', $display)
                                 ->push_to_data('password', $this->m_users->ghash('dkpp_pass'))
                                 ->push_to_data('deleted', '0')
                                 ->save($id);
