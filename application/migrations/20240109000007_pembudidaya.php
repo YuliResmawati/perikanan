@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Panel_harga extends CI_Migration {
+class Migration_Pembudidaya extends CI_Migration {
 
     public function up()
     {
@@ -11,31 +11,16 @@ class Migration_Panel_harga extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'komoditas_id' => array(
-                'type' => 'INT4',
-                'default' => null,
-            ),
             'kecamatan_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'default' => null,
-            ),
-            'harga' => array(
                 'type' => 'INT4',
                 'default' => null,
             ),
-            'satuan' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'default' => null,
-            ),
-            'tanggal' => array(
-                'type' => 'date',
+            'jumlah' => array(
+                'type' => 'INT4',
                 'default' => null,
             ),
             'type' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '1',
+                'type' => 'INT4',
                 'default' => null,
             ),
             'created_at' => array(
@@ -75,12 +60,12 @@ class Migration_Panel_harga extends CI_Migration {
         ));
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('panel_harga');
+        $this->dbforge->create_table('pembudidaya');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('panel_harga');
+        $this->dbforge->drop_table('pembudidaya');
     }
 }
 

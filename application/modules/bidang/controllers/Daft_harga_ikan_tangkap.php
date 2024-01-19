@@ -1,16 +1,16 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Panel_harga_ikan extends Backend_Controller {
+class Daft_harga_ikan_tangkap extends Backend_Controller {
 
     public function __construct()
 	{
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'bidang/panel_harga_ikan';
+		$this->data['uri_mod'] = 'bidang/daft_harga_ikan_tangkap';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Panel Harga Ikan', 'panel_harga');
+        $this->breadcrumbs->push('Panel Harga Ikan Hasil Tangkap Nelayan', 'daft_harga_ikan_tangkap');
         $this->load->model([
             'm_panel_harga_ikan', 'm_wilayah','m_komoditas','m_kamus_data', 'm_bulan'
         ]);
@@ -37,14 +37,14 @@ class Panel_harga_ikan extends Backend_Controller {
 
     public function index()
 	{   
-        $this->data['add_button_link'] = base_url('bidang/panel_harga_ikan/add');
+        $this->data['add_button_link'] = base_url('bidang/daft_harga_ikan_tangkap/add');
         $this->data['page_title'] = "Panel Harga Ikan";
         $this->data['page_description'] = "Halaman Data Harga Bahan Ikan.";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['card'] = "true";
 
-		$this->load->view('panel_harga_ikan/v_index', $this->data);
+		$this->load->view('daft_harga_ikan_tangkap/v_index', $this->data);
     }
 
 
@@ -59,7 +59,7 @@ class Panel_harga_ikan extends Backend_Controller {
         $this->data['komoditas'] = $this->m_komoditas->get_all_komoditas_ikan()->findAll();
         $this->data['satuan'] = $this->m_kamus_data->get_all_satuan()->findAll();
 
-        $this->load->view('panel_harga_ikan/v_add', $this->data);
+        $this->load->view('daft_harga_ikan_tangkap/v_add', $this->data);
     }
 
     public function edit($id = null)
@@ -67,10 +67,10 @@ class Panel_harga_ikan extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 		
 		if ($id == FALSE) {
-			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('bidang/harga_panel_ikan')));
+			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('bidang/daft_harga_ikan_tangkap')));
         }
 
-        $this->breadcrumbs->push('Edit', 'bidang/panel_harga_ikan/edit');
+        $this->breadcrumbs->push('Edit', 'bidang/daft_harga_ikan_tangkap/edit');
         $this->data['page_title'] = "Edit Panel Harga Ikan";
         $this->data['page_description'] = "Halaman Data Harga Ikan.";
         $this->data['card'] = "true";
@@ -79,7 +79,7 @@ class Panel_harga_ikan extends Backend_Controller {
         $this->data['id'] = $id;
         $this->data['satuan'] = $this->m_kamus_data->get_all_satuan()->findAll();
 
-        $this->load->view('panel_harga_ikan/v_edit', $this->data);
+        $this->load->view('daft_harga_ikan_tangkap/v_edit', $this->data);
     }
 
     public function AjaxGet($id = NULL)
@@ -91,8 +91,8 @@ class Panel_harga_ikan extends Backend_Controller {
         if ($id == FALSE) {
             $this->m_panel_harga_ikan->push_select('status');
             
-            $edit_link = 'bidang/panel_harga_ikan/edit/'; 
-            $response = $this->m_panel_harga_ikan->get_all_panel_ikan()->where(['type' => '1'])->datatables();
+            $edit_link = 'bidang/daft_harga_ikan_tangkap/edit/'; 
+            $response = $this->m_panel_harga_ikan->get_all_panel_ikan()->where(['type' => '2'])->datatables();
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
             $response->edit_column('status', '$1', "str_status(status)");
             $response->edit_column('tanggal', '$1', "indo_date(tanggal)");
@@ -179,7 +179,7 @@ class Panel_harga_ikan extends Backend_Controller {
         $this->output->unset_template();
 
         $id = decrypt_url($id, $this->id_key);
-        $captcha_score = get_recapture_score($this->input->post('pni-token-response'));  
+        $captcha_score = get_recapture_score($this->input->post('dfit-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(
@@ -208,7 +208,7 @@ class Panel_harga_ikan extends Backend_Controller {
                             'satuan'       => decrypt_url($this->input->post('satuan'), $this->id_key),
                             'harga'       => $harga,
                             'status'     => '1',
-                            'type'       => '1'
+                            'type'       => '2'
                         );  
                     }
                 } 
@@ -246,7 +246,7 @@ class Panel_harga_ikan extends Backend_Controller {
         $this->output->unset_template();
 
         $id = decrypt_url($id, $this->id_key);
-        $captcha_score = get_recapture_score($this->input->post('pnie-token-response'));  
+        $captcha_score = get_recapture_score($this->input->post('dfite-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(

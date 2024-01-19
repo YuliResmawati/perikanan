@@ -1,7 +1,7 @@
 <div class="row mt-4">
     <div class="col-12">
         <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
-        <input type="hidden" class="pni-token-response" name="pni-token-response">
+        <input type="hidden" class="pi-token-response" name="pi-token-response">
         <div class="form-group row">
             <label for="jenis" class="col-md-2 col-form-label">Pilih Jenis Ikan <?= label_required() ?></label>
             <div class="col-md-10">
@@ -21,9 +21,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="harga" class="col-md-2 col-form-label">Harga Konsumen <?= label_required() ?></label>
+            <label for="produksi" class="col-md-2 col-form-label">Jumlah Produksi <?= label_required() ?></label>
             <div class="col-md-10">
-                <input class="form-control custom-form " type="text" name="harga" id="rupiah" placeholder="Harga Konsumen">
+                <input class="form-control custom-form " type="text" name="produksi" id="produksi" placeholder="Jumlah Produksi">
             </div>
         </div>
         <div class="form-group row">
@@ -58,12 +58,12 @@
             disableMobile : true
         });
 
-        $('.select2-selection').css('border-color','#d0d0d0');
-
-        var rupiah = document.getElementById("rupiah");
+         var rupiah = document.getElementById("produksi");
             rupiah.addEventListener("keyup", function(e) {
-                rupiah.value = formatRupiah(this.value, "Rp. ");
+                rupiah.value = formatRupiah(this.value);
         });
+
+        $('.select2-selection').css('border-color','#d0d0d0');
 
         $('select.select2').each(function(el) {
             let spinner = "<span class=\"select2-spinner spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\" style=\"display:none;\"></span>";
@@ -137,7 +137,7 @@
         $('#button-value').html("Loading...");
         grecaptcha.ready(function() {
             grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'submit'}).then(function(token) {
-                document.querySelector('.pni-token-response').value = token;
+                document.querySelector('.pi-token-response').value = token;
                 $('#formAjax').submit()
             });
         });

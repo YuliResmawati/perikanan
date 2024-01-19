@@ -70,7 +70,7 @@ class Gallery extends Backend_Controller {
 
         $this->breadcrumbs->push('Edit', 'admin/gallery/edit');
         $this->data['page_title'] = "Edit Data Gallery";
-        $this->data['page_description'] = "Halaman Edit Data Guru.";
+        $this->data['page_description'] = "Halaman Edit Data Gallery.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;

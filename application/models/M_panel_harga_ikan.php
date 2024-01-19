@@ -23,7 +23,7 @@ class M_panel_harga_ikan extends MY_Model {
         
         parent::clear_join();
 
-        $this->_fields_toshow = ['panel_harga_ikan.id', 'komoditas', 'satuan','komoditas_id', 'harga', 'tanggal','jenis'];
+        $this->_fields_toshow = ['panel_harga_ikan.id', 'komoditas', 'satuan','komoditas_id', 'harga', 'panel_harga_ikan.created_at as tanggal','jenis'];
 
         parent::join('komoditas ','panel_harga_ikan.komoditas_id=komoditas.id');
         

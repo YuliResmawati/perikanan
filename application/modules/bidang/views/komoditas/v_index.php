@@ -5,7 +5,7 @@
 </div>
 <br>
 <?php if ($this->logged_level != 3) { ?>
-    <div class="form-group row mt-10 ">
+<div class="form-group row mt-10 ">
     <label for="jenis_ikan" class="col-sm-2 col-form-label">Pilih Jenis Ikan</label>
     <div class="col-sm-10">
         <select class="form-control select2" name="jenis_ikan" id="jenis_ikan">

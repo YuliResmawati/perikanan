@@ -1,12 +1,13 @@
 <div class="row mt-4">
     <div class="col-12">
-        <?= form_open($uri_mod.'/AjaxSave', 'id="formAjax" class="form"') ?> 
-        <input type="hidden" class="pni-token-response" name="pni-token-response">
+        <?= form_open($uri_mod.'/AjaxSavePanel', 'id="formAjax" class="form"') ?> 
+        <input type="hidden" class="pnbk-token-response" name="pnbk-token-response">
+        <input type="hidden" class="form-control" name="kec_id" id="kec_id" value="<?= encrypt_url($id, $id_key) ?>" readonly>
         <div class="form-group row">
             <label for="jenis" class="col-md-2 col-form-label">Pilih Jenis Ikan <?= label_required() ?></label>
             <div class="col-md-10">
                 <select class="form-control select2" name="jenis" id="jenis">
-                    <option selected disable>Pilih Jenis Ikan</option>
+                    <option selected disabled>Pilih Jenis Ikan</option>
                     <option value="<?= encrypt_url('1', $id_key) ?>">Ikan Laut</option>
                     <option value="<?= encrypt_url('2', $id_key) ?>">Ikan Tawar</option>
                 </select>
@@ -15,26 +16,32 @@
         <div class="form-group row">
             <label for="komoditas" class="col-md-2 col-form-label">Pilih Komoditas <?= label_required() ?></label>
             <div class="col-md-10">
-                <select id="filter_komoditas" class="selectpicker" data-actions-box="true"  multiple data-selected-text-format="count > 4" data-style="btn-light" 
-                    title="Pilih Komoditas" data-live-search="true" name="filter_komoditas[]">
+                <select class="form-control select2" name="komoditas" id="komoditas_select">
+                    <option selected disabled>Komoditas Tidak Tersedia</option>  
                 </select>
             </div>
         </div>
         <div class="form-group row">
-            <label for="harga" class="col-md-2 col-form-label">Harga Konsumen <?= label_required() ?></label>
+            <label for="harga" class="col-md-2 col-form-label">Harga <?= label_required() ?></label>
             <div class="col-md-10">
-                <input class="form-control custom-form " type="text" name="harga" id="rupiah" placeholder="Harga Konsumen">
+                <input class="form-control custom-form " type="text" name="harga" id="rupiah" placeholder="Harga">
             </div>
         </div>
         <div class="form-group row">
             <label for="satuan" class="col-md-2 col-form-label">Satuan <?= label_required() ?></label>
             <div class="col-md-10">
                 <select class="form-control select2" name="satuan" id="satuan">
-                    <option selected disable>Pilih Satuan</option>
+                    <option selected disabled>Pilih Satuan</option>
                     <?php $no = 1; foreach($satuan as $row): ?>
                         <option value="<?= encrypt_url($row->id, $id_key) ?>"><?= $no. ' - ' .$row->kamus_data ?></option>
                     <?php $no++; endforeach; ?>
                 </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="tanggal" class="col-md-2 col-form-label">Tanggal <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input type="date" class="form-control flatpickr" name="tanggal" id="tanggal">
             </div>
         </div>
         <div class="row mt-3">
@@ -64,68 +71,48 @@
             rupiah.addEventListener("keyup", function(e) {
                 rupiah.value = formatRupiah(this.value, "Rp. ");
         });
+    });
 
-        $('select.select2').each(function(el) {
-            let spinner = "<span class=\"select2-spinner spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\" style=\"display:none;\"></span>";
-            let element = $(this).next(".select2-container").find(".select2-selection .select2-selection__arrow");
-            element.append(spinner);
-        });
+    $('#jenis').change(function() {
+        var id = $(this).val();
 
-        $('#jenis').change(function() {
-            jenis_id = $(this).val();
-            spinner = $(this).next(".select2-container").find(".select2-selection .select2-selection__arrow .select2-spinner");
-            arrow = $(this).next(".select2-container").find(".select2-selection .select2-selection__arrow b[role='presentation']");
-
-            jenis_select_change(jenis_id, spinner, arrow);
-        });
-
-        function jenis_select_change(jenis_id,  spinner, arrow) {
-            var id = jenis_id;
-
-            $.ajax({
-                url: "<?= base_url($uri_mod. '/AjaxGetValueByJenis/') ?>",
-                method : "POST",
-                data : {id: id, dkpp_c_token: csrf_value},
-                async : true,
-                dataType : 'json',
-                beforeSend:function(){
-                    spinner.show();
-                    arrow.hide();
-                },
-                success: function(data) {
-                    if (data.status == true) {
+        $.ajax({
+            url: "<?= base_url('bidang/daft_harga_ikan_budidaya/AjaxGetValueByJenis') ?>",
+            method : "POST",
+            data : {id: id, dkpp_c_token: csrf_value},
+            async : true,
+            dataType : 'json',
+            success: function(data) {
+                if (data.status == true) {
+                    if (data.data !== null) {
                         csrf_value = data.token;
+                        var html = '<option value="" selected disabled>Pilih Komoditas</option>';
                         var index;
 
                         for (index = 0; index < data.data.length; index++) {
                             html += '<option value='+data.data[index].id+'>'+data.data[index].komoditas+'</option>';
                         }
-                        
-                        $('#filter_komoditas').html(html);
+
+                        $('#komoditas_select').html(html);
+
                     } else {
                         var html = '<option value="" selected disabled>Komoditas Tidak Tersedia</option>';
-                        $('#filter_komoditas').html(html);
+                        $('#komoditas_select').html(html);
                     }
-                    
-                    $('.selectpicker').selectpicker('refresh');
-                    spinner.hide();
-                    arrow.show();
-                },
-                error:function() {
-                    bootbox.alert({
-                        title: "Error",
-                        centerVertical: true,
-                        message: '<span class="text-danger"><i class="mdi mdi-alert"></i> Oops, terjadi kesalahan dalam menghubungkan ke server. Silahkan periksa koneksi anda terlebih dahulu.</span>',
-                    });
-                    
-                    $('#pegawai').hide();
-                    spinner.hide();
-                    arrow.show();
+                } else {
+                    var html = '<option value="" selected disabled>Komoditas Tidak Tersedia</option>';
+                    $('#komoditas_select').html(html);
                 }
-            });
-
-            return false;
-        }
+            },
+            error:function() {
+                bootbox.alert({
+                    title: "Error",
+                    centerVertical: true,
+                    message: '<span class="text-danger"><i class="mdi mdi-alert"></i> Oops, terjadi kesalahan dalam menghubungkan ke server. Silahkan periksa koneksi anda terlebih dahulu.</span>',
+                });
+            }
+        });
+        return false;
     });
 
     $('#submit-btn').click(function(e) {
@@ -137,7 +124,7 @@
         $('#button-value').html("Loading...");
         grecaptcha.ready(function() {
             grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'submit'}).then(function(token) {
-                document.querySelector('.pni-token-response').value = token;
+                document.querySelector('.pnbk-token-response').value = token;
                 $('#formAjax').submit()
             });
         });
@@ -153,7 +140,7 @@
             button_value: $('#button-value'),
             url: $(this).attr('action'),
             data: $(this).serialize(),
-            redirect: "<?= base_url($uri_mod) ?>"
+            redirect: "<?= base_url($uri_mod.'/index_panel/').encrypt_url($id, $this->id_key) ?>"
         }
 
         btn_save_form(option_save);

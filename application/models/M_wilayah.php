@@ -40,13 +40,13 @@ class M_wilayah extends MY_Model {
     }
 
 
-    public function get_all_panel_kecamatan()
+    public function get_all_panel_kecamatan($type = null)
     {
         parent::clear_join();
 
         $this->_fields_toshow = [
             "id", "nama_kecamatan",
-            "(select count(komoditas_id) from panel_harga where kecamatan_id=v_kecamatan.id) as total_panel",
+            "(select count(komoditas_id) from panel_harga where kecamatan_id=v_kecamatan.id and type = '$type') as total_panel",
         ];
         
         return $this;

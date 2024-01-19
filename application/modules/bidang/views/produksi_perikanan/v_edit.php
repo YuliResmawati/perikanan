@@ -1,8 +1,7 @@
 <div class="row mt-4">
     <div class="col-12">
     <?= form_open($uri_mod.'/AjaxSaveEdit/'.encrypt_url($id, $id_key), 'id="formAjax" class="form"') ?>
-        <input type="hidden" class="pnie-token-response" name="pnie-token-response">
-
+        <input type="hidden" class="pie-token-response" name="pie-token-response">
         <div class="form-group row">
             <label for="jenis" class="col-md-2 col-form-label">Pilih Jenis Ikan <?= label_required() ?></label>
             <div class="col-md-10">
@@ -22,9 +21,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="harga" class="col-md-2 col-form-label">Harga Konsumen <?= label_required() ?></label>
+            <label for="produksi" class="col-md-2 col-form-label">Jumlah Produksi <?= label_required() ?></label>
             <div class="col-md-10">
-                <input class="form-control custom-form " type="text" name="harga" id="rupiah" placeholder="Harga Konsumen">
+                <input class="form-control custom-form " type="text" name="produksi" id="produksi" placeholder="Jumlah Produksi">
             </div>
         </div>
         <div class="form-group row">
@@ -50,6 +49,7 @@
         <?= form_close(); ?>
     </div>
 </div>
+
 
 <!-- Komoditas Search Modal -->
 <div class="modal fade" id="data-komoditas" tabindex="-1" role="dialog" aria-hidden="true">
@@ -91,9 +91,9 @@
             disableMobile : true
         });
 
-        var rupiah = document.getElementById("rupiah");
+        var rupiah = document.getElementById("produksi");
             rupiah.addEventListener("keyup", function(e) {
-                rupiah.value = formatRupiah(this.value, "Rp. ");
+                rupiah.value = formatRupiah(this.value);
         });
 
         let id ='<?= encrypt_url($id, $id_key) ?>';
@@ -113,11 +113,10 @@
 
         data = get_data_by_id(aOption);
         if (data != false) {
-            let harga = formatRupiah(data.data.harga, 'Rp.');
+            let produksi = formatRupiah(data.data.produksi);
 
             $('select[name="satuan"]').val(data.data.satuan).change();
-            $('#tanggal').val(data.data.tanggal);
-            $('#rupiah').val(harga);
+            $('#produksi').val(produksi);
             $('select[name="jenis"]').val(data.data.jenis).change();
             $('#nama_komoditas').val(data.data.komoditas);
             $('#komoditas').val(data.data.komoditas_id);
@@ -157,7 +156,7 @@
         $('#button-value').html("Loading...");
         grecaptcha.ready(function() {
             grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'submit'}).then(function(token) {
-                document.querySelector('.pnie-token-response').value = token;
+                document.querySelector('.pie-token-response').value = token;
                 $('#formAjax').submit()
             });
         });

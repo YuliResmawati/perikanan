@@ -91,7 +91,6 @@ class Skm extends Frontend_Controller {
             $this->output->set_output(json_encode(['message' => FALSE, 'msg' => 'Gagal mengambil data.']));
         }   
     }
-
 }
 
 /* End of file Skm.php */

@@ -102,3 +102,31 @@
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function () {
+        $('#submitBtn').click(function () {
+            var formData = $('#form_emoticon').serialize();
+            console.log(formData);
+
+            $.ajax({
+                url: '{{ route("User_ajax_ikm") }}', // Ganti 'nama_rute_controller' dengan nama rute controller Anda
+                // url: 'https://rangkiang.agamkab.go.id/api/ikm/ajaxInsertPenilaian', // Ganti 'nama_rute_controller' dengan nama rute controller Anda
+                method: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Handle respons dari controller jika diperlukan
+                    console.log(response.success);
+                    // var data = response.success.true;
+                    // if (data) {
+                    //     Swal.fire(
+                    //         'Data Berhasil',
+                    //     )
+                    // }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

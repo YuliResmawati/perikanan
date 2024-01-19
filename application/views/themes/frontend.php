@@ -220,7 +220,7 @@
                                  <img src="<?= $theme_path ?>/images/logo_dkpp2.png" alt="logo">
                               </a>
                            </div>
-                           <div class="textwidget widget-text"> Media Website ini dapat digunakan untuk komunikasi atau penyampaian informasi kepada sejumlah pihak yang membutuhkan. </div>
+                           <div class="textwidget widget-text"> Aplikasi ini merupakan website dan panel harga, dimana pada media ini dapat digunakan untuk komunikasi atau penyampaian informasi kepada sejumlah pihak yang membutuhkan. </div>
                         </aside>
                      </div>
                      <div class="col-lg-4 col-md-6">

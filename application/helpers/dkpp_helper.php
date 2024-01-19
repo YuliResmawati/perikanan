@@ -289,7 +289,7 @@ if (!function_exists('tabel_icon_komoditas')) {
     function tabel_icon_komoditas($id, $session_id, $action, $link_url = '', $keyid = '', $modal_name = '', $attr =  '', $level = '')
     {
         $a = '';
-
+        
         if ($id !== $session_id) {
             if ($keyid !== '') {
                 $id = encrypt_url($id, $keyid);
@@ -566,26 +566,6 @@ if (!function_exists('str_level'))
             $a = 'Admin Bidang Perikanan Budi Daya dan Perikanan Tangkap';
         } else if ($status == '7') {
             $a = 'Admin Bidang Penguatan Daya Saing Produk Perikanan dan Pengawasan Sumber Daya Perikanan';
-        } else {
-            $a = 'Tidak Diketahui';
-        }
-
-        return $a;
-    }
-}
-
-if (!function_exists('jenis_komoditas')) 
-{
-    function jenis_komoditas($jenis)
-    {
-        $a = '';
-
-        if ($jenis == '1') {
-            $a = 'Ikan Laut';
-        } else if ($jenis == '2') {
-            $a = 'Ikan Air Tawar';
-        } else if ($jenis == '3') {
-            $a = 'Bahan pokok';
         } else {
             $a = 'Tidak Diketahui';
         }
@@ -2091,4 +2071,36 @@ if (!function_exists('rupiah')) {
     }
 }
 
+if (!function_exists('jenis_komoditas')) 
+{
+    function jenis_komoditas($jenis)
+    {
+        $a = '';
+
+        if ($jenis == '1') {
+            $a = '<h6><span class="badge bg-soft-blue text-blue"><i class="mdi mdi-fish"></i> Ikan Laut</span></h6>';
+        } else if ($jenis == '2') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-fish"></i> Ikan Air Tawar</span></h6>';
+        } else if ($jenis == '3') {
+            $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-barley"></i>Bahan pokok</span></h6>';
+        } else {
+            $a = 'Tidak Diketahui';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('jum_produksi')) 
+{
+    function jum_produksi($jum, $satuan)
+    {
+        $a = '';
+
+        if (!empty($jum) && !empty($satuan)) {
+            $a = number_format($jum) ."(". $satuan .")";
+        } 
+        return $a;
+    }
+}
     

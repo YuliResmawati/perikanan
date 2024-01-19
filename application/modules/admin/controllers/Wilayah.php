@@ -49,7 +49,7 @@ class Wilayah extends Backend_Controller {
         if ($id == FALSE) {
             $this->m_wilayah->push_select('status');
 
-            $response = $this->m_wilayah->get_kecamatan()->where(['simpeg.kecamatan.kabupaten_id' => '1306'])->datatables();
+            $response = $this->m_wilayah->get_kecamatan()->datatables();
             $response->order_by('id', 'ASC');
             $response->edit_column('kode', '$1', "encrypt_url(id,' ', $this->id_key)");
             $response->add_column('id', '$1',"id");

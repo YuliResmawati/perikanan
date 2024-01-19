@@ -1,26 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Komoditas extends Backend_Controller {
-
+class Kelompok_nelayan extends Backend_Controller {
     public function __construct()
 	{
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'bidang/komoditas';
+		$this->data['uri_mod'] = 'bidang/kelompok_nelayan';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Komoditas', 'komoditas');
-        $this->modal_name = 'modal-komoditas';
-        $this->load->model(['m_komoditas']);
-        
-        $this->load->css($this->data['theme_path'] . '/libs/bootstrap-select/css/bootstrap-select.min.css');
-        $this->load->js($this->data['theme_path'] . '/libs/bootstrap-select/js/bootstrap-select.min.js');
+        $this->breadcrumbs->push('Kelompok Nelayan', 'kelompok_nelayan');
+        $this->load->model(['m_kelompok_nelayan']);
+
         $this->load->css($this->data['theme_path'] . '/libs/select2/css/select2.min.css');
         $this->load->js($this->data['theme_path'] . '/libs/select2/js/select2.min.js');
         $this->load->js($this->data['theme_path'] . '/libs/select2/js/i18n/id.js');
         $this->load->js($this->data['global_custom_path'] . '/js/select2-init.js');
-        $this->load->js($this->data['global_custom_path'] . '/js/init_mask.js');
 
 	}
 
@@ -31,18 +26,45 @@ class Komoditas extends Backend_Controller {
 
     public function index()
 	{   
-        if ($this->logged_level == '3' || $this->logged_level == '6') {
-            $this->data['add_button_link'] = base_url('bidang/komoditas/add');
-        }
-        $this->data['page_title'] = "Komoditas";
-        $this->data['page_description'] = "Halaman Data Komoditas.";
+        $this->data['add_button_link'] = base_url('bidang/kelompok_nelayan/add');
+        $this->data['page_title'] = "Kelompok Nelayan";
+        $this->data['page_description'] = "Halaman Kelompok Nelayan.";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['card'] = "true";
-        $this->data['form_name'] = "form-komoditas";
-        $this->data['modal_name'] = $this->modal_name;
 
-		$this->load->view('komoditas/v_index', $this->data);
+		$this->load->view('kelompok_nelayan/v_index', $this->data);
+    }
+
+    public function add()
+    {
+        $this->breadcrumbs->push('Tambah', 'bidang/kelompok_nelayan/add');
+        $this->data['page_title'] = "Tambah Data Kelompok Nelayan";
+        $this->data['page_description'] = "Halaman Tambah Data Kelompok Nelayan.";
+        $this->data['card'] = "true";
+        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
+        $this->data['id_key'] = $this->id_key;
+
+        $this->load->view('kelompok_nelayan/v_add', $this->data);
+    }
+
+    public function edit($id = null)
+    {        
+        $id = decrypt_url($id, $this->id_key);
+		
+		if ($id == FALSE) {
+			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('bidang/kelompok_nelayan')));
+        }
+
+        $this->breadcrumbs->push('Edit', 'bidang/kelompok_nelayan/edit');
+        $this->data['page_title'] = "Edit Data Kelompok Nelayan";
+        $this->data['page_description'] = "Halaman Edit Data Kelompok Nelayan.";
+        $this->data['card'] = "true";
+        $this->data['breadcrumbs'] = $this->breadcrumbs->show();
+        $this->data['id_key'] = $this->id_key;
+        $this->data['id'] = $id;
+
+        $this->load->view('kelompok_nelayan/v_edit', $this->data);
     }
 
     public function AjaxGet($id = NULL)
@@ -52,38 +74,25 @@ class Komoditas extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id == FALSE) {
-            $this->m_komoditas->push_select('status');
+            $this->m_kelompok_nelayan->push_select('status');
 
-            if ($this->logged_level == '3') {
-                $response = $this->m_komoditas->where(['jenis' => '3'])->datatables();
-            } else {
-                $response = $this->m_komoditas->datatables();
-
-                if (decrypt_url($this->input->post('filter_jenis'), $this->id_key) == FALSE) {
-                    $response->where('jenis', 0);
-                } else {
-                    if (decrypt_url($this->input->post('filter_komoditas'), $this->id_key) !== 'ALL') {
-                        $response->where('jenis', decrypt_url($this->input->post('filter_jenis'), $this->id_key));
-                    }
-                }
-            }
-
+            $edit_link = 'bidang/kelompok_nelayan/edit/';
+            $response = $this->m_kelompok_nelayan->datatables();
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
             $response->edit_column('status', '$1', "str_status(status)");
-            $response->edit_column('jenis', '$1', "jenis_komoditas(jenis)");
-            $response->add_column('aksi', '$1 $2', "tabel_icon_komoditas(id,' ','edit',' ', $this->id_key, $this->modal_name,' ', $this->logged_level ),
-                                                    tabel_icon_komoditas(id,' ','delete',' ', $this->id_key,' ',' ', $this->logged_level)");
+            $response->edit_column('nama_koperasi', '$1', "two_row(nama_koperasi,'fe-home text-danger mr-1', tahun_berdiri,'fe-type text-success mr-1')");
+            $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link ', $this->id_key, ' '),
+                                                    tabel_icon(id,' ','delete',' ', $this->id_key),
+                                                    active_status(id,' ',status,$this->id_key,' ')");
             
-            $response = $this->m_komoditas->datatables(true);
+            $response = $this->m_kelompok_nelayan->datatables(true);
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_komoditas->find($id); 
+            $this->return = $this->m_kelompok_nelayan->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
-                
-                $this->return->jenis= encrypt_url(($this->return->jenis), $this->id_key);
 
                 $response = array(
                     'status' => TRUE,
@@ -107,7 +116,8 @@ class Komoditas extends Backend_Controller {
     public function AjaxSave($id = null)
     {
         $this->output->unset_template();
-        $captcha_score = get_recapture_score($this->input->post('km-token-response'));  
+        $id = decrypt_url($id, $this->id_key);
+        $captcha_score = get_recapture_score($this->input->post('nl-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(
@@ -117,10 +127,11 @@ class Komoditas extends Backend_Controller {
         } else {
             $this->result = array('status' => TRUE, 'message' => NULL);
 
-            $_id = decrypt_url($this->input->post('data-id'), $this->id_key);
-            $id = ($_id !== FALSE) ? $_id : null;
-
-            $this->form_validation->set_rules('komoditas', 'Komoditas', 'required'); 
+            $this->form_validation->set_rules('nama_koperasi', 'Nama Koperasi', 'required'); 
+            $this->form_validation->set_rules('nama_ketua', 'Nama Ketua', 'required'); 
+            $this->form_validation->set_rules('alamat', 'Alamat Koperasi', 'required'); 
+            $this->form_validation->set_rules('jumlah', 'Jumlah Anggota', 'required'); 
+            $this->form_validation->set_rules('tahun', 'Tahun Berdiri', 'required'); 
 
 
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
@@ -128,22 +139,18 @@ class Komoditas extends Backend_Controller {
             if ($this->form_validation->run() == TRUE) {  
 
                 if ($id == FALSE) {
-                    $this->m_komoditas->push_to_data('status', '1');
+                    $this->m_kelompok_nelayan->push_to_data('status', '1');
                 }
 
-                if ($this->logged_level == '3'){
-                    $jenis = '3';
-                }else {
-                    $jenis = decrypt_url($this->input->post('jenis'), $this->id_key);
-                }
-
-                $this->m_komoditas->push_to_data('komoditas', $this->input->post('komoditas'))
-                    ->push_to_data('jenis', $jenis);
-
+                $this->m_kelompok_nelayan->push_to_data('nama_koperasi', $this->input->post('nama_koperasi'))
+                    ->push_to_data('nama_ketua', $this->input->post('nama_ketua'))
+                    ->push_to_data('alamat', $this->input->post('alamat'))
+                    ->push_to_data('jumlah_anggota', $this->input->post('jumlah'))
+                    ->push_to_data('tahun_berdiri', $this->input->post('tahun'));
 
                 if ($this->result['status'] !== FALSE) {
 
-                    $this->return =  $this->m_komoditas->save($id);
+                    $this->return =  $this->m_kelompok_nelayan->save($id);
 
                     if ($this->return) {
                         $this->result = array(
@@ -179,7 +186,7 @@ class Komoditas extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->return = $this->m_komoditas->delete($id);
+            $this->return = $this->m_kelompok_nelayan->delete($id);
 
             if ($this->return) {
                 $this->result = array(
@@ -210,18 +217,18 @@ class Komoditas extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->m_komoditas->push_select('status');
+            $this->m_kelompok_nelayan->push_select('status');
 
-            $check = $this->m_komoditas->find($id);
+            $check = $this->m_kelompok_nelayan->find($id);
 
             if ($check !== FALSE) {
                 if ($check->status == 0) {
-                    $this->m_komoditas->push_to_data('status', '1');
+                    $this->m_kelompok_nelayan->push_to_data('status', '1');
                 } else {
-                    $this->m_komoditas->push_to_data('status', '0');
+                    $this->m_kelompok_nelayan->push_to_data('status', '0');
                 }
 
-                $this->return = $this->m_komoditas->save($id);
+                $this->return = $this->m_kelompok_nelayan->save($id);
 
                 if ($this->return) {
                     $this->result = array(
@@ -253,4 +260,4 @@ class Komoditas extends Backend_Controller {
 
 }
 
-/* End of file Pengaturan_website.php */
+/* End of file kelompok_ nelayan.php */

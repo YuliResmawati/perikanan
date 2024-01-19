@@ -1,19 +1,16 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Panel_harga_ikan extends Backend_Controller {
-
+class Produksi_perikanan extends Backend_Controller {
     public function __construct()
 	{
 		parent::__construct();
 
 		$this->_init();
-		$this->data['uri_mod'] = 'bidang/panel_harga_ikan';
+		$this->data['uri_mod'] = 'bidang/produksi_perikanan';
         $this->id_key = $this->private_key;
-        $this->breadcrumbs->push('Panel Harga Ikan', 'panel_harga');
-        $this->load->model([
-            'm_panel_harga_ikan', 'm_wilayah','m_komoditas','m_kamus_data', 'm_bulan'
-        ]);
+        $this->breadcrumbs->push('Produksi Perikanan', 'produksi_perikanan');
+        $this->load->model(['m_produksi_perikanan', 'm_komoditas', 'm_kamus_data']);
 
         $this->load->css($this->data['theme_path'] . '/libs/bootstrap-select/css/bootstrap-select.min.css');
         $this->load->css($this->data['theme_path'] . '/libs/flatpickr/flatpickr.min.css');
@@ -37,29 +34,27 @@ class Panel_harga_ikan extends Backend_Controller {
 
     public function index()
 	{   
-        $this->data['add_button_link'] = base_url('bidang/panel_harga_ikan/add');
-        $this->data['page_title'] = "Panel Harga Ikan";
-        $this->data['page_description'] = "Halaman Data Harga Bahan Ikan.";
+        $this->data['add_button_link'] = base_url('bidang/produksi_perikanan/add');
+        $this->data['page_title'] = "Produksi Perikanan Tangkap";
+        $this->data['page_description'] = "Halaman Produksi Perikanan Tangkap.";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['card'] = "true";
 
-		$this->load->view('panel_harga_ikan/v_index', $this->data);
+		$this->load->view('produksi_perikanan/v_index', $this->data);
     }
-
 
     public function add()
     {
-        $this->breadcrumbs->push('Tambah', 'bidang/panel_harga/add');
-        $this->data['page_title'] = "Tambah Panel Harga Ikan";
-        $this->data['page_description'] = "Halaman Data Harga Ikan.";
+        $this->breadcrumbs->push('Tambah', 'bidang/produksi_perikanan/add');
+        $this->data['page_title'] = "Tambah Data Produksi Perikanan";
+        $this->data['page_description'] = "Halaman Tambah Data Produksi Perikanan.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
-        $this->data['komoditas'] = $this->m_komoditas->get_all_komoditas_ikan()->findAll();
         $this->data['satuan'] = $this->m_kamus_data->get_all_satuan()->findAll();
 
-        $this->load->view('panel_harga_ikan/v_add', $this->data);
+        $this->load->view('produksi_perikanan/v_add', $this->data);
     }
 
     public function edit($id = null)
@@ -67,19 +62,19 @@ class Panel_harga_ikan extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 		
 		if ($id == FALSE) {
-			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('bidang/harga_panel_ikan')));
+			$this->load->view('errors/html/error_bootbox.php', array('message' => 'ID yang tertera tidak terdaftar', 'redirect_link' => base_url('bidang/produksi_perikanan')));
         }
 
-        $this->breadcrumbs->push('Edit', 'bidang/panel_harga_ikan/edit');
-        $this->data['page_title'] = "Edit Panel Harga Ikan";
-        $this->data['page_description'] = "Halaman Data Harga Ikan.";
+        $this->breadcrumbs->push('Edit', 'bidang/produksi_perikanan/edit');
+        $this->data['page_title'] = "Edit Data Produksi Perikanan";
+        $this->data['page_description'] = "Halaman Edit Data Produksi Perikanan.";
         $this->data['card'] = "true";
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['id'] = $id;
         $this->data['satuan'] = $this->m_kamus_data->get_all_satuan()->findAll();
 
-        $this->load->view('panel_harga_ikan/v_edit', $this->data);
+        $this->load->view('produksi_perikanan/v_edit', $this->data);
     }
 
     public function AjaxGet($id = NULL)
@@ -89,22 +84,30 @@ class Panel_harga_ikan extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id == FALSE) {
-            $this->m_panel_harga_ikan->push_select('status');
+            $this->m_produksi_perikanan->push_select('status');
+
+            $edit_link = 'bidang/produksi_perikanan/edit/';
+            $response = $this->m_produksi_perikanan->get_all_produksi()->datatables();
+
+            if (decrypt_url($this->input->post('filter_jenis'), $this->id_key) == FALSE) {
+                $response->where('jenis', 0);
+            } else {
+                if (decrypt_url($this->input->post('filter_komoditas'), $this->id_key) !== 'ALL') {
+                    $response->where('jenis', decrypt_url($this->input->post('filter_jenis'), $this->id_key));
+                }
+            }
             
-            $edit_link = 'bidang/panel_harga_ikan/edit/'; 
-            $response = $this->m_panel_harga_ikan->get_all_panel_ikan()->where(['type' => '1'])->datatables();
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
-            $response->edit_column('status', '$1', "str_status(status)");
-            $response->edit_column('tanggal', '$1', "indo_date(tanggal)");
-            $response->edit_column('harga', '$1', "rupiah(harga)");
-            $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link ', $this->id_key, ''),
-                                                    tabel_icon(id,' ','delete',' ', $this->id_key),");
+            $response->edit_column('jenis', '$1', "jenis_komoditas(jenis)");
+            $response->edit_column('produksi', '$1', "jum_produksi(produksi, nama_satuan)");
+            $response->add_column('aksi', '$1 $2', "tabel_icon(id,' ','edit','$edit_link ', $this->id_key, ' '),
+                                                    tabel_icon(id,' ','delete',' ', $this->id_key)");
             
-            $response = $this->m_panel_harga_ikan->datatables(true);
+            $response = $this->m_produksi_perikanan->datatables(true);
     
             $this->output->set_output($response);
         } else {
-            $this->return = $this->m_panel_harga_ikan->get_all_panel_ikan()->find($id); 
+            $this->return = $this->m_produksi_perikanan->get_all_produksi()->find($id); 
 
             if ($this->return !== FALSE) {
                 unset($this->return->id);
@@ -173,13 +176,12 @@ class Panel_harga_ikan extends Backend_Controller {
 
     }
 
-
     public function AjaxSave($id = null)
     {
         $this->output->unset_template();
 
         $id = decrypt_url($id, $this->id_key);
-        $captcha_score = get_recapture_score($this->input->post('pni-token-response'));  
+        $captcha_score = get_recapture_score($this->input->post('pi-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(
@@ -189,7 +191,7 @@ class Panel_harga_ikan extends Backend_Controller {
         } else {
 
             $this->form_validation->set_rules('filter_komoditas[]', 'Komoditas', 'required');
-            $this->form_validation->set_rules('harga', 'Harga', 'required');
+            $this->form_validation->set_rules('produksi', 'Harga', 'required');
             $this->form_validation->set_rules('satuan', 'Satuan', 'required');
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
@@ -198,22 +200,20 @@ class Panel_harga_ikan extends Backend_Controller {
                 if ($id == FALSE) {
                     $id = null;
 
+                    $produksi = preg_replace("/[^0-9]/", "", $this->input->post('produksi'));
                     $arr_komoditas = $this->input->post('filter_komoditas[]');
-                    $harga = preg_replace("/[^0-9]/", "", $this->input->post('harga'));
                     $data = [];
 
                     foreach ($arr_komoditas as $key => $value) {
                         $data[] = array(
                             'komoditas_id'  => decrypt_url($value, $this->id_key),
                             'satuan'       => decrypt_url($this->input->post('satuan'), $this->id_key),
-                            'harga'       => $harga,
-                            'status'     => '1',
-                            'type'       => '1'
+                            'produksi'       => $produksi,
+                            'status'     => '1'
                         );  
                     }
                 } 
-
-                $this->return = $this->m_panel_harga_ikan->save_batch($data);
+                $this->return = $this->m_produksi_perikanan->save_batch($data);
 
                 if ($this->return) {
                     $this->result = array(
@@ -246,7 +246,7 @@ class Panel_harga_ikan extends Backend_Controller {
         $this->output->unset_template();
 
         $id = decrypt_url($id, $this->id_key);
-        $captcha_score = get_recapture_score($this->input->post('pnie-token-response'));  
+        $captcha_score = get_recapture_score($this->input->post('pie-token-response'));  
 
         if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
             $this->result = array(
@@ -256,21 +256,21 @@ class Panel_harga_ikan extends Backend_Controller {
         } else {
 
             $this->form_validation->set_rules('komoditas', 'Komoditas', 'required');
-            $this->form_validation->set_rules('harga', 'Harga', 'required');
+            $this->form_validation->set_rules('produksi', 'Produksi', 'required');
             $this->form_validation->set_rules('satuan', 'Satuan', 'required');
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
             if ($this->form_validation->run() == TRUE) {
 
                 
-                $harga = preg_replace("/[^0-9]/", "", $this->input->post('harga'));
+                $produksi = preg_replace("/[^0-9]/", "", $this->input->post('produksi'));
                 $komoditas = decrypt_url($this->input->post('komoditas'), 'app');
                 
-                $this->m_panel_harga_ikan->push_to_data('satuan', decrypt_url($this->input->post('satuan'), $this->id_key))
-                    ->push_to_data('harga', $harga)
+                $this->m_produksi_perikanan->push_to_data('satuan', decrypt_url($this->input->post('satuan'), $this->id_key))
+                    ->push_to_data('produksi', $produksi)
                     ->push_to_data('komoditas_id', $komoditas);
 
-                $this->return = $this->m_panel_harga_ikan->save($id);
+                $this->return = $this->m_produksi_perikanan->save($id);
 
                 if ($this->return) {
                     $this->result = array(
@@ -305,7 +305,7 @@ class Panel_harga_ikan extends Backend_Controller {
         $id = decrypt_url($id, $this->id_key);
 
         if ($id !== FALSE) {
-            $this->return = $this->m_panel_harga_ikan->delete($id);
+            $this->return = $this->m_produksi_perikanan->delete($id);
 
             if ($this->return) {
                 $this->result = array(
@@ -328,7 +328,6 @@ class Panel_harga_ikan extends Backend_Controller {
         $this->output->set_output(json_encode($this->result));
     }
 
-
 }
 
-/* End of file Pengaturan_website.php */
+/* End of file produksi_perikanan.php */

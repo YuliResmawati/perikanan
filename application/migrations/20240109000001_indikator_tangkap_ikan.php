@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Panel_harga_ikan extends CI_Migration {
+class Migration_Indikator_tangkap_ikan extends CI_Migration {
 
     public function up()
     {
@@ -11,28 +11,21 @@ class Migration_Panel_harga_ikan extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'komoditas_id' => array(
-                'type' => 'INT4',
-                'default' => null,
-            ),
-            'harga' => array(
-                'type' => 'INT4',
-                'default' => null,
-            ),
-            'satuan' => array(
+            'nama_indikator' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '255',
                 'default' => null,
             ),
-            'tanggal' => array(
-                'type' => 'date',
+            'jenis' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
                 'default' => null,
-            ),
-            'type' => array(
+            ), 
+            'type_peraiaran' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '1',
                 'default' => null,
-            ),
+            ), 
             'created_at' => array(
                 'type' => 'timestamp',
                 'default' => null,
@@ -70,12 +63,12 @@ class Migration_Panel_harga_ikan extends CI_Migration {
         ));
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('panel_harga_ikan');
+        $this->dbforge->create_table('indikator_tangkap_ikan');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('panel_harga_ikan');
+        $this->dbforge->drop_table('indikator_tangkap_ikan');
     }
 }
 
