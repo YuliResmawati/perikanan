@@ -40,7 +40,6 @@
                         <textarea rows="7" name="isi" id="isi" placeholder="Isi Pengaduan..."></textarea>
                         </div>
                         <div class="submit-area col-lg-12 col-12">
-                        
                             <button class="button-round-primary w-100" id="submit-survei">
                                 <span class="spinner-border spinner-border-sm mr-1" id="spinner-status" role="status" aria-hidden="true" style="display:none"></span>
                                 <i class="bi bi-unlock me-2" id="login-icon"></i> <span id="text-button">Kirim Pengaduan</span> 

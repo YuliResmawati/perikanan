@@ -1,0 +1,6 @@
+.floatedTable {
+    float:left;
+}
+.inlineTable {
+    display: inline-block;
+}

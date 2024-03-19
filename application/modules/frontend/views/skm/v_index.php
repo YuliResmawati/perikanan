@@ -9,29 +9,9 @@
 </section>
 <div class="checkout-section">
     <div class="container">
+        <?= form_open($uri_mod.'/sendRankiangApis', 'id="formAjax" class="form"') ?>
         <div class="row">
-            <div class="col-md-7 right-sidebar">
-            <div class="checkout-field-wrap">
-                <h3>Pendapat Responden Tentang Pelayanan Publik</h3><br>
-                <?php if (!empty($ikm)): ?>
-                    <?php $no = 1; foreach ($ikm as $row): ?>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label><?= $no. ' - ' .$row['pertanyaan']?></label>
-                                <select class="form-control select2" name="opsi" id="opsi">
-                                    <?php $no = 1; foreach($row['pilihan'] as $row_opsi): ?>
-                                        <option value="<?= $row_opsi['pilihan_nilai']?>"><?= $row_opsi['pilihan'].''. $row_opsi['icon'] ?></option>
-                                    <?php $no++; endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    <?php $no++; endforeach ?>
-                <?php else: ?>
-                    <h3 class="brand-title">Belum ada Kusioner. </h3>
-                <?php endif ?>
-            </div>
-            </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="qsn-form-container">
                     <h4>Biodata Responden</h4>
                     <p>silahkan isikan biodata diri anda</p>
@@ -45,7 +25,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <select>
+                                <select name="jenis_kelamin">
                                     <option>Pilih Jenis Kelamin</option>
                                     <option value="L">Laki-Laki</option>
                                     <option value="P">Perempuan</option>
@@ -56,14 +36,14 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                            <input type="text" name="name" placeholder="Usia Anda">
+                            <input type="text" name="usia" placeholder="Usia Anda">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <select>
+                                <select name="pendidikan">
                                     <option>Pilih Pendidikan</option>
                                     <option value="SD">SD</option>
                                     <option value="SMP">SMP</option>
@@ -82,7 +62,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <select>
+                                <select name="pekerjaan">
                                     <option>Pilih Pekerjaan</option>
                                     <option value="Petani">Petani</option>
                                     <option value="PNS">PNS</option>
@@ -94,39 +74,101 @@
                             </div>
                         </div>
                     </div>
-                    <div class="submit-area col-lg-12 col-12">
-                        <button type="submit" class="button-round-primary">Kirim</button>
-                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 right-sidebar">
+                <div class="checkout-field-wrap">
+                    <h3>Pendapat Responden Tentang Pelayanan Publik</h3><br>
+                    <?php if (!empty($ikm)): ?>
+                        <?php $noa = 1; foreach ($ikm as $row): ?>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label><?= $noa. ' - ' .$row['pertanyaan']?></label>
+                                    <select class="form-control select2" name="nilai" id="nilai">
+                                        <?php $no = 1; foreach($row['pilihan'] as $row_opsi): ?>
+                                            <option value="<?= $row_opsi['pilihan_nilai']?>"><?= $row_opsi['pilihan'].''. $row_opsi['icon'] ?></option>
+                                        <?php $no++; endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        <?php $noa++; endforeach ?>
+                    <?php else: ?>
+                        <h3 class="brand-title">Belum ada Kusioner. </h3>
+                    <?php endif ?>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-right">
+                    <button type="submit" id="submit-btn" class="button-round-primary w-60">
+                        <span class="spinner-border spinner-border-sm mr-1" id="spinner-status" role="status" aria-hidden="true" style="display:none"></span>
+                        <i class="mdi mdi-content-save mr-1" id="icon-save"></i><span id="button-value">Kirim</span>
+                    </button>
                 </div>
             </div>
         </div>
+        <?= form_close(); ?>
     </div>
 </div>
-<script>
-$(document).ready(function () {
-        $('#submitBtn').click(function () {
-            var formData = $('#form_emoticon').serialize();
-            console.log(formData);
+<script type="text/javascript">
+$('#formAjax').submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: "<?= site_url('isi-survei/sendRankiangApis') ?>",
+        type  : 'POST',
+        async : true,
+        data: $(this).serialize(),
+        dataType : 'json',
+        beforeSend : function() {
+            $('#loading-process').show();
+            $('#spinner-status').show();
+            $('#login-icon').hide();
+            $('#text-button').html('Loading...');
+            $('#text-button').addClass('ml-3');
+        },
+        success : function(data){
+            $('#spinner-status').hide();
+            $('#login-icon').show();
+            $('#text-button').html('Kirim SKM');
+            $('#text-button').removeClass('ml-3');
 
-            $.ajax({
-                url: '{{ route("User_ajax_ikm") }}', // Ganti 'nama_rute_controller' dengan nama rute controller Anda
-                // url: 'https://rangkiang.agamkab.go.id/api/ikm/ajaxInsertPenilaian', // Ganti 'nama_rute_controller' dengan nama rute controller Anda
-                method: 'POST',
-                data: formData,
-                success: function (response) {
-                    // Handle respons dari controller jika diperlukan
-                    console.log(response.success);
-                    // var data = response.success.true;
-                    // if (data) {
-                    //     Swal.fire(
-                    //         'Data Berhasil',
-                    //     )
-                    // }
-                },
-                error: function (error) {
-                    console.log(error);
-                }
+            if (data.status == true) {
+                Swal.fire({
+                    title: 'Informasi!',
+                    html: data.message,
+                    icon: 'success',
+                    confirmButtonColor: '#FFDA0F',
+                    confirmButtonText: 'OK'
+                }).then(function() {
+                    window.location = '<?= base_url('isi-survei') ?>';
+                });
+            } else {
+                Swal.fire({
+                    title: 'Informasi!',
+                    html: data.message,
+                    icon: 'error',
+                    confirmButtonColor: '#FFDA0F',
+                    confirmButtonText: 'OK'
+                })
+            }
+
+            $('#loading-process').hide();
+        },
+        error : function() {
+            $('#spinner-status').hide();
+            $('#login-icon').show();
+            $('#text-button').html('Kirim SKM');
+            $('#text-button').removeClass('ml-3');
+
+            Swal.fire({
+                title: 'Informasi!',
+                text: 'Oops, terjadi kesalahan saat menghubungkan ke server. Silahkan periksa koneksi internet anda atau refresh ulang halaman ini.',
+                icon: 'error',
+                confirmButtonColor: '#FFDA0F',
+                confirmButtonText: 'OK'
             });
-        });
-    });
+
+            $('#loading-process').hide();
+        }
+    });
+});
 </script>

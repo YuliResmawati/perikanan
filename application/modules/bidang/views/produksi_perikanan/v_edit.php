@@ -125,7 +125,7 @@
     });
 
     function init_autocomplete_komoditas(value_option) {
-        ajax_get_region = {
+        ajax_get_komoditas = {
             element: $('#komoditas_id'),
             type: 'post',
             url: "<?= base_url('app/AjaxGetKomoditas/') ?>" + value_option,
@@ -135,7 +135,7 @@
             placeholder: 'Ketik Nama Komoditas',
         }
 
-        init_ajax_select2_paging(ajax_get_region);
+        init_ajax_select2_paging(ajax_get_komoditas);
     }
 
     $(document).on("submit", ".form-data-komoditas", function (e) {

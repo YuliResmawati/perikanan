@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Produksi_pembenihan extends CI_Migration {
+class Migration_Pelaku_Usaha extends CI_Migration {
 
     public function up()
     {
@@ -11,28 +11,40 @@ class Migration_Produksi_pembenihan extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'komoditas_id' => array(
+            'kecamatan_id' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'default' => null,
+            ),
+            'nama_pelaku' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '225',
+                'default' => null,
+            ),
+            'telp' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '20',
+                'default' => null,
+            ),
+            'email' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'default' => null,
+            ),
+            'bidang' => array(
                 'type' => 'INT4',
                 'default' => null,
             ),
-            'rtp' => array(
+            'skala' => array(
                 'type' => 'INT4',
                 'default' => null,
             ),
-            'jumlah_induk' => array(
-                'type' => 'INT4',
-                'default' => null,
-            ), 
-            'type_induk' => array(
+            'jumlah_karyawan' => array(
                 'type' => 'INT4',
                 'default' => null,
             ),
-            'luas_lahan' => array(
-                'type' => 'FLOAT',
-                'default' => null,
-            ),
-            'produksi' => array(
-                'type' => 'INT4',
+            'alamat' => array(
+                'type' => 'TEXT',
                 'default' => null,
             ),
             'created_at' => array(
@@ -72,12 +84,12 @@ class Migration_Produksi_pembenihan extends CI_Migration {
         ));
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('produksi_pembenihan');
+        $this->dbforge->create_table('pelaku_usaha');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('produksi_pembenihan');
+        $this->dbforge->drop_table('pelaku_usaha');
     }
 }
 

@@ -27,10 +27,34 @@ if (!empty($reports)) {
             label {font-weight: bold}
         </style>
         ";
+        if ($row['m']==true) {
+            $pdf->AddPage($row['o'], $paper_size);
+            $data_x = explode("explod_x" ,  $row['c'][0]);
+            //title
 
-        $content .= $row['c'];
-        $pdf->AddPage($row['o'], $paper_size);
-        $pdf->writeHTML($content, true, false, true, false, '');
+            //colom 1
+            $left_column =  $content;
+            $left_column .= $data_x[1];
+            $pdf->SetX(10);
+            $pdf->writeHTMLCell(155, '', '', $y='', $left_column, 0, 0, 0, true, false, false);
+            // $start_y    = $pdf->GetY();
+            //colom 2
+            $right_column =  $content;
+            $right_column .= $data_x[2];
+            $pdf->SetX(163);
+            $pdf->writeHTMLCell(155, '', '', $y='', $right_column, 0, 1, 0, true, false, false);
+            //$pdf->SetX(0);
+            
+            $pdf->writeHTMLCell(0, '', '', $y='', '<br/>', 0, 1, 0, true, false, false);
+            $pdf->writeHTML($start_y, true, false, true, false, '');
+
+        }else {
+            $pdf->AddPage($row['o'], $paper_size);
+            $content .= $row['c'];
+            $pdf->writeHTML($content, true, false, true, false, '');
+        }
+       
+        
     }
 }
 

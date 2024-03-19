@@ -100,8 +100,11 @@ class Produksi_perikanan extends Backend_Controller {
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
             $response->edit_column('jenis', '$1', "jenis_komoditas(jenis)");
             $response->edit_column('produksi', '$1', "jum_produksi(produksi, nama_satuan)");
+            $response->edit_column('tanggal', '$1', "indo_date(created_at)");
             $response->add_column('aksi', '$1 $2', "tabel_icon(id,' ','edit','$edit_link ', $this->id_key, ' '),
                                                     tabel_icon(id,' ','delete',' ', $this->id_key)");
+            $response->edit_column('komoditas_id', '$1', "encrypt_url(komoditas_id,' ', $this->id_key)");
+            $response->edit_column('satuan', '$1', "encrypt_url(satuan,' ', $this->id_key)");
             
             $response = $this->m_produksi_perikanan->datatables(true);
     
@@ -135,47 +138,6 @@ class Produksi_perikanan extends Backend_Controller {
         return $this->output->set_output($response);
     }
 
-    public function AjaxGetValueByJenis()
-    {
-        $this->output->unset_template();
-        $jenis = decrypt_url($this->input->post('id'), $this->id_key);
-
-        if ($jenis != FALSE) { 
-            
-            $this->return = $this->m_komoditas->where([
-                'jenis' => $jenis])->findAll();
-
-            foreach ($this->return as $key => $value) {
-                $this->return[$key]->id = encrypt_url($value->id, $this->id_key);
-                $this->return[$key]->jenis = encrypt_url($value->jenis, $this->id_key);
-            }
-
-            if ($this->return) {
-                $this->result = array (
-                    'status' => TRUE,
-                    'message' => 'Berhasil mengambil data',
-                    'token' => $this->security->get_csrf_hash(),
-                    'data' => $this->return
-                );
-            } else {
-                $this->result = array (
-                    'status' => FALSE,
-                    'message' => 'Gagal mengambil data',
-                    'data' => []
-                );
-            }
-        } else {
-            $this->result = array('status' => FALSE, 'message' => 'ID tidak valid');
-        }
-
-        if ($this->result) {
-            $this->output->set_output(json_encode($this->result));
-        } else {
-            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan.']));
-        }
-
-    }
-
     public function AjaxSave($id = null)
     {
         $this->output->unset_template();
@@ -206,7 +168,7 @@ class Produksi_perikanan extends Backend_Controller {
 
                     foreach ($arr_komoditas as $key => $value) {
                         $data[] = array(
-                            'komoditas_id'  => decrypt_url($value, $this->id_key),
+                            'komoditas_id'  => decrypt_url($value, 'app'),
                             'satuan'       => decrypt_url($this->input->post('satuan'), $this->id_key),
                             'produksi'       => $produksi,
                             'status'     => '1'

@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Pembudidaya extends CI_Migration {
+class Migration_ketersediaan_pangan extends CI_Migration {
 
     public function up()
     {
@@ -12,15 +12,16 @@ class Migration_Pembudidaya extends CI_Migration {
                 'auto_increment' => TRUE
             ),
             'kecamatan_id' => array(
-                'type' => 'INT4',
+                'type' => 'VARCHAR',
+                'constraint' => '100',
                 'default' => null,
             ),
-            'jumlah' => array(
-                'type' => 'INT4',
+            'luas_tanam_padi' => array(
+                'type' => 'FLOAT',
                 'default' => null,
             ),
-            'type' => array(
-                'type' => 'INT4',
+            'luas_puso_padi' => array(
+                'type' => 'FLOAT',
                 'default' => null,
             ),
             'created_at' => array(
@@ -60,12 +61,12 @@ class Migration_Pembudidaya extends CI_Migration {
         ));
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('pembudidaya');
+        $this->dbforge->create_table('ketersediaan_pangan');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('pembudidaya');
+        $this->dbforge->drop_table('ketersediaan_pangan');
     }
 }
 

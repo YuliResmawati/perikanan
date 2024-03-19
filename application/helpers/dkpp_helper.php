@@ -215,7 +215,7 @@ if (!function_exists('tabel_icon')) {
                                         <i class="icon-check"></i>
                                 </' . $a_tag . '>';
                     } elseif ($action == "detail") {
-                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Siswa" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                        $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Pelaku" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                         <i class="icon-people"></i>
                                 </' . $a_tag . '>';
                     } elseif ($action == "list_materi") {
@@ -246,7 +246,7 @@ if (!function_exists('tabel_icon')) {
                                     <i class="icon-info"></i>
                             </' . $a_tag . '>';
                 } elseif ($action == "child") {
-                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-add btn btn-soft-danger waves-effect waves-light btn-xs" title="Lihat Detail" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '">
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-add btn btn-soft-danger waves-effect waves-light btn-xs" title="Lihat Kuesioner" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '">
                                     <i class="icon-share"></i>
                             </' . $a_tag . '>';
                 } elseif($action == "custom") {
@@ -262,11 +262,11 @@ if (!function_exists('tabel_icon')) {
                                     Reset Password
                             </' . $a_tag . '>';
                 } elseif ($action == "detail") {
-                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Siswa" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-detail btn btn-info waves-effect waves-light btn-xs" title="Lihat Data Pelaku Usaha" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                     <i class="icon-people"></i>
                             </' . $a_tag . '>';
                 } elseif ($action == "panel_harga") {
-                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-list-materi btn btn-info waves-effect waves-light btn-xs" title="Lihat Panel Harga" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
+                    $a = '<' . $a_tag . ' ' . $link_url . ' '. $attr .' class="button-list-materi btn btn-info waves-effect waves-light btn-xs" title="Lihat Panel" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" ' . $modal_attr . '>
                                     <i class="icon-notebook"></i>
                             </' . $a_tag . '>';
                 } elseif ($action == "jadwal") {
@@ -309,7 +309,7 @@ if (!function_exists('tabel_icon_komoditas')) {
                 }
             }
 
-            if ($level == '3' || $level == '6'){
+            if ($level != '7'){
                 if ($action == "delete") {
                     $a = '<' . $a_tag . ' ' . $link_url . '  '. $attr .' class="button-hapus btn btn-danger waves-effect waves-light btn-xs" title="Hapus" data-plugin="tippy" data-tippy-size="small" data-id="' . $id . '" >
                                     <i class="icon-trash"></i>
@@ -1378,12 +1378,26 @@ if (!function_exists('files_get_file_path')) {
 }
 
 if (!function_exists('lap_content')) {
-    function lap_content($orientation, $view, $data = null)
+    function lap_content($orientation, $view, $data = null, $multi=false)
     {
         $CI = &get_instance();
+
+        if ($multi==true) {
+            $ar_data = [];
+            foreach ($view as $row) {
+                $ar_data[] = $CI->load->view($row, $data, TRUE);
+            }
+    
+            $c_data = $ar_data;
+        }else {
+            $c_data = $CI->load->view($view, $data, TRUE);
+        }
+       
+
         return array(
+            'm' => $multi,
             'o' => $orientation,
-            'c' => $CI->load->view($view, $data, TRUE)
+            'c' => $c_data
         );
     }
 }
@@ -2083,6 +2097,8 @@ if (!function_exists('jenis_komoditas'))
             $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-fish"></i> Ikan Air Tawar</span></h6>';
         } else if ($jenis == '3') {
             $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-barley"></i>Bahan pokok</span></h6>';
+        } else if ($jenis == '4') {
+            $a = '<h6><span class="badge bg-soft-success text-success"><i class="mdi mdi-barley"></i>PSAT</span></h6>';
         } else {
             $a = 'Tidak Diketahui';
         }
@@ -2103,4 +2119,213 @@ if (!function_exists('jum_produksi'))
         return $a;
     }
 }
+
+if (!function_exists('jenis_perairan')) {
+    function jenis_perairan($type)
+    {
+        $a = '';
+
+        if ($type == '1') {
+            $a = '<h6><span class="badge bg-soft-blue text-blue"><i class="mdi mdi-bookmark-check"></i> Perairan Laut</span></h6>';
+        } else {
+            $a = '<h6><span class="badge bg-soft-warning text-warning"><i class="mdi mdi-bookmark-remove"></i> Perairan PUD</span></h6>';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('indikator')) {
+    function indikator($jenis)
+    {
+        $a = '';
+
+        if ($jenis == '1') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-bookmark-check"></i>Armada</span></h6>';
+        } else if ($jenis == '2') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-bookmark-remove"></i>Alat Tangkap</span></h6>';
+        } else {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-bookmark-remove"></i>Alat Bantu Penangkapan</span></h6>';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('jumlah_sum')) {
+    function jumlah_sum($value)
+    {
+        $text = '';
+        if (!empty($value)) {  
+            $text = $value;
+        } else {
+            $text = "0";
+        }
+        return $text;
+    }
+}
+
+if (!function_exists('cekdesimal')) {
+    function cekdesimal($number)
+    {
+        if($number !== false){
+            $number = round($number,2);
+        }
+        return $number;
+    }
+}
+
+if (!function_exists('produksi')) {
+    function produksi($value)
+    {
+        $text = '';
+        if (!empty($value)) {  
+            $text = number_format($value, 0, ",", ".");
+        } else {
+            $text = "0";
+        }
+        return $text;
+    }
+}
+
+if (!function_exists('skala')) {
+    function skala($jenis)
+    {
+        $a = '';
+
+        if ($jenis == '1') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-bookmark-check"></i>Kecil</span></h6>';
+        } else if ($jenis == '2') {
+            $a = '<h6><span class="badge bg-soft-warning text-secondary"><i class="mdi mdi-bookmark-check"></i>Menengah</span></h6>';
+        } else {
+            $a = '<h6><span class="badge bg-soft-blue text-secondary"><i class="mdi mdi-bookmark-check"></i>Besar</span></h6>';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('jenis_kusioner')) 
+{
+    function jenis_kusioner($jenis)
+    {
+        $a = '';
+
+        if ($jenis == '1') {
+            $a = '<h6><span class="badge bg-soft-blue text-blue"><i class="mdi mdi-alpha-t-box"></i> Pasca Panen</span></h6>';
+        } else if ($jenis == '2') {
+            $a = '<h6><span class="badge bg-soft-secondary text-secondary"><i class="mdi mdi-alpha-t-box"></i> Budidaya</span></h6>';
+        } else {
+            $a = 'Tidak Diketahui';
+        }
+
+        return $a;
+    }
+}
+
+if (!function_exists('opsi_kusioner')) 
+{
+    function opsi_kusioner($id, $opsi)
+    {
+        $a = '';
+
+        if ($opsi == '1') {
+            $a = '<input type="hidden" class="form-control" name="idopsi" id="idopsi" value="' . $id . '">
+            <label class="radio-inline mr-3">
+            <input type="radio" name="inlineRadioOptions" id="opsiYes" value="1" data-id="' . $id . '"> Sesuai</label>
+          <label class="radio-inline">
+            <input type="radio" name="inlineRadioOptions" id="opsiNo" value="0" data-id="' . $id . '">Tidak</label>';
+        } else  {
+            $a = '<input type="hidden" class="form-control" name="idopsi" id="idopsi" value="' . $id . '">
+            <input type="text" class="form-control" name="opsiEntry" id="opsiEntry" placeholder ="Jawaban Anda" data-id="' . $id . '">';
+        } 
+
+        return $a;
+    }
+}
+
+if (!function_exists('opsi')) {
+    function opsi($opsi)
+    {
+        $text = '';
+        if (!empty($opsi)) {  
+            if ($opsi == '1'){
+                $text = "Sesuai";
+            } else if ($opsi == '2'){
+                $text = "Tidak Sesuai";
+            } else {
+                $text = $opsi;
+            }
+        } 
+        return $text;
+    }
+}
+
+if (!function_exists('set_null')) {
+    function set_null($field)
+    {
+        $text = '';
+        if (!empty($opsi)) {  
+            $text = $field;
+        } else {
+            $text = '-';
+        }
+        
+        return $text;
+    }
+}
+
+function per_minggu($tanggal='') {
+    $tahun = "2024";
+    $bulan = "03";
+    $tanggal = "29";
+    $format = $tahun.'-'.$bulan.'-'.$tanggal;
+    $seminggu = abs(6*86400);
+    $awal = strtotime($format);
+    $akhir = strtotime($format)+$seminggu;
+    $c_tgl = [];
+    for($i=$awal; $i <=$akhir;$i+=86400)
+    {
+        $c_tgl[] = date('Y-m-d', $i);
+    // $sql = $db->query("select * from invoice where tgl_invoice='$date' AND  year(tgl_invoice)='$tahun'");
+    // $row = $sql->fetch_array();
+    // echo $row['tgl_invoice'];
+    // echo "<br/>";    
+    }
+
+    return var_dump($c_tgl);
+}
+
+function weekOfMonth($date) {
+    //Get the first day of the month.
+    $firstOfMonth = strtotime(date("Y-m-01", $date));
+    //Apply above formula.
+    return weekOfYear($date) - weekOfYear($firstOfMonth) + 1;
+}
+
+function weekOfYear($date) {
+    $weekOfYear = intval(date("W", $date));
+    if (date('n', $date) == "1" && $weekOfYear > 51) {
+        // It's the last week of the previos year.
+        return 0;
+    }
+    else if (date('n', $date) == "12" && $weekOfYear == 1) {
+        // It's the first week of the next year.
+        return 53;
+    }
+    else {
+        // It's a "normal" week.
+        return $weekOfYear;
+    }
+}
+
+function hitung_jumlah_hari_minggu() {
+    echo weekOfMonth(strtotime("2020-04-12")) . " "; // 2
+    echo weekOfMonth(strtotime("2020-12-31")) . " "; // 5
+    echo weekOfMonth(strtotime("2020-01-02")) . " "; // 1
+    echo weekOfMonth(strtotime("2021-01-28")) . " "; // 5
+    echo weekOfMonth(strtotime("2018-12-31")) . " "; // 6
+}
+
+
     

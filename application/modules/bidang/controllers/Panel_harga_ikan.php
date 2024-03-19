@@ -43,6 +43,7 @@ class Panel_harga_ikan extends Backend_Controller {
         $this->data['breadcrumbs'] = $this->breadcrumbs->show();
         $this->data['id_key'] = $this->id_key;
         $this->data['card'] = "true";
+        $this->data['tahun'] = $this->m_panel_harga_ikan->get_tahun('1')->findAll();
 
 		$this->load->view('panel_harga_ikan/v_index', $this->data);
     }
@@ -87,16 +88,28 @@ class Panel_harga_ikan extends Backend_Controller {
         $this->output->unset_template();
 
         $id = decrypt_url($id, $this->id_key);
+        $date_year = decrypt_url($this->input->post('filter_tahun'), $this->id_key);
 
         if ($id == FALSE) {
             $this->m_panel_harga_ikan->push_select('status');
             
             $edit_link = 'bidang/panel_harga_ikan/edit/'; 
-            $response = $this->m_panel_harga_ikan->get_all_panel_ikan()->where(['type' => '1'])->datatables();
+            $response = $this->m_panel_harga_ikan->get_all_panel_ikan()->datatables();
+
+            if ($date_year == FALSE) {
+                $response->where("extract(year from panel_harga_ikan.created_at) = '0'" , null);
+            } else {
+                if ($date_year !== 'ALL') {
+                    $response->where("extract(year from panel_harga_ikan.created_at) = '$date_year'" , NULL);
+                }
+            }
+
+            $response->where('panel_harga_ikan.type','1');
             $response->edit_column('id', '$1', "encrypt_url(id,' ', $this->id_key)");
             $response->edit_column('status', '$1', "str_status(status)");
             $response->edit_column('tanggal', '$1', "indo_date(tanggal)");
             $response->edit_column('harga', '$1', "rupiah(harga)");
+            $response->edit_column('volume', '$1', "produksi(volume)");
             $response->add_column('aksi', '$1 $2 $3', "tabel_icon(id,' ','edit','$edit_link ', $this->id_key, ''),
                                                     tabel_icon(id,' ','delete',' ', $this->id_key),");
             
@@ -132,48 +145,6 @@ class Panel_harga_ikan extends Backend_Controller {
         return $this->output->set_output($response);
     }
 
-    public function AjaxGetValueByJenis()
-    {
-        $this->output->unset_template();
-        $jenis = decrypt_url($this->input->post('id'), $this->id_key);
-
-        if ($jenis != FALSE) { 
-            
-            $this->return = $this->m_komoditas->where([
-                'jenis' => $jenis])->findAll();
-
-            foreach ($this->return as $key => $value) {
-                $this->return[$key]->id = encrypt_url($value->id, $this->id_key);
-                $this->return[$key]->jenis = encrypt_url($value->jenis, $this->id_key);
-            }
-
-            if ($this->return) {
-                $this->result = array (
-                    'status' => TRUE,
-                    'message' => 'Berhasil mengambil data',
-                    'token' => $this->security->get_csrf_hash(),
-                    'data' => $this->return
-                );
-            } else {
-                $this->result = array (
-                    'status' => FALSE,
-                    'message' => 'Gagal mengambil data',
-                    'data' => []
-                );
-            }
-        } else {
-            $this->result = array('status' => FALSE, 'message' => 'ID tidak valid');
-        }
-
-        if ($this->result) {
-            $this->output->set_output(json_encode($this->result));
-        } else {
-            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan.']));
-        }
-
-    }
-
-
     public function AjaxSave($id = null)
     {
         $this->output->unset_template();
@@ -200,13 +171,15 @@ class Panel_harga_ikan extends Backend_Controller {
 
                     $arr_komoditas = $this->input->post('filter_komoditas[]');
                     $harga = preg_replace("/[^0-9]/", "", $this->input->post('harga'));
+                    $volume = preg_replace("/[^0-9]/", "", $this->input->post('volume'));
                     $data = [];
 
                     foreach ($arr_komoditas as $key => $value) {
                         $data[] = array(
-                            'komoditas_id'  => decrypt_url($value, $this->id_key),
+                            'komoditas_id'  => decrypt_url($value, 'app'),
                             'satuan'       => decrypt_url($this->input->post('satuan'), $this->id_key),
                             'harga'       => $harga,
+                            'volume'       => $volume,
                             'status'     => '1',
                             'type'       => '1'
                         );  
@@ -264,10 +237,12 @@ class Panel_harga_ikan extends Backend_Controller {
 
                 
                 $harga = preg_replace("/[^0-9]/", "", $this->input->post('harga'));
+                $volume = preg_replace("/[^0-9]/", "", $this->input->post('volume'));
                 $komoditas = decrypt_url($this->input->post('komoditas'), 'app');
                 
                 $this->m_panel_harga_ikan->push_to_data('satuan', decrypt_url($this->input->post('satuan'), $this->id_key))
                     ->push_to_data('harga', $harga)
+                    ->push_to_data('volume', $volume)
                     ->push_to_data('komoditas_id', $komoditas);
 
                 $this->return = $this->m_panel_harga_ikan->save($id);
@@ -326,6 +301,36 @@ class Panel_harga_ikan extends Backend_Controller {
         }
 
         $this->output->set_output(json_encode($this->result));
+    }
+
+    public function report($tahun)
+    {
+        $this->output->unset_template();
+
+        ini_set('memory_limit', '-1');
+
+        $this->benchmark->mark('start_report');
+
+        $tahun = decrypt_url($tahun, $this->id_key);
+        $date_now = date('Y-m-d');
+
+        if ($tahun != FALSE) {
+            $this->data['base64_logo_instansi'] = base64_encode(file_get_contents("./assets/global/images/agam.png"));
+            $this->data['paper_size'] = "F4";
+            $this->data['page_title'] = "Cetak Laporan Harga Ikan";
+
+            $this->data['date_now'] = $date_now;
+            $this->data['data_list'] = $this->m_panel_harga_ikan->get_all_panel_ikan()->where(["extract(year from panel_harga_ikan.created_at) = '$tahun'" => null, 'panel_harga_ikan.type' => '1'])->findAll();
+            $this->data['reports'][] = lap_content('L', 'panel_harga_ikan/v_report', $this->data);
+
+            $this->benchmark->mark('end_report');
+
+            $this->data['benchmark'] = $this->benchmark->elapsed_time('start_report', 'end_report');
+
+            $this->load->view('themes/report', $this->data);
+        } else {
+            show_404();
+        }
     }
 
 

@@ -51,6 +51,31 @@ class M_wilayah extends MY_Model {
         
         return $this;
     }
+
+    public function get_all_upr($type = null)
+    {
+        parent::clear_join();
+
+        $this->_fields_toshow = [
+            "id", "nama_kecamatan",
+            "(select sum(luas_lahan) from upr where kecamatan_id=v_kecamatan.id) as luas_lahan",
+            "(select sum(jumlah_upr) from upr where kecamatan_id=v_kecamatan.id) as jumlah_upr",
+        ];
+        
+        return $this;
+    }
+
+    public function get_all_pelaku()
+    {
+        parent::clear_join();
+
+        $this->_fields_toshow = [
+            "id", "nama_kecamatan",
+            "(select count(id) from pelaku_usaha where kecamatan_id=v_kecamatan.id) as count_pelaku",
+        ];
+        
+        return $this;
+    }
     
 }
 

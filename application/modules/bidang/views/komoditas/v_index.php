@@ -1,10 +1,11 @@
+
+<?php if ($this->logged_level == 6 ||  ($this->logged_level == 7)) { ?>
 <div class="alert alert-info border-0 mt-1 mb-3" role="alert">
     <div class="text-justify">
         Jika nama Komoditas tidak muncul, Silahkan hubungi admin <strong>Bidang Perikanan Budi Daya dan Perikanan Tangkap </strong>untuk menambahkan data
     </div><br>
 </div>
 <br>
-<?php if ($this->logged_level != 3) { ?>
 <div class="form-group row mt-10 ">
     <label for="jenis_ikan" class="col-sm-2 col-form-label">Pilih Jenis Ikan</label>
     <div class="col-sm-10">
@@ -54,15 +55,7 @@
             <input class="form-control custom-form" type="hidden" name="data-id" id="data-id" />
             <input type="hidden" class="km-token-response" name="km-token-response">
                 <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <label class="col-form-label">Nama Komoditas <?= label_required() ?></label>
-                        </div>
-                        <div class="col-lg-8">
-                            <input class="form-control"  type="text" name="komoditas" id="komoditas">
-                        </div>
-                    </div>
-                    <?php if ($this->logged_level != 3) { ?>
+                    <?php if ($this->logged_level == 6 ||  ($this->logged_level == 7)) { ?>
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label class="col-form-label">Jenis Komoditas <?= label_required() ?></label>
@@ -76,6 +69,14 @@
                             </div>
                         </div>
                     <?php }else {}?>
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Nama Komoditas <?= label_required() ?></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input class="form-control"  type="text" name="komoditas" id="komoditas">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="submit-btn" class="btn btn-success waves-effect waves-light m-1">

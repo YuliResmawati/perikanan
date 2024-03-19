@@ -90,6 +90,11 @@ $route['publication'] = 'frontend/publication';
 $route['publication/page'] = 'frontend/publication';
 $route['publication/page/(:any)'] = 'frontend/publication/index/$1';
 
+$route['panel-harga'] = 'frontend/panel_harga_chart';
+$route['panel-harga/page'] = 'frontend/panel_harga_chart';
+$route['panel-harga/page/(:any)'] = 'frontend/panel_harga_chart/index/$1';
+$route['panel-harga/(:any)'] = 'frontend/panel_harga_chart/detail/$1';
+
 $route['article'] = 'frontend/article';
 $route['article/page'] = 'frontend/article';
 $route['article/page/(:any)'] = 'frontend/article/index/$1';
@@ -99,7 +104,7 @@ $route['layanan-pengaduan'] = 'frontend/layanan_pengaduan';
 $route['layanan-pengaduan/process'] = 'frontend/layanan_pengaduan/process';
 
 $route['isi-survei'] = 'frontend/skm';
-$route['isi-survei/process'] = 'frontend/skm/process';
+$route['isi-survei/sendRankiangApis'] = 'frontend/skm/sendRankiangApis';
 
 $route['daftar-sekolah'] = 'frontend/school';
 $route['daftar-sekolah/(:any)'] = 'frontend/school/detail/$1';

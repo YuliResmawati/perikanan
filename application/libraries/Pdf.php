@@ -42,6 +42,8 @@ class Pdf_Polos extends TCPDF
         // Page number
         $this->Cell(0, 10, 'Halaman '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
+
+    
 }
 /* End of file Pdf.php */
 /* Location: ./application/libraries/Pdf.php */

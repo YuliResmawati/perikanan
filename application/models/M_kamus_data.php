@@ -28,4 +28,14 @@ class M_kamus_data extends MY_Model {
 
         return $this;
     }
+
+    public function get_all_media(){
+        
+        parent::clear_join();
+
+        $this->_fields_toshow = ['id', 'kamus_data'];
+        $this->db->where(['type' => 'Media']);
+
+        return $this;
+    }
 }

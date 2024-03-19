@@ -20,13 +20,13 @@ class M_app extends MY_Model {
     }
 
 
-    public function get_kabupaten_by_paging($per_page, $page, $search, $type)
+    public function get_kecamatan_by_paging($per_page, $page, $search, $type)
     {
         if($page == 0) $page = 1;
         $page = ($per_page * $page) - $per_page;
-        $this->db->select('id, nama_kabupaten, provinsi_id, status');
-        $this->db->from('kabupaten');
-        $this->db->like('LOWER(nama_kabupaten)', strtolower($search));
+        $this->db->select('id, nama_kecamatan');
+        $this->db->from('v_kecamatan');
+        $this->db->like('LOWER(nama_kecamatan)', strtolower($search));
         $this->db->limit($per_page, $page);
         $this->db->where('status', '1');
 
@@ -66,6 +66,64 @@ class M_app extends MY_Model {
         $this->db->like('LOWER(komoditas)', strtolower($search));
         $this->db->limit($per_page, $page);
         $this->db->where(array('status' =>'1', 'jenis' => $params));
+
+        if ($type == 'data') {
+            return $this->db->get()->result_array();
+        } else {
+            return $this->db->count_all_results();
+        }
+    }
+
+    public function get_komoditas_psat_by_paging($per_page, $page, $search, $type)
+    {
+        if($page == 0) $page = 1;
+        $page = ($per_page * $page) - $per_page;
+        $this->db->select('id, komoditas, status','jenis');
+        $this->db->from('komoditas');
+        $this->db->like('LOWER(komoditas)', strtolower($search));
+        $this->db->limit($per_page, $page);
+        $this->db->where(array('status' =>'1', 'jenis' => '4'));
+
+        if ($type == 'data') {
+            return $this->db->get()->result_array();
+        } else {
+            return $this->db->count_all_results();
+        }
+    }
+
+    public function get_pelaku_by_paging($per_page, $page, $search, $type)
+    {
+        if($page == 0) $page = 1;
+        $page = ($per_page * $page) - $per_page;
+        $this->db->select('id, nama_pelaku, status');
+        $this->db->from('pelaku_usaha');
+        $this->db->like('LOWER(nama_pelaku)', strtolower($search));
+        $this->db->limit($per_page, $page);
+        $this->db->where(array('status' =>'1'));
+
+        if ($type == 'data') {
+            return $this->db->get()->result_array();
+        } else {
+            return $this->db->count_all_results();
+        }
+    }
+
+    public function get_indikator_by_paging($per_page, $page, $search, $type, $choise, $params)
+    {
+        if($page == 0) $page = 1;
+        $page = ($per_page * $page) - $per_page;
+        $this->db->select('id, nama_indikator');
+        $this->db->from('indikator_tangkap_ikan');
+        $this->db->like('LOWER(nama_indikator)', strtolower($search));
+        $this->db->limit($per_page, $page);
+        if ($choise == 'armada'){
+            $this->db->where(array('status' =>'1', 'jenis' => '1', 'type_perairan' => $params));
+        } else if ($choise == 'alat_tangkap'){
+            $this->db->where(array('status' =>'1', 'jenis' => '2', 'type_perairan' => $params));
+        } else {
+            $this->db->where(array('status' =>'1', 'jenis' => '3', 'type_perairan' => $params));
+        }
+        
 
         if ($type == 'data') {
             return $this->db->get()->result_array();

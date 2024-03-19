@@ -178,7 +178,7 @@
                                  </ul>
                               </li>
                            <li>
-                              <a href="#">Panel Harga</a>
+                              <a href="<?= base_url('panel-harga') ?>">Panel Harga</a>
                            </li>
                            <li class="menu-item-has-children">
                                  <a href="#">Layanan</a>

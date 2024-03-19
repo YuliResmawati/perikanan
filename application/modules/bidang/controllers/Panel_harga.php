@@ -61,6 +61,7 @@ class Panel_harga extends Backend_Controller {
         $this->data['id'] = $id; 
         $this->data['card'] = "true";
         $this->data['bulan'] = $this->m_bulan->findAll();
+        $this->data['nama_kecamatan'] = $this->m_wilayah->where(['id' => $id])->findAll();
         $this->data['komoditas'] = $this->m_panel_harga->get_all_komoditas_by_kecamatan_distinct()
                 ->where(['komoditas.status' => '1','type' =>'1','kecamatan_id' => $id])->findAll();
 
@@ -194,7 +195,7 @@ class Panel_harga extends Backend_Controller {
                 if ($this->return !== FALSE) {
                     unset($this->return->id);
                     $this->return->kecamatan_id = ($this->return->kecamatan_id) ? encrypt_url($this->return->kecamatan_id, $this->id_key) : '';
-                    $this->return->komoditas_id = ($this->return->komoditas_id) ? encrypt_url($this->return->komoditas_id, $this->id_key) : '';
+                    $this->return->komoditas_id = ($this->return->komoditas_id) ? encrypt_url($this->return->komoditas_id,  $this->id_key) : '';
                     $this->return->satuan = ($this->return->satuan) ? encrypt_url($this->return->satuan, $this->id_key) : '';
 
                     $response = array(
@@ -238,8 +239,6 @@ class Panel_harga extends Backend_Controller {
             $this->form_validation->set_rules('harga', 'Harga', 'required');
             $this->form_validation->set_rules('satuan', 'Satuan', 'required');
             $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
-
-
             $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
             if ($this->form_validation->run() == TRUE) {  

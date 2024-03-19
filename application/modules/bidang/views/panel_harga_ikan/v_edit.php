@@ -28,6 +28,12 @@
             </div>
         </div>
         <div class="form-group row">
+            <label for="volume" class="col-md-2 col-form-label">Volume <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input class="form-control custom-form " type="text" name="volume" id="volume" placeholder="Volume">
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="satuan" class="col-md-2 col-form-label">Satuan <?= label_required() ?></label>
             <div class="col-md-10">
                 <select class="form-control select2" name="satuan" id="satuan">
@@ -96,6 +102,11 @@
                 rupiah.value = formatRupiah(this.value, "Rp. ");
         });
 
+        var volume = document.getElementById("volume");
+            volume.addEventListener("keyup", function(e) {
+                volume.value = formatRupiah(this.value);
+        });
+
         let id ='<?= encrypt_url($id, $id_key) ?>';
         
         aOption = {
@@ -114,10 +125,12 @@
         data = get_data_by_id(aOption);
         if (data != false) {
             let harga = formatRupiah(data.data.harga, 'Rp.');
+            let volume = formatRupiah(data.data.volume);
 
             $('select[name="satuan"]').val(data.data.satuan).change();
             $('#tanggal').val(data.data.tanggal);
             $('#rupiah').val(harga);
+            $('#volume').val(volume);
             $('select[name="jenis"]').val(data.data.jenis).change();
             $('#nama_komoditas').val(data.data.komoditas);
             $('#komoditas').val(data.data.komoditas_id);

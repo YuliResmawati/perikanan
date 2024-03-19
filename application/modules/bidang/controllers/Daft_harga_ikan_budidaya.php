@@ -62,6 +62,7 @@ class daft_harga_ikan_budidaya extends Backend_Controller {
         $this->data['id'] = $id; 
         $this->data['card'] = "true";
         $this->data['bulan'] = $this->m_bulan->findAll();
+        $this->data['nama_kecamatan'] = $this->m_wilayah->where(['id' => $id])->findAll();
 
 		$this->load->view('daft_harga_ikan_budidaya/v_index_panel', $this->data);
     }
@@ -178,7 +179,11 @@ class daft_harga_ikan_budidaya extends Backend_Controller {
                 $response->edit_column('tanggal', '$1', "indo_date(tanggal)");
                 $response->edit_column('harga', '$1', "rupiah(harga)");
                 $response->add_column('aksi', '$1 $2', "tabel_icon(id,' ','edit','$edit_link', $this->id_key),
-                                                                tabel_icon(id,' ','delete',' ', $this->id_key)");
+                                                                tabel_icon(id,' ','delete',' ', $this->id_key)");                                             
+                $response->edit_column('komoditas_id', '$1', "encrypt_url(komoditas_id,' ', $this->id_key)");
+                $response->edit_column('satuan', '$1', "encrypt_url(satuan,' ', $this->id_key)");
+                $response->edit_column('jenis', '$1', "encrypt_url(jenis,' ', $this->id_key)");
+                $response->edit_column('kecamatan_id', '$1', "encrypt_url(kecamatan_id,' ', $this->id_key)");
 
                 $response = $this->m_panel_harga->datatables(true);
         
@@ -189,7 +194,7 @@ class daft_harga_ikan_budidaya extends Backend_Controller {
                 if ($this->return !== FALSE) {
                     unset($this->return->id);
                     $this->return->kecamatan_id = ($this->return->kecamatan_id) ? encrypt_url($this->return->kecamatan_id, $this->id_key) : '';
-                    $this->return->komoditas_id = ($this->return->komoditas_id) ? encrypt_url($this->return->komoditas_id, $this->id_key) : '';
+                    $this->return->komoditas_id = ($this->return->komoditas_id) ? encrypt_url($this->return->komoditas_id, 'app') : '';
                     $this->return->satuan = ($this->return->satuan) ? encrypt_url($this->return->satuan, $this->id_key) : '';
 
                     $response = array(
@@ -211,49 +216,6 @@ class daft_harga_ikan_budidaya extends Backend_Controller {
         }
 
         return $this->output->set_output($response);
-    }
-
-    public function AjaxGetValueByJenis()
-    {
-        $this->output->unset_template();
-        $jenis_id = decrypt_url($this->input->post('id'), $this->id_key);
-
-        if ($jenis_id != FALSE) { 
-           
-            $this->return = $this->m_komoditas->get_all_komoditas_ikan()->where([
-                    'jenis' => $jenis_id,
-                    'status' => '1'])->findAll();
-
-            foreach ($this->return as $key => $value) {
-                $this->return[$key]->id = encrypt_url($value->id, $this->id_key);
-                unset($this->return[$key]->status);
-                
-            }
-
-            if ($this->return) {
-                $this->result = array (
-                    'status' => TRUE,
-                    'message' => 'Berhasil mengambil data',
-                    'token' => $this->security->get_csrf_hash(),
-                    'data' => $this->return
-                );
-            } else {
-                $this->result = array (
-                    'status' => FALSE,
-                    'message' => 'Gagal mengambil data',
-                    'data' => []
-                );
-            }
-        } else {
-            $this->result = array('status' => FALSE, 'message' => 'ID tidak valid');
-        }
-
-        if ($this->result) {
-            $this->output->set_output(json_encode($this->result));
-        } else {
-            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Terjadi kesalahan.']));
-        }
-
     }
 
     public function AjaxGetAvailable()
@@ -340,7 +302,7 @@ class daft_harga_ikan_budidaya extends Backend_Controller {
                     foreach ($arr_kecamatan_id as $row) {
                         $_data[] = array(
                             'kecamatan_id' => decrypt_url($row, $this->id_key),
-                            'komoditas_id' => decrypt_url($this->input->post('komoditas'), $this->id_key),
+                            'komoditas_id' => decrypt_url($this->input->post('komoditas'), 'app'),
                             'harga'      => $harga,
                             'satuan'     => decrypt_url($this->input->post('satuan'), $this->id_key),
                             'tanggal'    => $this->input->post('tanggal'),
@@ -412,7 +374,7 @@ class daft_harga_ikan_budidaya extends Backend_Controller {
                 }
                 $harga = preg_replace("/[^0-9]/", "", $this->input->post('harga'));
 
-                $this->m_panel_harga->push_to_data('komoditas_id', decrypt_url($this->input->post('komoditas'), $this->id_key))
+                $this->m_panel_harga->push_to_data('komoditas_id', decrypt_url($this->input->post('komoditas'), 'app'))
                     ->push_to_data('harga', $harga)
                     ->push_to_data('satuan', decrypt_url($this->input->post('satuan'), $this->id_key))
                     ->push_to_data('kecamatan_id', decrypt_url($this->input->post('kec_id'), $this->id_key))
@@ -483,4 +445,4 @@ class daft_harga_ikan_budidaya extends Backend_Controller {
 
 }
 
-/* End of file Pengaturan_website.php */
+/* End of file Daft_harga_ikan_budidaya.php */

@@ -23,11 +23,46 @@ class M_panel_harga_ikan extends MY_Model {
         
         parent::clear_join();
 
-        $this->_fields_toshow = ['panel_harga_ikan.id', 'komoditas', 'satuan','komoditas_id', 'harga', 'panel_harga_ikan.created_at as tanggal','jenis'];
+        $this->_fields_toshow = ['panel_harga_ikan.id', 'komoditas', 'satuan','komoditas_id', 
+            'harga', 'panel_harga_ikan.created_at as tanggal','jenis','volume', 'kamus_data as nama_satuan'];
 
         parent::join('komoditas ','panel_harga_ikan.komoditas_id=komoditas.id');
+        parent::join('kamus_data ','panel_harga_ikan.satuan=kamus_data.id');
         
 
+        return $this;
+    }
+
+    public function get_tahun($type){
+
+        parent::clear_join();
+        $this->_order_by = false;
+
+        $this->_fields_toshow = ["date_part('Y', created_at) as tahun"];
+        $this->db->where(['type' => $type]);
+        $this->db->distinct();
+
+        return $this;
+    }
+
+    public function get_report_harga_ikan_by_jenis($tanggal, $opsi, $type)
+    {
+        parent::clear_join();
+
+        $this->_fields_toshow = ['panel_harga_ikan.id', 'komoditas', 'satuan',
+        'harga', 'jenis','volume', 'kamus_data as nama_satuan',
+        'panel_harga_ikan.type', 'panel_harga_ikan.created_at'];
+
+        parent::join('komoditas ','panel_harga_ikan.komoditas_id=komoditas.id');
+        parent::join('kamus_data ','panel_harga_ikan.satuan=kamus_data.id');
+
+        if ($opsi == '0'){
+            $this->db->where(['date(panel_harga_ikan.created_at)' => $tanggal, 'jenis' => '1', 'panel_harga_ikan.type' => $type]);
+        } else {
+            $this->db->where(['date(panel_harga_ikan.created_at)' => $tanggal, 'jenis' => '2', 'panel_harga_ikan.type' => $type]);
+        }
+        
+        
         return $this;
     }
 }

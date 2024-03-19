@@ -7,8 +7,8 @@
             <div class="col-md-10">
                 <select class="form-control select2" name="jenis" id="jenis">
                     <option selected disable>Pilih Jenis Ikan</option>
-                    <option value="<?= encrypt_url('1', $id_key) ?>">Ikan Laut</option>
-                    <option value="<?= encrypt_url('2', $id_key) ?>">Ikan Tawar</option>
+                    <option value="<?= encrypt_url('1', 'app') ?>">Ikan Laut</option>
+                    <option value="<?= encrypt_url('2', 'app') ?>">Ikan Tawar</option>
                 </select>
             </div>
         </div>
@@ -21,9 +21,15 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="harga" class="col-md-2 col-form-label">Harga Konsumen <?= label_required() ?></label>
+            <label for="harga" class="col-md-2 col-form-label">Harga Eceran <?= label_required() ?></label>
             <div class="col-md-10">
-                <input class="form-control custom-form " type="text" name="harga" id="rupiah" placeholder="Harga Konsumen">
+                <input class="form-control custom-form " type="text" name="harga" id="rupiah" placeholder="Harga Eceran">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="volume" class="col-md-2 col-form-label">Volume <?= label_required() ?></label>
+            <div class="col-md-10">
+                <input class="form-control custom-form " type="text" name="volume" id="volume" placeholder="Volume">
             </div>
         </div>
         <div class="form-group row">
@@ -65,6 +71,11 @@
                 rupiah.value = formatRupiah(this.value, "Rp. ");
         });
 
+        var volume = document.getElementById("volume");
+            volume.addEventListener("keyup", function(e) {
+                volume.value = formatRupiah(this.value);
+        });
+
         $('select.select2').each(function(el) {
             let spinner = "<span class=\"select2-spinner spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\" style=\"display:none;\"></span>";
             let element = $(this).next(".select2-container").find(".select2-selection .select2-selection__arrow");
@@ -83,7 +94,7 @@
             var id = jenis_id;
 
             $.ajax({
-                url: "<?= base_url($uri_mod. '/AjaxGetValueByJenis/') ?>",
+                url: "<?= base_url('app/AjaxGetValueByJenis/') ?>",
                 method : "POST",
                 data : {id: id, dkpp_c_token: csrf_value},
                 async : true,

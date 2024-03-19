@@ -31,7 +31,7 @@ class Komoditas extends Backend_Controller {
 
     public function index()
 	{   
-        if ($this->logged_level == '3' || $this->logged_level == '6') {
+        if ($this->logged_level != '7') {
             $this->data['add_button_link'] = base_url('bidang/komoditas/add');
         }
         $this->data['page_title'] = "Komoditas";
@@ -56,13 +56,15 @@ class Komoditas extends Backend_Controller {
 
             if ($this->logged_level == '3') {
                 $response = $this->m_komoditas->where(['jenis' => '3'])->datatables();
+            } else if ($this->logged_level == '5') {
+                $response = $this->m_komoditas->where(['jenis' => '4'])->datatables();
             } else {
                 $response = $this->m_komoditas->datatables();
 
                 if (decrypt_url($this->input->post('filter_jenis'), $this->id_key) == FALSE) {
                     $response->where('jenis', 0);
                 } else {
-                    if (decrypt_url($this->input->post('filter_komoditas'), $this->id_key) !== 'ALL') {
+                    if (decrypt_url($this->input->post('filter_jenis'), $this->id_key) !== 'ALL') {
                         $response->where('jenis', decrypt_url($this->input->post('filter_jenis'), $this->id_key));
                     }
                 }
@@ -133,7 +135,9 @@ class Komoditas extends Backend_Controller {
 
                 if ($this->logged_level == '3'){
                     $jenis = '3';
-                }else {
+                }else if ($this->logged_level == '5'){
+                    $jenis = '4';
+                } else {
                     $jenis = decrypt_url($this->input->post('jenis'), $this->id_key);
                 }
 
@@ -253,4 +257,4 @@ class Komoditas extends Backend_Controller {
 
 }
 
-/* End of file Pengaturan_website.php */
+/* End of file komoditas.php */

@@ -11,6 +11,8 @@ class Skm extends Frontend_Controller {
 		$this->data['uri_mod'] = 'isi-survei';
         $this->load->model(['m_api','m_ikm']);
 
+        $this->load->js("https://cdn.jsdelivr.net/npm/sweetalert2@11");
+
 	}
 
 	public function _init()
@@ -27,69 +29,72 @@ class Skm extends Frontend_Controller {
 		$this->load->view('skm/v_index', $this->data);
     }
 
-    public function process()
+    public function sendRankiangApis()
     {
         $this->output->unset_template();
 
-        $captcha_score = get_recapture_score($this->input->post('is-recaptcha-response'));  
-        $score = (float)$this->input->post('score');
+        $this->form_validation->set_rules('name', 'Nama Lengkap', 'required');
+        $this->form_validation->set_rules('nilai[]', 'Nilai', 'required');
+        // $this->form_validation->set_rules('id_nagari', 'Id Nagari', 'required');
+        $this->form_validation->set_rules('usia', 'usia', 'required');
+        $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
+        $this->form_validation->set_rules('pendidikan', 'Pendidikan', 'required');
+        $this->form_validation->set_rules('pekerjaan', 'Pekerjaan', 'required');
+        $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
 
-        if ($captcha_score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
-            $this->result = array(
-                'status' => FALSE,
-                'message' => '<span class="text-danger"> Request yang anda jalankan dianggap SPAM oleh sistem.</span>'
-            );
-        } else {
-            $this->form_validation->set_rules('score', 'Rating', 'required');
-            $this->form_validation->set_rules('name', 'Nama Lengkap', 'required');
-            $this->form_validation->set_rules('gender', 'Jenis Kelamin', 'required');
-            $this->form_validation->set_rules('education', 'Pendidikan', 'required');
-            $this->form_validation->set_rules('age', 'Usia', 'required');
-            $this->form_validation->set_rules('phone_number', 'Nomor Handphone', 'required');
-            $this->form_validation->set_rules('phone_number', 'Nomor Handphone', 'required');
-            $this->form_validation->set_error_delimiters(error_delimeter(1), error_delimeter(2));
+        if ($this->form_validation->run() == TRUE) {
+            $apiUrl = 'https://rangkiang.agamkab.go.id/api/ikm/ajaxInsertPenilaian';
+            $nilai = $this->input->post('nilai');
 
-            if ($this->form_validation->run() == TRUE) {
-                if ($score >= 0.5 && $score <= 5) {
-                    $education = decrypt_url($this->input->post('education'), 'skm');
-                    $gender = decrypt_url($this->input->post('gender'), 'skm');
+            $data = new stdClass();
+            $data->username = $this->input->post('username');
+            $data->nilai = $nilai;
+            $data->id_nagari = $this->input->post('id_nagari');
+            $data->usia = $this->input->post('usia');
+            $data->jenis_kelamin = $this->input->post('jenis_kelamin');
+            $data->pendidikan = $this->input->post('pendidikan');
+            $data->pekerjaan = $this->input->post('pekerjaan');
 
-                    $this->return = $this->m_skm->push_to_data('status', '1')
-                        ->push_to_data('gender', $gender)
-                        ->push_to_data('education', $education)
-                        ->push_to_data('rate', $score)
-                        ->save();
+            $json_data = json_encode($data);
 
-                    if ($this->return) {
-                        $this->result = array(
-                            'status' => TRUE,
-                            'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Survei berhasil dikirim.</span>'
-                        );
-                    } else {
-                        $this->result = array(
-                            'status' => FALSE,
-                            'message' => '<span class="text-danger"><i class="mdi mdi-alert"></i> Survei gagal dikirim.</span>'
-                        );
-                    }
-                } else {
-                    $this->result = array(
-                        'status' => FALSE,
-                        'message' => '<span class="text-danger"> Silahkan berikan nilai score yang sesuai.</span>'
-                    );
-                }
-            } else {
+            $ch = curl_init($apiUrl);
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($json_data)
+            ));
+
+            $apiResponse = curl_exec($ch);
+
+            curl_close($ch);
+
+            if (!$apiResponse) {
                 $this->result = array(
                     'status' => FALSE,
-                    'message' => validation_errors()
+                    'message' => '<span class="text-danger"><i class="mdi mdi-check-alert"></i> Failed to send data to API.</span>'
+                );
+            } else {
+                $this->result = array(
+                    'status' => TRUE,
+                    'message' => '<span class="text-success"><i class="mdi mdi-check-decagram"></i> Success to send data to API.</span>'
                 );
             }
+        } else {
+            $this->result = array(
+                'status' => FALSE,
+                'message' => validation_errors()
+            );
         }
 
         if ($this->result) {
             $this->output->set_output(json_encode($this->result));
         } else {
-            $this->output->set_output(json_encode(['message' => FALSE, 'msg' => 'Gagal mengambil data.']));
-        }   
+            $this->output->set_output(json_encode(['status'=> FALSE, 'message'=> 'Gagal mengambil data.']));
+        }
     }
 }
 

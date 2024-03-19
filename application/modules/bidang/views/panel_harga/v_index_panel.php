@@ -1,3 +1,6 @@
+<span class="badge badge-soft-info p-1"> KECAMATAN <strong><?=$nama_kecamatan[0]->nama_kecamatan?></strong></span>
+<br>
+<br>
 <div class="form-group row mt-10 ">
     <label for="bulan" class="col-sm-2 col-form-label">Pilih Bulan</label>
     <div class="col-sm-10">

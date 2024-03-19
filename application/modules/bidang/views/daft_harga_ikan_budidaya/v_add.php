@@ -18,8 +18,8 @@
             <div class="col-md-10">
                 <select class="form-control select2" name="jenis" id="jenis">
                     <option selected disabled>Pilih Jenis Ikan</option>
-                    <option value="<?= encrypt_url('1', $id_key) ?>">Ikan Laut</option>
-                    <option value="<?= encrypt_url('2', $id_key) ?>">Ikan Tawar</option>
+                    <option value="<?= encrypt_url('1', 'app') ?>">Ikan Laut</option>
+                    <option value="<?= encrypt_url('2', 'app') ?>">Ikan Tawar</option>
                 </select>
             </div>
         </div>
@@ -86,7 +86,7 @@
             var id = $(this).val();
 
             $.ajax({
-                url: "<?= base_url('bidang/daft_harga_ikan_budidaya/AjaxGetValueByJenis') ?>",
+                url: "<?= base_url('app/AjaxGetValueByJenis') ?>",
                 method : "POST",
                 data : {id: id, dkpp_c_token: csrf_value},
                 async : true,

@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Upr extends CI_Migration {
+class Migration_Pembudidaya extends CI_Migration {
 
     public function up()
     {
@@ -12,15 +12,24 @@ class Migration_Upr extends CI_Migration {
                 'auto_increment' => TRUE
             ),
             'kecamatan_id' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'default' => null,
+            ),
+            'aktif' => array(
                 'type' => 'INT4',
                 'default' => null,
             ),
-            'jumlah_upr' => array(
+            'tidak_aktif' => array(
                 'type' => 'INT4',
                 'default' => null,
             ),
-            'luas_lahan' => array(
-                'type' => 'FLOAT',
+            'berkelompok' => array(
+                'type' => 'INT4',
+                'default' => null,
+            ),
+            'belum_berkelompok' => array(
+                'type' => 'INT4',
                 'default' => null,
             ),
             'created_at' => array(
@@ -60,12 +69,12 @@ class Migration_Upr extends CI_Migration {
         ));
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('upr');
+        $this->dbforge->create_table('pembudidaya');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('upr');
+        $this->dbforge->drop_table('pembudidaya');
     }
 }
 

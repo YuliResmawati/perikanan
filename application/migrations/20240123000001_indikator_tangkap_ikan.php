@@ -21,7 +21,7 @@ class Migration_Indikator_tangkap_ikan extends CI_Migration {
                 'constraint' => '255',
                 'default' => null,
             ), 
-            'type_peraiaran' => array(
+            'type_perairan' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '1',
                 'default' => null,
